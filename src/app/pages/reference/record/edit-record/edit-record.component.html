@@ -1,0 +1,142 @@
+<form *ngIf="loaded && !isEmpty" [formGroup]="labelForm" (ngSubmit)="submitEvent(labelForm.valid)">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <tc-card *ngIf="loaded">
+                <div *ngFor="let field of fieldsData; let index = index;" [ngSwitch]="field.type">
+                    <tc-integer-field *ngSwitchCase="'integer'"
+                            [_valueField]="field"
+                            [(ngModel)]="field.value"
+                            [type]="typePage"
+                            [form]="labelForm"
+                            [isNew]="isNew"
+                            [formControlName]="field.id"
+                    ></tc-integer-field>
+
+                    <tc-float-field *ngSwitchCase="'float'"
+                            [_valueField]="field"
+                            [(ngModel)]="field.value"
+                            [type]="typePage"
+                            [form]="labelForm"
+                            [isNew]="isNew"
+                            [formControlName]="field.id"
+                    ></tc-float-field>
+
+                    <tc-string-field *ngSwitchCase="'string'"
+                            [_valueField]="field"
+                            [(ngModel)]="field.value"
+                            [type]="typePage"
+                            [form]="labelForm"
+                            [isNew]="isNew"
+                            [formControlName]="field.id"
+                    ></tc-string-field>
+
+                    <tc-text-field *ngSwitchCase="'text'"
+                                     [_valueField]="field"
+                                     [(ngModel)]="field.value"
+                                     [type]="typePage"
+                                     [form]="labelForm"
+                                     [isNew]="isNew"
+                                     [formControlName]="field.id"
+                    ></tc-text-field>
+
+                    <tc-password-field *ngSwitchCase="'password'"
+                             [_valueField]="field"
+                             [(ngModel)]="field.value"
+                             [type]="typePage"
+                             [form]="labelForm"
+                             [isNew]="isNew"
+                             [formControlName]="field.id"
+                    ></tc-password-field>
+
+                    <tc-date-field *ngSwitchCase="'date'"
+                            [_valueField]="field"
+                            [(ngModel)]="field.value"
+                            [type]="typePage"
+                            [form]="labelForm"
+                            [isNew]="isNew"
+                            [formControlName]="field.id"
+                    ></tc-date-field>
+                    <tc-timestamp-field *ngSwitchCase="'timestamp'"
+                            [_valueField]="field"
+                            [(ngModel)]="field.value"
+                            [type]="typePage"
+                            [form]="labelForm"
+                            [isNew]="isNew"
+                            [formControlName]="field.id"
+                    ></tc-timestamp-field>
+
+                    <tc-boolean-field *ngSwitchCase="'boolean'"
+                            [_valueField]="field"
+                            [(ngModel)]="field.value"
+                            [type]="typePage"
+                            [form]="labelForm"
+                            [isNew]="isNew"
+                            [formControlName]="field.id"
+                    ></tc-boolean-field>
+
+                    <tc-enumeration-field *ngSwitchCase="'enumeration'"
+                            [_valueField]="field"
+                            [type]="typePage"
+                            [form]="labelForm"
+                            [isNew]="isNew"
+                    ></tc-enumeration-field>
+
+                    <tc-reference-field *ngSwitchCase="'reference'"
+                            [_valueField]="field"
+                            [(ngModel)]="field.value"
+                            [type]="typePage"
+                            [form]="labelForm"
+                            [isNew]="isNew"
+                            [formControlName]="field.id"
+                    ></tc-reference-field>
+
+                    <tc-structure-field *ngSwitchCase="'structure'"
+                            [_valueField]="field"
+                            [(ngModel)]="field.value"
+                            [type]="typePage"
+                            [form]="labelForm"
+                            [isNew]="isNew"
+                            [formControlName]="field.id"
+                    ></tc-structure-field>
+
+                    <tc-image-field *ngSwitchCase="'image'"
+                            [_valueField]="field"
+                            [(ngModel)]="field.value"
+                            [type]="typePage"
+                            [form]="labelForm"
+                            [referenceId]="referenceId"
+                            [isNew]="isNew"
+                            [formControlName]="field.id"
+                            [postAction]="postImage"
+                            [getUrl]="getImageUrl"
+                    ></tc-image-field>
+
+                    <tc-file-field *ngSwitchCase="'file'"
+                                    [_valueField]="field"
+                                    [(ngModel)]="field.value"
+                                    [type]="typePage"
+                                    [form]="labelForm"
+                                    [referenceId]="referenceId"
+                                    [isNew]="isNew"
+                                    [formControlName]="field.id"
+                    ></tc-file-field>
+                </div>
+            </tc-card>
+        </div>
+        <div class="col-12 col-md-4">
+            <tc-card [title]="'Publish'|translate">
+                <div style="text-align: right;">
+                    <button tc-button
+                            *ngIf="typePage == 'edit'"
+                            class="mr-2"
+                            [size]="'sm'"
+                            [view]="'info'">
+                        {{'Save'|translate}}
+                    </button>
+                </div>
+            </tc-card>
+        </div>
+    </div>
+</form>
+
+<not-found-page *ngIf="isEmpty"></not-found-page>

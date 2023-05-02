@@ -1,0 +1,44 @@
+@import '../../../assets/sass/variables';
+
+:host {
+  .app-container {
+    @media only screen and (max-width: 991px) {
+      padding-left: 0;
+    }
+
+    ::ng-deep {
+      .navbar.horizontal {
+        navbar-skeleton {
+          .sk-logo {
+            display: none !important;
+          }
+        }
+      }
+    }
+    .horizontal-navbar {
+      box-shadow: 0 0 10px 0 rgba(#000, 0.15);
+    }
+  }
+}
+.button-save {
+  cursor: pointer;
+}
+.main-content-wrap {
+  overflow-y: scroll !important;
+}
+
+.d-flex  {
+  display: flex;
+}
+
+.header {
+  align-items: center;
+  padding-left: 30px;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 20px;
+  font-feature-settings: 'salt' on, 'liga' off;
+  color: #18191F;
+}

@@ -1,0 +1,322 @@
+<div class="d-flex justify-content-between">
+    <h3 class="mt-0">{{'User profile' | translate}}</h3>
+    <div>
+        <button
+                tc-button
+                style="margin-right: 10px"
+                *ngIf="(id && isAdmin && !archive) || switched"
+                (click)="switch()"
+                [view]="'info'"
+                [beforeIcon]="switched ? 'icofont-scroll-left' : 'icofont-scroll-right'"
+        >
+            {{ 'Switch' |translate }}
+        </button>
+        <button
+            tc-button
+            *ngIf="(!id || canEdit || isAdmin) && !archive"
+            [view]="'info'"
+            [beforeIcon]="'icofont-gear'"
+            [routerLink]="id ? ['/vertical/edit-account', id] : ['/vertical/edit-account']"
+        >
+        {{ 'Edit profile' |translate }}
+        </button>
+    </div>
+</div>
+<div class="row" *ngIf="profile">
+    <div class="col-12 col-md-4">
+        <div>
+            <tc-card [tcGradient]="['#fff', '#fbfbfb']" class="user-profile">
+                <img [src]="(profile['avatar_ref'] && profile['avatar_ref'].length) ? (apiUrl + '/api/media/file/' + profile['avatar_ref'][0]['id'] | secureFile | async) : 'assets/image/photo34.jpg'" alt="" [style.borderRadius]="'16px'">
+                <h4 class="mb-0 mt-20 mr-1">{{ profile['fio'] }}</h4>
+                <p class="mb-0 mt-0 mr-1 role-pg">{{profile['roles']}}</p>
+                <div class="mt-3">
+                    <h5 class="mb-2">{{'About me'|translate}}</h5>
+                    <div *ngIf="profile['gender_enum']">
+                        <p class="mb-0 mt-0">{{'Gender'| translate}}</p>
+                        <span>{{ profile['gender_enum'] }}</span>
+                    </div>
+                    <div class="mb-2 mt-2" *ngIf="profile['city']">
+                        <p class="mb-0 mt-1">{{'Lives'| translate}}</p>
+                        <span>{{profile['city']}}</span>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <h5 class="mb-2">{{'Education'|translate}}</h5>
+                    <div class="mb-2 mt-2">
+                        <div *ngIf="profile['university']">
+                            <p class="mb-0 mt-1">{{'University'| translate}}</p>
+                            <span>{{ profile['university'] }}</span>
+                        </div>
+                        <div *ngIf="profile['speciality']">
+                            <p class="mb-0 mt-1">{{'Specialty'| translate}}</p>
+                            <span>{{ profile['speciality'] }}</span> <span *ngIf="profile['edu_degree']">({{profile['edu_degree']}})</span>
+                        </div>
+                        <div *ngIf="profile['course']">
+                            <p class="mb-0 mt-1">{{'Course'| translate}}</p>
+                            <span>{{ profile['course'] }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <h5 class="mb-2">{{'Contacts'|translate}}</h5>
+                    <div *ngIf="profile['phone']">
+                        <p class="mb-0 mt-0">{{'Phone'|translate}}</p>
+                        <a *ngFor="let item of profile['phone'].split(','); let i = index;"
+                           [href]="('callto:' + item) | trim | safeUrl">
+                            <span *ngIf="item.length === 12">{{ item | mask : '+0 (000) 000 00 00' }}</span>
+                            <span *ngIf="item.length === 11">{{ item | mask : '0 (000) 000 00 00' }}</span>
+                            <span *ngIf="item.length === 10">+7 {{ item | mask : '(000) 000 00 00' }}</span>
+                            <span *ngIf="profile['phone'].split(',').length - 1 != i">, </span>
+                        </a>
+                    </div>
+                    <div *ngIf="profile.email">
+                        <p class="mb-0 mt-2">{{'Email'|translate}}</p>
+                        <a [href]="('mailto:' + profile.email) | trim | safeUrl">{{ profile.email }}</a>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <a *ngIf="isAdmin && !archive" [routerLink]="['/vertical/profile/edit', profile['id'] ? profile['id'] : id]" [ngStyle]="{color: '#949494'}">
+                        <i class="icofont-pencil-alt-2 tc-icon-wrap mr-2"></i> {{'Edit profile' | translate}}
+                    </a><br/>
+                    <a *ngIf="(isAdmin || canDelete) && id && archive"
+                       [ngStyle]="{color: '#949494'}"
+                       (click)="openModal(modalBodyArchive, 'Modal title', modalFooterArchive, { closeButton: true, overlayClose: true })">
+                        <i class="icofont-upload-alt tc-icon-wrap mr-2"></i> {{'Unarchive' | translate}}
+                    </a><br/>
+                    <a
+                            *ngIf="(isAdmin || canDelete) && id && !archive"
+                            [ngStyle]="{color: '#949494'}"
+                            (click)="openModal(modalBody, 'Modal title', modalFooter, { closeButton: true, overlayClose: true })"
+                    >
+                        <i class="icofont-trash tc-icon-wrap mr-2"></i> {{'Delete'|translate}} {{'Profile'|translate}}
+                    </a>
+                </div>
+            </tc-card>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-8">
+        <tc-card *ngIf="profileStatistic">
+            <div class="d-flex justify-content-between">
+                <h4 class="mt-0">{{'RatingEducation'|translate}}</h4>
+                <tc-select class="mr-2" placeholder="Тип чарт" [(ngModel)]="selectedTypeChart" [options]="typeChart"></tc-select>
+                <tc-select placeholder="Ай" [(ngModel)]="selectedMonth" [options]="month" (ngModelChange)="changeMonth()"></tc-select>
+<!--                <button tc-button [(ngModel)]="switchValue">{{'Table / SpiderChat'|translate}}</button>-->
+            </div>
+
+            <div class="row" *ngIf="selectedTypeChart == 'list'">
+                    <div class="rating col-12 col-md-6">
+                        <div class="mb-3 icon d-flex">
+                            <div class="mr-3 ico-img" [inlineSVG]="'assets/image/icons/CalendarDark.svg'">
+                            </div>
+                            <div class="ico-text">
+                                {{'Books'|translate}}
+                                <div class="sub-text">
+                                    {{'SectionDescriptionBooks' |translate}}
+                                </div>
+                            </div>
+                        </div>
+                        <nz-progress nzStrokeLinecap="round"
+                                     [nzPercent]="(this.profileEmpty['reading']
+                                      && this.profileStatistic['reading'][this.selectedMonth]['avg']) ? this.profileStatistic['reading'][this.selectedMonth]['avg'] : 0"
+                                     nzStrokeColor="#3D3DD8"
+                                     nzStrokeWidth="12"
+                        ></nz-progress>
+                    </div>
+
+                    <div class="rating col-12 col-md-6">
+                        <div class="mb-3 icon d-flex">
+                            <div class="mr-3 ico-img" [inlineSVG]="'assets/image/icons/MenuCourseDark.svg'">
+                            </div>
+                            <div class="ico-text">
+                                {{'Menu Courses'|translate}}
+                                <div class="sub-text">
+                                    {{'SectionDescriptionMenuCourses' |translate}}
+                                </div>
+                            </div>
+                        </div>
+                        <nz-progress nzStrokeLinecap="round"
+                                     [nzPercent]="(this.profileEmpty['course']
+                                     && profileStatistic['course'][selectedMonth]['avg']) ? profileStatistic['course'][selectedMonth]['avg'] : 0"
+                                     nzStrokeColor="#3D3DD8"
+                                     nzStrokeWidth="12"
+                        ></nz-progress>
+                    </div>
+
+                    <div class="rating col-12 col-md-6">
+                        <div class="mb-3 icon d-flex">
+                            <div class="mr-3 ico-img" [inlineSVG]="'assets/image/icons/SeminarDark.svg'">
+                            </div>
+                            <div class="ico-text">
+                                {{'Seminar'|translate}}
+                                <div class="sub-text">
+                                    {{'SectionDescriptionSeminar' |translate}}
+                                </div>
+                            </div>
+                        </div>
+                        <nz-progress nzStrokeLinecap="round"
+                                     [nzPercent]="(this.profileEmpty['seminar']
+                                      && profileStatistic['seminar'][selectedMonth]['avg']) ? profileStatistic['seminar'][selectedMonth]['avg'] : 0"
+                                     nzStrokeColor="#3D3DD8"
+                                     nzStrokeWidth="12"
+                        ></nz-progress>
+                    </div>
+              
+<!--                    <div class="rating col-12 col-md-6" *ngIf="isEduWT">-->
+<!--                        <div class="mb-3 icon d-flex">-->
+<!--                            <div class="mr-3 ico-img">-->
+<!--                                <img [src]="'assets/image/icons/eduway.svg'"  alt=""/>-->
+<!--                            </div>-->
+<!--                            <div class="ico-text">-->
+<!--                                {{'Eduway'|translate}}-->
+<!--                                <div class="sub-text">-->
+<!--                                    {{'SectionDescriptionEduway' |translate}}-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <nz-progress nzStrokeLinecap="round"-->
+<!--                                     [nzPercent]="(this.profileEmpty['eduway']-->
+<!--                                      && profileStatistic['eduway'][selectedMonth]['avg']) ? profileStatistic['eduway'][selectedMonth]['avg'] : 0"-->
+<!--                                     nzStrokeColor="#3D3DD8"-->
+<!--                                     nzStrokeWidth="12"-->
+<!--                        ></nz-progress>-->
+<!--                    </div>-->
+              
+                    <div class="rating col-12 col-md-6" *ngIf="isPractice">
+                        <div class="mb-3 icon d-flex">
+                            <div class="mr-3 ico-img" [inlineSVG]="'assets/image/icons/WorkDark.svg'" >
+                            </div>
+                            <div class="ico-text">
+                                {{'Experience'|translate}}
+                                <div class="sub-text">
+                                    {{'SectionDescriptionExperience' |translate}}
+                                </div>
+                            </div>
+                        </div>
+                        <nz-progress nzStrokeLinecap="round"
+                                     [nzPercent]="(this.profileEmpty['practice']
+                                      && profileStatistic['practice'][selectedMonth]['avg']) ? profileStatistic['practice'][selectedMonth]['avg'] : 0"
+                                     nzStrokeColor="#3D3DD8"
+                                     nzStrokeWidth="12"
+                        ></nz-progress>
+                    </div>
+
+                    <div class="rating col-12 col-md-6">
+                        <div class="mb-3 icon d-flex">
+                            <div class="mr-3 ico-img" [inlineSVG]="'assets/image/icons/MPassportDark.svg'">
+                            </div>
+                            <div class="ico-text">
+                                {{'M Passport'|translate}}
+                                <div class="sub-text">
+                                    {{'SectionDescriptionPassport' |translate}}
+                                </div>
+                            </div>
+                        </div>
+                        <nz-progress nzStrokeLinecap="round"
+                                     [nzPercent]="(this.profileEmpty['passport']
+                                      && profileStatistic['passport'][selectedMonth]['avg']) ? profileStatistic['passport'][selectedMonth]['avg'] : 0"
+                                     nzStrokeColor="#3D3DD8"
+                                     nzStrokeWidth="12"
+                        ></nz-progress>
+                    </div>
+
+                    <div class="rating col-12 col-md-6" *ngIf="isEduWT">
+                        <div class="mb-3 icon d-flex">
+                            <div class="mr-3 ico-img" [inlineSVG]="'assets/image/icons/EdutestDark.svg'">
+                            </div>
+                            <div class="ico-text">
+                                {{'Edutest'|translate}}
+                                <div class="sub-text">
+                                    {{'SectionDescriptionEdutest' |translate}}
+                                </div>
+                            </div>
+                        </div>
+                        <nz-progress nzStrokeLinecap="round"
+                                     [nzPercent]="(this.profileEmpty['edutest']
+                                      && profileStatistic['edutest'][selectedMonth]['avg']) ? profileStatistic['edutest'][selectedMonth]['avg'] : 0"
+                                     nzStrokeColor="#3D3DD8"
+                                     nzStrokeWidth="12"
+                        ></nz-progress>
+                    </div>
+
+                    <div class="rating col-12 col-md-6">
+                        <div class="mb-3 icon d-flex">
+                            <div class="mr-3 ico-img" [inlineSVG]="'assets/image/icons/LinguaDark.svg'">
+                            </div>
+                            <div class="ico-text">
+                                {{'English'|translate}}
+                                <div class="sub-text">
+                                    {{'SectionDescriptionEnglish' |translate}}
+                                </div>
+                            </div>
+                        </div>
+                        <nz-progress nzStrokeLinecap="round"
+                                     [nzPercent]="(this.profileEmpty['lingua']
+                                      && profileStatistic['lingua'][selectedMonth]['avg']) ? profileStatistic['lingua'][selectedMonth]['avg'] : 0"
+                                     nzStrokeColor="#3D3DD8"
+                                     nzStrokeWidth="12"
+                        ></nz-progress>
+                    </div>
+            </div>
+
+            <div class="row justify-content-center" *ngIf="selectedTypeChart == 'spyder'">
+                <apx-chart
+                        [series]="chartData.series"
+                        [chart]="chartOptions.chart"
+                        [xaxis]="chartData.xaxis"
+                        [yaxis]="chartOptions.yaxis"
+                        [title]="chartOptions.title"
+                ></apx-chart>
+            </div>
+        </tc-card>
+
+        <tc-card>
+            <div class="d-flex justify-content-between">
+                <h4 class="mt-0">{{'Documents'|translate}}</h4>
+                <tc-select [(ngModel)]="selectedSertificate" [options]="sertificate"></tc-select>
+            </div>
+
+            <nz-carousel [nzEffect]="'fade'">
+                <div nz-carousel-content *ngFor="let index of array">
+                    <h3>{{ index }}</h3>
+                </div>
+            </nz-carousel>
+
+        </tc-card>
+
+    </div>
+</div>
+
+<ng-container>
+    <ng-template #modalBody>
+        <p>{{'Are you sure you want to delete user?' | translate}}</p>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="actions" [ngStyle]="{textAlign: 'right', display: 'block'}">
+            <button tc-button [view]="'default'" (click)="closeModal()">{{'Cancel' | translate}}</button>
+            <button tc-button [view]="'error'" (click)="removeRecord()">{{'Delete' | translate}}</button>
+        </div>
+    </ng-template>
+</ng-container>
+
+<ng-container>
+    <ng-template #modalBodyArchive>
+        <p>{{'Are you sure you want to add User?' | translate}}</p>
+    </ng-template>
+
+    <ng-template #modalFooterArchive>
+        <div class="actions" [ngStyle]="{textAlign: 'right', display: 'block'}">
+            <button tc-button [view]="'default'" (click)="closeModal()">{{'Cancel' | translate}}</button>
+            <button tc-button [view]="'info'" (click)="addFromArchive()">{{'Unarchive' | translate}}</button>
+        </div>
+    </ng-template>
+</ng-container>
+
+<style>
+    .arsensio{
+        fill: #3D3DD8;
+    }
+</style>

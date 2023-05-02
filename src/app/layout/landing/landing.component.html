@@ -1,0 +1,36 @@
+<div class="app-container" [ngClass]="{ 'boxed': appSettings.boxed }" *ngIf="appSettings">
+  <!-- Horizontal navbar -->
+  <navbar
+          class="horizontal-navbar"
+          [boxed]="appSettings.boxed"
+          [tcBgColor]="appSettings.topbarBg"
+          [tcColor]="appSettings.topbarColor"
+          [minHeight]="'4.28571429rem'"
+  >
+    <img src="{{ logo }}" alt="{{ 'logo' }}"  height="50px" class="logo-img"/>
+
+    <div class="d-flex align-middle">
+      <p class="header">Проектінің мақсаты</p>
+      <p class="header">Платформаға шолу</p>
+      <p class="header">Қолжетімді курстар</p>
+      <p class="header">Контакті</p>
+    </div>
+
+    <actions></actions>
+
+    <navbar-skeleton [type]="'horizontal'" [withLogo]="false" [loaded]="loaded"></navbar-skeleton>
+
+  </navbar>
+  <!-- end Horizontal navbar -->
+  <router-outlet></router-outlet>
+
+<!--  <main class="main-content" [ngClass]="{ 'loaded': pageData?.loaded }">-->
+<!--    <div class="main-content-wrap">-->
+<!--    </div>-->
+<!--  </main>-->
+
+  <footer [boxed]="appSettings.boxed" [pageData]="pageData" [loaded]="loaded"></footer>
+</div>
+
+
+

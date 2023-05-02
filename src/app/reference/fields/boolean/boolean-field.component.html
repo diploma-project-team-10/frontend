@@ -1,0 +1,46 @@
+<tc-form-group *ngIf="_valueField && type === 'edit' && form" [formGroup]="form" [ngClass]="{'mb-0' : styleType === 'no-label'}">
+  <div class="row align-items-center">
+    <div class="col-12 col-md-3" *ngIf="styleType === 'standard'">
+      <tc-form-label class="mb-md-0" *ngIf="!isConfig">{{ _valueField.title|translate }} <span class="error" *ngIf="_valueField.isRequired">*</span></tc-form-label>
+      <tc-form-label class="mb-md-0" *ngIf="isConfig">{{'Default Vaule'|translate}} <span class="error" *ngIf="_valueField.isRequired">*</span></tc-form-label>
+    </div>
+    <div class="col-12" [ngClass]="{'col-md-9' : styleType === 'standard'}">
+      <tc-form-label *ngIf="styleType != 'standard' && styleType != 'no-label'">{{ _valueField.title|translate }} <span class="error" *ngIf="_valueField.isRequired">*</span></tc-form-label>
+      <tc-radio id="default-value-{{_valueField.id}}"
+                *ngIf="!isSwitcher"
+                [formControlName]="_valueField.id"
+                [direction]="'horizontal'"
+                [(ngModel)]="value"
+                [value]="value"
+                (focusout)="focused()">
+        <tc-radio-option class="mb-2 color-main" [value]="true">{{'Yes'|translate}}</tc-radio-option>
+        <tc-radio-option class="mb-2 color-main" [value]="false">{{'No'|translate}}</tc-radio-option>
+      </tc-radio>
+      <tc-switcher
+              id="default-value-{{_valueField.id}}-switcher"
+              *ngIf="isSwitcher"
+              [formControlName]="_valueField.id"
+              [(ngModel)]="value"
+              [value]="value"
+              (focusout)="focused()"
+      >
+      </tc-switcher>
+    </div>
+  </div>
+</tc-form-group>
+
+<div *ngIf="_valueField && type != 'edit' && innerValue" [ngSwitch]="styleType">
+  <span *ngSwitchCase="'single'">
+      {{ value.toString() | translate }}
+  </span>
+  <tc-form-group *ngSwitchDefault>
+    <div class="row align-items-center">
+      <div class="col-12 col-md-3">
+        <tc-form-label class="mb-md-0 label-show">{{ _valueField.title|translate }}:</tc-form-label>
+      </div>
+      <div class="col-12 col-md-9">
+        {{ value.toString() | translate }}
+      </div>
+    </div>
+  </tc-form-group>
+</div>

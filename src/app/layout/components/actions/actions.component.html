@@ -1,0 +1,61 @@
+<tc-dropdown class="item">
+  <tc-dropdown-button>
+    <div class="d-flex align-items-center">
+      <img [src]="language.img" [ngStyle]="{height: '20px'}" class="mr-2" />
+      <span class="mr-1">{{ language.title }}</span>
+      <i class="icofont-simple-down"></i>
+    </div>
+  </tc-dropdown-button>
+
+  <tc-dropdown-content [align]="'right'" [animation]="'fadeInUp'" [offset]="[10, 0]" [width]="180">
+    <ul class="list">
+      <li class="px-2 item" *ngFor="let item of languages; let index = index;">
+        <a (click)="setLanguage(item.value)" class="item-link align-items-center item-content">
+          <img [src]="item.img" [ngStyle]="{height: '20px'}" class="mr-2" />
+          <span>{{ item.title }}</span>
+        </a>
+      </li>
+    </ul>
+  </tc-dropdown-content>
+</tc-dropdown>
+
+<tc-dropdown *ngIf="hasUser" class="item" [close]="closeDropdown">
+  <tc-dropdown-button>
+    <div class="d-flex align-items-center">
+      <tc-avatar [src]="userImage | secureFile | async" [size]="32" class="mr-1"></tc-avatar>
+      <i class="icofont-simple-down"></i>
+    </div>
+  </tc-dropdown-button>
+
+  <tc-dropdown-content [align]="'right'" [animation]="'fadeInUp'" [offset]="[10, 0]" [width]="180">
+    <ul class="list">
+      <li class="px-2 item">
+        <a href="#" (click)="goTo($event, 'user-profile')" class="item-link align-items-center item-content">
+          {{'My account'|translate}}
+        </a>
+      </li>
+
+      <li class="px-2 item" *ngIf="isAdmin">
+        <a href="#" (click)="goTo($event, 'profile', '../vertical/create')" class="item-link align-items-center item-content">
+          {{'Add account' |translate}}
+        </a>
+      </li>
+
+      <li class="px-2 item">
+        <a href="#" (click)="goTo($event, 'edit-account')" class="item-link align-items-center item-content">
+          {{'Reset Password'|translate}}
+        </a>
+      </li>
+
+      <li class="divider m-0 p-0"></li>
+
+      <li class="px-2 item">
+        <a href="#" (click)="goTo($event, 'sign-in', '../public/')" class="item-link align-items-center item-content">
+          {{'Log Out'|translate}}
+          <span class="icon icofont-logout log-out-icon p-1 mr-0"></span>
+        </a>
+      </li>
+    </ul>
+  </tc-dropdown-content>
+</tc-dropdown>
+<button tc-button [view]="'info'" *ngIf="!hasUser" class="item" (click)="goTo($event, 'sign-in', '../public/')">{{'Log In'|translate}}</button>

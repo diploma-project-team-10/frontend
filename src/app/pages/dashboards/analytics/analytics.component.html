@@ -1,0 +1,40 @@
+<tc-card *ngFor="let type of types">
+    <div class="d-flex" style="justify-content: space-between;">
+        <div class="d-flex">
+            <i *ngIf="type.infoVisible"
+               class="icofont-exclamation-circle
+                        information"
+               nz-dropdown
+               [nzDropdownMenu]="menu"
+               [nzPlacement]="'bottomLeft'"
+            ></i>
+            <h5 class="mt-0">{{type.title|translate}}</h5>
+        </div>
+
+        <nz-dropdown-menu #menu>
+            <tc-card class="info-dropdown">
+                {{type.info|translate}}
+            </tc-card>
+        </nz-dropdown-menu>
+        <div class="d-flex filter-block">
+            <tc-select class="mr-3" [(ngModel)]="avg[type.key].filter.semester" [options]="semester" [allowClear]="true"
+                       placeholder="{{'Semester'|translate}}"></tc-select>
+            <tc-select class="mr-3" [(ngModel)]="avg[type.key].filter.mentors" [options]="mentors" [multiple]="true"
+                       [allowClear]="true" placeholder="{{'AllMentors'|translate}}"></tc-select>
+            <tc-select class="mr-3" [(ngModel)]="avg[type.key].filter.city" [options]="city" [allowClear]="true"
+                       [multiple]="true" [filter]="city.length > 6" placeholder="{{'AllCities'|translate}}"></tc-select>
+            <tc-select class="mr-3" [(ngModel)]="avg[type.key].filter.gender" [options]="gender" [allowClear]="true"
+                       placeholder="{{'Gender'|translate}}"></tc-select>
+            <button tc-button [view]="'info'" [load]="avg[type.key].filter.loading" (click)="applyAvgRating(type.key)">{{'Apply' |translate}}</button>
+        </div>
+    </div>
+    <apx-chart
+            [series]="avg[type.key].series"
+            [chart]="avgRating.chart"
+            [xaxis]="avg[type.key].xaxis"
+            [dataLabels]="avgRating.dataLabels"
+            [grid]="avgRating.grid"
+            [stroke]="avgRating.stroke"
+            [title]="avgRating.title"
+    ></apx-chart>
+</tc-card>

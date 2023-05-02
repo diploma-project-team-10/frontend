@@ -1,0 +1,48 @@
+# This is a basic workflow to help you get started with Actions
+
+name: LMS Rebuilding
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ release-beta ]
+#   pull_request:
+#     branches: [ release-beta ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    name: Deploy Angular App
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14 LTS
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          
+      - name: Install NPM Modules
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
+        
+      - name: Compress and Copy New Files to server
+        run : |
+              mkdir build
+              cd dist/
+              tar -czvf ../build/angular.tar.gz ninet/
+              cd ../
+
+      - uses: BetaHuhn/do-spaces-action@v2
+        with:
+          access_key: ${{ secrets.ACCESS_KEY}}
+          secret_key: ${{ secrets.SECRET_KEY }}
+          space_name: ${{ secrets.SPACE_NAME }}
+          space_region: ${{ secrets.SPACE_REGION }}
+          source: build/angular.tar.gz
+          out_dir: release-beta
+          cdn_domain: ${{ secrets.CDN_DOMAIN }}
+          permission: private

@@ -1,0 +1,32 @@
+<ul class="example-list" cdkDropList (cdkDropListDropped)="drop($event)">
+
+    <li *ngFor="let item of data; let index = index;" cdkDrag  >
+      <div class="d-flex mb-2">
+        <button tc-button (click)="toggle(index)" [afterIcon]="iconString" [view]="'info'" [square]="true" class="mr-2"></button>
+        <tc-input [(ngModel)]="item.title"  (ngModelChange)="saveTopic(item, index)" class="mr-2" [placeholder]="'Topic title'"></tc-input>
+        <button tc-button (click)="openModal(modalBody, 'Modal title', modalFooter, { closeButton: true, overlayClose: true }, index)" [afterIcon]="'icofont-close'" [view]="'error'" [square]="true" class="mr-2"></button>
+      </div>
+
+      <topic-list-item *ngIf="item.hidden == false" [data]="item.children" [program]="item['id']"></topic-list-item>
+    </li>
+    <li>
+      <div class="d-flex mb-2">
+        <tc-input [(ngModel)]="newTopic" class="mr-2" [placeholder]="'Add New Topic'"></tc-input>
+        <button tc-button [afterIcon]="'icofont-save'" [view]="'info'" [square]="true" *ngIf="newTopic" (click)="addTopic()" class="mr-2"></button>
+      </div>
+    </li>
+</ul>
+
+
+<ng-container>
+  <ng-template #modalBody>
+    <p>{{'Are you sure ?'|translate}}</p>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions" [ngStyle]="{textAlign: 'right', display: 'block'}">
+      <button tc-button [view]="'error'" (click)="closeModal()">Close</button>
+      <button tc-button [view]="'success'" (click)="removeTopic(index)">Submit</button>
+    </div>
+  </ng-template>
+</ng-container>

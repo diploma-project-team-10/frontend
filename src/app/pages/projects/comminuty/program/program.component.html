@@ -1,0 +1,58 @@
+<tc-card>
+    <button tc-button [view]="'error'" class="delete" *ngIf="!isNew" [disabled]="!exists && !isNew"
+            (click)="openModalRemove(modalBody, '', modalFooter, { closeButton: true, overlayClose: true })" >{{'Delete'|translate}}</button>
+    <nz-tabset>
+        <nz-tab [nzTitle]="'Direction'|translate">
+            <div class="col-12 col-md-7 border">
+                <div class="column">
+                    <p class="mb-25 mt-0 mr-1 role-pg" >{{'Upload a file in png format with a maximum of 5 megabytes' | translate}}</p>
+                </div>
+                <div class="column">
+                    <passport-img [imgUrl]="imgUrl" (changeImgUrl)="imgUrl=$event" ></passport-img>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-7 ">
+                <tc-form-label class="label">{{ 'Passport Name'|translate }}</tc-form-label>
+                <tc-input id="default-value-edit-{{'passport_name'}}"
+                          [(ngModel)]="passport['title'] ? passport['title'] : title"
+                          [borderColor]="'#8E919B'"
+                          [bgColor]="'#FFFFFF'"
+                          [placeholder]="'Passport Name'"
+                          [maxlength]="100"
+                >
+                </tc-input>
+            </div>
+            <div class="line"></div>
+            <footer class="float-right">
+                <button type="button" tc-button class="cancel mr-3" [outline]="true"
+                        [tcBorderColor]="'transparent'"
+                        [view]="'br-lock'" [tcColor]="'#10142D'"
+                        [routerLink]="['/vertical/passports/passport/list']">{{'Cancel'|translate}}</button>
+                <button tc-button class="save" [disabled]="!exists && !isNew" [load]="loading" (click)="savePassport()">{{'Save'|translate}}</button>
+            </footer>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'Topics'|translate" *ngIf="!isNew">
+            <add-topic [program]="passport['id']"></add-topic>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'Questions'|translate" *ngIf="!isNew">
+            <community-problem-list>
+            </community-problem-list>
+        </nz-tab>
+    </nz-tabset>
+</tc-card>
+
+<ng-container>
+    <ng-template #modalBody>
+        <p>{{'Are you sure you want to delete' | translate}}?</p>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="actions" [ngStyle]="{textAlign: 'right', display: 'block'}">
+            <button tc-button [view]="'default'" (click)="closeModal()">{{'Cancel'|translate}}</button>
+            <button tc-button [view]="'error'" [disabled]="!exists && !isNew" (click)="deletePassport()">{{'Delete'|translate}}</button>
+        </div>
+    </ng-template>
+</ng-container>

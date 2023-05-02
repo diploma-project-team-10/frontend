@@ -1,0 +1,20 @@
+:host {
+  .label-show {
+    font-weight: 700;
+  }
+  .error-text {
+    text-align: right;
+    color: #ed253d;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  error-color {
+    color: #ed253d;
+  }
+}
+
+::ng-deep {
+  .tc-radio-horizontal > tc-radio-option {
+    margin-bottom: 0 !important;
+  }
+}

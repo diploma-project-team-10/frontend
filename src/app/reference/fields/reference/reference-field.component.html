@@ -1,0 +1,89 @@
+<tc-form-group *ngIf="_valueField && type === 'edit' && form" [formGroup]="form" [ngClass]="{'mb-0' : styleType === 'no-label'}">
+  <div class="row align-items-center">
+    <div class="col-12 col-md-3" *ngIf="styleType === 'standard'">
+      <tc-form-label class="mb-md-0" *ngIf="!isConfig">{{ _valueField.title|translate }} <span class="error" *ngIf="_valueField.isRequired">*</span></tc-form-label>
+      <tc-form-label class="mb-md-0" *ngIf="isConfig">{{'Default Value'|translate}} <span class="error" *ngIf="_valueField.isRequired">*</span></tc-form-label>
+    </div>
+    <div class="col-12" [ngClass]="{'col-md-9' : styleType === 'standard'}">
+      <tc-form-label *ngIf="styleType != 'standard' && styleType != 'no-label'">{{ _valueField.title|translate }} <span class="error" *ngIf="_valueField.isRequired">*</span></tc-form-label>
+      <div style="position: relative;">
+        <tc-autocomplete-mds
+          [data]="referenceValueAuto"
+          [key]="'value'"
+          [loading]="loadingRef"
+          [(ngModel)]="refDefaultValue"
+          [ngModelOptions]="{standalone: true}"
+          (keyup)="changeDefaultAuto($event)"
+          (optionSelected)="changeDefaultAutoSelected($event)"
+          [placeholder]="'Default Value'|translate"></tc-autocomplete-mds>
+        <i class="tc-icon-wrap ref-btn" [ngClass]="{'icofont-users-alt-5' : isStructure, 'icofont-book' : !isStructure}"
+           (click)="openModal(
+                modalBody, '',
+                modalFooter,
+                { closeButton: true, overlayClose: true, width: 'auto', height: 'auto' }
+           )"></i>
+      </div>
+      <div class="mt-2"
+           cdkDropList
+           [cdkDropListData]="value"
+           (cdkDropListDropped)="onDrop($event)">
+        <div class="ref-values" *ngFor="let item of value; let index = index;" cdkDrag>
+          <div class="ref-text">
+            <i class="icofont-drag tc-icon-wrap mr-2"></i>
+            <span [innerHTML]="item.value"></span>
+          </div>
+          <button [type]="'button'">
+            <i class="icofont-close" (click)="removeItem(index)"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</tc-form-group>
+<div *ngIf="_valueField && type != 'edit'" [ngSwitch]="styleType">
+  <div  *ngSwitchCase="'single'" [innerHTML]="value"></div>
+
+  <tc-form-group *ngSwitchDefault>
+    <div class="row align-items-center">
+      <div class="col-12 col-md-3">
+        <tc-form-label class="mb-md-0 label-show">{{ _valueField.title|translate }}:</tc-form-label>
+      </div>
+      <div class="col-12 col-md-9">
+        <span [innerHTML]="value" *ngIf="!isStructure"></span>
+        <div *ngIf="isStructure">
+          <tc-badge *ngFor="let item of value"
+                    [outline]="false"
+                    [view]="'info'"
+                    class="mr-2 mb-2 structure-user"
+          >
+            <i class="icofont-ui-user mr-2"></i>
+            <span [innerHTML]="item['value']"></span>
+          </tc-badge>
+        </div>
+      </div>
+    </div>
+  </tc-form-group>
+</div>
+
+
+<ng-container>
+  <ng-template #modalBody>
+    <tc-mini-folder-ref
+            [referenceTitle]="referenceSelectedTitle"
+            [records]="isConfig ? _valueField.defaultValue : value"
+            [isStructure]="isStructure"
+            [reference]="_valueField"
+            (selectedItem)="selectedDefaultValue($event)"
+    ></tc-mini-folder-ref>
+  </ng-template>
+
+  <ng-template #modalFooter class="mini-folder-footer">
+    <div class="actions" [ngStyle]="{textAlign: 'right', display: 'block'}">
+      <button tc-button [size]="'sm'" [view]="'error'" (click)="closeModal()">{{'Close'|translate}}</button>
+      <button tc-button [size]="'sm'" [view]="'success'" (click)="selectRecordRef()">{{'Submit'|translate}}</button>
+    </div>
+  </ng-template>
+</ng-container>
+
+<ng-template #userDetail>
+</ng-template>
