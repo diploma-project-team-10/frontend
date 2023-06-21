@@ -38,7 +38,7 @@ const CHILD_ROUTES: Routes = [
   { path: 'edit-account', component: PageEditAccountComponent, canActivate: [AuthGuard] },
   { path: 'edit-account/:id', component: PageEditAccountComponent, canActivate: [AuthGuard] },
   { path: 'widgets', component: PageWidgetsComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
-  { path: 'subjects', component: ProgramListComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'student'] } },
+  { path: 'subjects', component: ProgramListComponent, canActivate: [AuthGuard] },
   {
     path: 'courses',
     children: COURSES_ROUTES
