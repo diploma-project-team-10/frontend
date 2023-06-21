@@ -25,9 +25,7 @@ import { SettingsComponent } from './components/settings';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReferenceModule} from '../reference/reference.module';
 import {InlineSVGModule} from 'ng-inline-svg';
-import {ProgramListComponent} from './programs';
 import {PageLandingComponent} from './landing';
-import {LandingSectionComponent} from './landing/section';
 
 @NgModule({
     imports: [
@@ -58,9 +56,7 @@ import {LandingSectionComponent} from './landing/section';
     NavbarSkeletonComponent,
     SettingsComponent,
     ErrorLayoutComponent,
-      LandingSectionComponent,
-      ProgramListComponent,
-      PageLandingComponent
+    PageLandingComponent,
   ],
     exports: [
         LoginFormComponent,

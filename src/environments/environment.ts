@@ -17,13 +17,11 @@ const firebaseConfig = {
 export const environment = {
   production: false,
   appSettings: SETTINGS,
-  apiUrl: 'http://164.90.188.126:9898',
+  apiUrl: 'http://localhost:9227',
   defaultLanguage: 'kz',
   appMenu: 'assets/data/menu.json',
-  // logo: 'assets/img/mdsg.png',
-  // logoSign: 'assets/img/mdsg-n.svg',
-  logo: 'assets/img/talaptan.png',
-  logoSign: 'assets/img/talaptan-logo.png',
+  logo: 'assets/img/talaptan-logo.svg',
+  logoSign: 'assets/img/talaptan-logo.svg',
   version: npm.version,
   firebaseConfig: firebaseConfig,
 };

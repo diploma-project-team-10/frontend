@@ -23,21 +23,11 @@ import * as PageActions from '../../../../store/actions/page.actions';
 })
 export class QuizComponent extends BasePageComponent implements OnInit {
 
-    id: string;
+    programId = '';
     successCode = '';
     errorCode = '';
     loading = false;
     langType = 'kz';
-    tinyMceSettings = {
-        base_url: '/tinymce',
-        suffix: '.min',
-        plugins: 'link lists',
-        skin: 'CUSTOM',
-        content_css: 'CUSTOM',
-        mode: 'none',
-        statusbar: false,
-        toolbar: 'formatselect | bold italic underline | bullist numlist | undo redo',
-    };
 
     quiz: GenerateQuiz[] = [
         {
@@ -63,8 +53,6 @@ export class QuizComponent extends BasePageComponent implements OnInit {
     };
 
     program: string;
-    programs: Program[];
-    currentProgram: string;
 
     userAnswer: any = null;
     leftPosition: number = null;
@@ -80,6 +68,7 @@ export class QuizComponent extends BasePageComponent implements OnInit {
         isAnswer: true,
         orderNum: 0
     };
+    started = false;
 
     constructor(store: Store<IAppState>, httpSv: HttpService,
                 private formBuilder: FormBuilder,
@@ -99,7 +88,9 @@ export class QuizComponent extends BasePageComponent implements OnInit {
 
     ngOnInit(): void {
         super.ngOnInit();
-        this.getPrograms();
+        this.programId = this.route.snapshot.params['programId'];
+        // console.log(this.programId);
+        this.selectProgram();
     }
 
     initTable(): void {
@@ -109,27 +100,15 @@ export class QuizComponent extends BasePageComponent implements OnInit {
         );
     }
 
-    getPrograms() {
-        this.initTable();
-        this.loading = true;
-        return this.http.get<Program[]>(`${environment.apiUrl}/api/project/community/programs/list`)
-            .pipe(map(data => {
-                return data;
-            }))
-            .subscribe(data => {
-                this.programs = data;
-            });
-    }
-
     selectProgram() {
-        this.program = this.currentProgram;
-        this.http.get<Status>(`${environment.apiUrl}/api/project/community/quiz/start/${this.program}`)
+        this.http.get<Status>(`${environment.apiUrl}/api/project/community/quiz/start/${this.programId}`)
             .pipe(map(data => {
                 return data;
             }))
             .subscribe(data => {
                 if (data.status === 1) {
-                    this.id = data.value;
+                    this.programId = data.value;
+                    this.started = true;
                     this.nextQuestion();
                     this.toastr.success(data.message, 'Success', {closeButton: true});
                 } else {
@@ -141,7 +120,7 @@ export class QuizComponent extends BasePageComponent implements OnInit {
     nextQuestion() {
         // this.question.answerVariants = JSON.stringify(this.question.variants);
         this.userAnswer = {
-            id: this.id,
+            id: this.programId,
             leftPosition: this.leftPosition,
             rightPosition: this.rightPosition,
             question: this.question,
@@ -149,7 +128,7 @@ export class QuizComponent extends BasePageComponent implements OnInit {
         };
         this.setAnswer(this.userAnswer);
 
-        return this.http.post<Status>(`${environment.apiUrl}/api/project/community/quiz/individual`, this.userAnswer)
+        return this.http.post<Status>(`${environment.apiUrl}/api/project/community/quiz/getQuestion`, this.userAnswer)
             .subscribe({
                 next: data => {
                     if (data.status === 1) {

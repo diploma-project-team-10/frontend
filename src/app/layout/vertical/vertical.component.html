@@ -35,11 +35,14 @@
       (click)="toggleSidebar(false)"
     ></button>
 
-    <logo style="margin-top: 0.28571429rem"
-      [src]="logo"
-      [tcBgColor]="appSettings.topbarBg"
-      [height]="65"
-    ></logo>
+    <div style="width: 100%; justify-content: center">
+      <logo style="width: 70%; margin-top: 0.5rem; margin: auto"
+            [src]="logo"
+            [tcBgColor]="appSettings.topbarBg"
+            [height]="50"
+            [routerLink]="['']"
+      ></logo>
+    </div>
 
     <app-menu class="menu" [src]="appMenu"></app-menu>
 

@@ -114,8 +114,8 @@ export class ProgramComponent extends BasePageComponent implements OnInit, OnDes
         } else {
             const body = {
                 id: this.passport['id'] ? this.passport['id'] : '',
-                image: this.imgUrl ? this.imgUrl : this.passport['image'],
-                title: this.passport['title'] ? this.passport['title'] : this.title
+                image: this.imgUrl,
+                title: this.title
             };
             const result = await this.postRequest(`${environment.apiUrl}/api/project/community/program/save`, body);
             if (result.status === 1) {

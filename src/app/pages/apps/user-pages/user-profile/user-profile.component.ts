@@ -15,7 +15,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Content} from '../../../../ui/interfaces/modal';
 import {TCModalService} from '../../../../ui/services/modal/modal.service';
 import {ChartComponent} from 'ng-apexcharts';
-import {ChartOptions} from '../../../../interfaces/dashboard/dashboard';
+import {ChartLineOptions, ChartOptions} from '../../../../interfaces/dashboard/dashboard';
 import {AuthenticationService} from '../../../../user/_services/authentication.service';
 
 @Component({
@@ -113,6 +113,8 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
   isEduWT = false;
   isPractice = false;
   switched = false;
+  isStudent = false;
+  public avgRating: Partial<ChartLineOptions>;
 
   constructor(
     store: Store<IAppState>,
@@ -150,6 +152,31 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
         tickAmount: 5
       }
     };
+    this.avgRating = {
+      chart: {
+        height: 350,
+        type: 'line',
+        zoom: {
+          enabled: false
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      title: {
+        align: 'left'
+      },
+      grid: {
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        }
+      },
+    };
+
     this.defaultAvatar = 'assets/content/anonymous-400.jpg';
     this.currentAvatar = this.defaultAvatar;
     this.changes = false;
@@ -210,6 +237,7 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
             async data => {
               if (Object.keys(data).length) {
                 this.profile = data;
+                this.isStudent =
                 this.isEduWT = (this.profile.course === '1' || this.profile.course === '2' || this.profile.course === null);
                 this.isPractice = (this.profile.course === '3' || this.profile.course === '4' || this.profile.course === null);
                 if (this.isEduWT) {

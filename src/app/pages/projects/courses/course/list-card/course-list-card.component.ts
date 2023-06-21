@@ -75,7 +75,7 @@ export class CourseListCardComponent extends TCFolderComponent implements OnInit
     this.loading = true;
     this.initTable();
 
-    const url = `${environment.apiUrl}/api/project/course/list/client/current` +
+    const url = `${environment.apiUrl}/api/project/course/list/client` +
         `?page=${this.pageIndex}&size=${this.pageSize}${this.prepareParamsFields()}&customised=true&headerEnable=true`;
     return this.http.get<IPageContent>(url)
         .pipe(map(data => {

@@ -45,12 +45,19 @@
       "pathToSvg": "assets/menuSvg/Seminar.svg",
       "pathToDarkSvg": "assets/image/icons/SeminarDark.svg"
     },
-    "routing": "community/program/list"
+    "routing": "community/program/list",
+    "access": ["admin"]
   },
   {
-    "title": "User",
-    "groupTitle": true,
-    "access": ["admin", "chief", "mentor", "head_city"]
+    "title": "Subjects",
+    "icon": {
+      "class": "icofont-justify-left"
+    },
+    "pathToSvg": {
+      "pathToSvg": "assets/menuSvg/Seminar.svg",
+      "pathToDarkSvg": "assets/image/icons/SeminarDark.svg"
+    },
+    "routing": "subjects"
   },
   {
     "title": "News",
@@ -70,6 +77,7 @@
         "title": "Stories",
         "routing": "reference/record/section/3c10fa1e-c6aa-44e5-a3ce-465fab2d9b00/36b7d46c-a976-46d3-b67d-63d73181a69a"
       }
-    ]
+    ],
+    "access": ["admin"]
   }
 ]

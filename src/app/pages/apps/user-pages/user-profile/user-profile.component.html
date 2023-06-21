@@ -2,16 +2,6 @@
     <h3 class="mt-0">{{'User profile' | translate}}</h3>
     <div>
         <button
-                tc-button
-                style="margin-right: 10px"
-                *ngIf="(id && isAdmin && !archive) || switched"
-                (click)="switch()"
-                [view]="'info'"
-                [beforeIcon]="switched ? 'icofont-scroll-left' : 'icofont-scroll-right'"
-        >
-            {{ 'Switch' |translate }}
-        </button>
-        <button
             tc-button
             *ngIf="(!id || canEdit || isAdmin) && !archive"
             [view]="'info'"
@@ -97,13 +87,12 @@
         </div>
     </div>
 
-    <div class="col-12 col-md-8">
+    <div class="col-12 col-md-8" >
         <tc-card *ngIf="profileStatistic">
             <div class="d-flex justify-content-between">
                 <h4 class="mt-0">{{'RatingEducation'|translate}}</h4>
                 <tc-select class="mr-2" placeholder="Тип чарт" [(ngModel)]="selectedTypeChart" [options]="typeChart"></tc-select>
                 <tc-select placeholder="Ай" [(ngModel)]="selectedMonth" [options]="month" (ngModelChange)="changeMonth()"></tc-select>
-<!--                <button tc-button [(ngModel)]="switchValue">{{'Table / SpiderChat'|translate}}</button>-->
             </div>
 
             <div class="row" *ngIf="selectedTypeChart == 'list'">
@@ -163,26 +152,6 @@
                                      nzStrokeWidth="12"
                         ></nz-progress>
                     </div>
-              
-<!--                    <div class="rating col-12 col-md-6" *ngIf="isEduWT">-->
-<!--                        <div class="mb-3 icon d-flex">-->
-<!--                            <div class="mr-3 ico-img">-->
-<!--                                <img [src]="'assets/image/icons/eduway.svg'"  alt=""/>-->
-<!--                            </div>-->
-<!--                            <div class="ico-text">-->
-<!--                                {{'Eduway'|translate}}-->
-<!--                                <div class="sub-text">-->
-<!--                                    {{'SectionDescriptionEduway' |translate}}-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <nz-progress nzStrokeLinecap="round"-->
-<!--                                     [nzPercent]="(this.profileEmpty['eduway']-->
-<!--                                      && profileStatistic['eduway'][selectedMonth]['avg']) ? profileStatistic['eduway'][selectedMonth]['avg'] : 0"-->
-<!--                                     nzStrokeColor="#3D3DD8"-->
-<!--                                     nzStrokeWidth="12"-->
-<!--                        ></nz-progress>-->
-<!--                    </div>-->
               
                     <div class="rating col-12 col-md-6" *ngIf="isPractice">
                         <div class="mb-3 icon d-flex">
@@ -260,32 +229,11 @@
                         ></nz-progress>
                     </div>
             </div>
-
-            <div class="row justify-content-center" *ngIf="selectedTypeChart == 'spyder'">
-                <apx-chart
-                        [series]="chartData.series"
-                        [chart]="chartOptions.chart"
-                        [xaxis]="chartData.xaxis"
-                        [yaxis]="chartOptions.yaxis"
-                        [title]="chartOptions.title"
-                ></apx-chart>
-            </div>
         </tc-card>
 
-        <tc-card>
-            <div class="d-flex justify-content-between">
-                <h4 class="mt-0">{{'Documents'|translate}}</h4>
-                <tc-select [(ngModel)]="selectedSertificate" [options]="sertificate"></tc-select>
-            </div>
-
-            <nz-carousel [nzEffect]="'fade'">
-                <div nz-carousel-content *ngFor="let index of array">
-                    <h3>{{ index }}</h3>
-                </div>
-            </nz-carousel>
-
+        <tc-card *ngIf="!isAdmin">
+            <quiz-result-list [userId]="profile['id']"></quiz-result-list>
         </tc-card>
-
     </div>
 </div>
 
@@ -315,8 +263,3 @@
     </ng-template>
 </ng-container>
 
-<style>
-    .arsensio{
-        fill: #3D3DD8;
-    }
-</style>

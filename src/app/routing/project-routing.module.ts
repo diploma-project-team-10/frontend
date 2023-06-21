@@ -113,22 +113,21 @@ export const COMMUNITY_ROUTES: Routes = [
             {path: 'edit/:id', component: ProgramComponent},
         ],
         canActivate: [AuthGuard],
-        data: {roles: ['community_admin']}
+        data: {roles: ['admin', 'community_admin']}
     },
     {
-        path: 'quiz/:id', component: QuizComponent,
+        path: 'quiz/:programId', component: QuizComponent,
         canActivate: [AuthGuard],
-        data: {roles: ['community_admin']}
+        data: { roles: ['admin', 'community_admin'] }
     },
     {
         path: 'problem',
         children: [
-            {path: 'add', component: AddProblemComponent},
-            {path: 'add/:topicId', component: AddProblemComponent},
-            {path: 'edit/:problemId', component: AddProblemComponent},
-            {path: 'edit/:problemId/:copied', component: AddProblemComponent},
+            {path: 'add/:programId', component: AddProblemComponent},
+            {path: 'edit/:programId/:problemId', component: AddProblemComponent},
+            {path: 'edit/:programId/:problemId/:copied', component: AddProblemComponent},
         ],
         canActivate: [AuthGuard],
-        data: {roles: ['community_admin']}
+        data: {roles: ['admin', 'community_admin']}
     },
 ];

@@ -32,7 +32,7 @@
 }
 
 .header {
-  align-items: center;
+  margin-bottom: 0;
   padding-left: 30px;
   font-family: "Montserrat", sans-serif;
   font-style: normal;
@@ -41,4 +41,227 @@
   line-height: 20px;
   font-feature-settings: 'salt' on, 'liga' off;
   color: #18191F;
+}
+
+
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+header {
+  padding: 0 85px;
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+  height: 70px;
+}
+
+.logo img {
+  height: 100%;
+}
+.navbar {
+  flex: 1 1 auto;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin: 25px 0;
+}
+li {
+  display: inline;
+  margin-right: 50px;
+  font-weight: 600;
+}
+li a {
+  text-decoration: none;
+  color: black;
+}
+li a:hover{
+  border-bottom: 1px solid #000;
+}
+select{
+  border: none;
+  font-size: inherit;
+  color: #646464;
+  margin: 25px 0;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+}
+
+.banner{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.banner__text{
+  width: 55%;
+  padding: 10px 115px;
+}
+.banner__title{
+  font-family: Playfair Display;
+  font-size: 70px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.banner__desc{
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+.banner__btn{
+  width: 40%;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 20px;
+  padding: 12px ;
+  border-radius: 15px;
+  background-color: #3D3DD8    ;
+  color: #fff;
+}
+.banner__img{
+  width: 45%;
+}
+.banner__img img{
+  width: 100%;
+}
+
+.videos, .gallery{
+  margin-top: 70px;
+  padding: 0 115px;
+}
+
+.videos__title, .gallery__title{
+  font-weight: 700;
+  font-size: 40px;
+  text-align: center;
+}
+.videos__title{
+  margin-bottom: 90px;
+}
+.videos__row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.video__item{
+  background: rgba(0, 0, 0, 0.74);
+  border-radius: 4px;
+  padding: 35px 65px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.video__player img{
+  width: 220px;
+  border-radius: 5px;
+}
+.video__title{
+  font-weight: 600;
+  color: #fff;
+}
+
+.gallery__title{
+  margin-bottom: 30px;
+}
+.gallery__imgs{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 65px;
+}
+.gallery__imgs img{
+  width: 90%;
+}
+.community{
+  width: 100%;
+  padding: 65px 10px;
+  background:   #3D3DD8;
+  background-size: contain;
+  color: #fff;
+  text-align: center;
+}
+.community__bigtit{
+  font-weight: 600;
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+.community__liltit{
+  /* font-weight: 600; */
+  margin-bottom: 48px;
+}
+.community__data{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.data__item{
+  width: 200px;
+}
+.num{
+  font-weight: 600;
+  font-size: 40px;
+}
+.word{
+  font-weight: 600;
+  font-size: 18px;
+}
+.contacts{
+  padding: 65px 115px;
+}
+.contacts__detail{
+  width: 100%;
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: stretch;
+}
+.contacts__title{
+  font-weight: 600;
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+.detail__img{
+  width: 50%;
+}
+.detail__img img{
+  width: 100%;
+  border-radius: 22px;
+}
+.detail__text{
+  width: 50%;
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.text>*{
+  padding-bottom: 10px;
+}
+.detail__text i{
+  color: #18408C    ;
+  font-size: 28px;
+  margin-right: 18px;
+}
+.socials{
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
 }

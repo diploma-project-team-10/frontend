@@ -15,7 +15,7 @@
             <div class="col-12 col-md-7 ">
                 <tc-form-label class="label">{{ 'Passport Name'|translate }}</tc-form-label>
                 <tc-input id="default-value-edit-{{'passport_name'}}"
-                          [(ngModel)]="passport['title'] ? passport['title'] : title"
+                          [(ngModel)]="title"
                           [borderColor]="'#8E919B'"
                           [bgColor]="'#FFFFFF'"
                           [placeholder]="'Passport Name'"
@@ -38,7 +38,7 @@
         </nz-tab>
 
         <nz-tab [nzTitle]="'Questions'|translate" *ngIf="!isNew">
-            <community-problem-list>
+            <community-problem-list [program] = "passport['id']">
             </community-problem-list>
         </nz-tab>
     </nz-tabset>

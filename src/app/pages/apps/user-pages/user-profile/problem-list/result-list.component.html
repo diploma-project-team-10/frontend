@@ -1,0 +1,31 @@
+<nz-table
+    #basicTable
+    [nzData]="result"
+    [nzShowPagination]="true"
+    [nzPageSize]="pageSize"
+    [nzTotal]="totalData"
+    [nzLoading]="loading"
+    [nzPageIndex]="pageIndex"
+    [nzFrontPagination]="false"
+    (nzPageIndexChange)="onChangePageIndex($event)"
+>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Subject</th>
+        <th nzShowSort>Result</th>
+        <th>Topics</th>
+        <th nzShowSort nzColumnKey="date">Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data; let index = index;"
+        class="mainTable">
+        <td>{{ (pageSize * (pageIndex - 1)) + index + 1}}</td>
+        <td>{{ data.title }}</td>
+        <td>{{ data.result }}</td>
+        <td>{{ data.relatedTopics ? data.relatedTopics.join('.') : '' }}</td>
+        <td>{{ data.createdAt ? data.createdAt : '' }}</td>
+    </tr>
+    </tbody>
+</nz-table>

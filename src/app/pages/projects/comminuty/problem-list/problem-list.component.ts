@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 
 import {Store} from '@ngrx/store';
@@ -23,7 +23,7 @@ import {Program, Questions, Topic} from '../../../../interfaces/services/project
 })
 export class ProblemListComponent implements OnInit {
     isNew = true;
-
+    @Input() program = '';
     referenceId = '';
 
     pageSize = 20;
@@ -33,10 +33,9 @@ export class ProblemListComponent implements OnInit {
 
     topicIds = [];
     relatedTopics = [];
-    topicList: Topic[] = [];
+    topicList: any[] = [];
     programList: Program[] = [];
     programList1 = [];
-    program = '';
 
     questions: Questions[] = [];
     children = false;
@@ -90,10 +89,10 @@ export class ProblemListComponent implements OnInit {
         body['byProgram'] = false;
         body['topics'] = this.topicIds;
         body['relatedTopics'] = this.relatedTopics;
-        body['program'] = this.program;
-        if (this.program !== '' && this.program !== null) {
-            body['byProgram'] = true;
-        }
+        // body['program'] = this.program;
+        // if (this.program !== '' && this.program !== null) {
+        //     body['byProgram'] = true;
+        // }
         // console.log(body);
         return this.http.post<IPageContent>(`${environment.apiUrl}/api/project/community/questions/list`
             + `?page=${this.pageIndex}&size=${this.pageSize}${this.prepareParamsFields()}`, body)
@@ -101,8 +100,6 @@ export class ProblemListComponent implements OnInit {
                 return data;
             }))
             .subscribe(data => {
-                // this.dataRecord = data.content.splice(1);
-                // console.log(data);
             });
     }
 
@@ -219,7 +216,10 @@ export class ProblemListComponent implements OnInit {
             }
         }
         for (let i = this.topicList.length - 1; i >= 0; i--) {
-            if (this.topicList[i].parentId != null && this.topicList[i].parentId !== '') {
+            if (this.topicList[i].parentId != null
+                && this.topicList[i].parentId !== ''
+                && this.topicList[i].parentId !== this.program
+            ) {
                 this.topicList.splice(i, 1);
             }
         }

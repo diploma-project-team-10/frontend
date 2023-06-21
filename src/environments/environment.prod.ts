@@ -13,10 +13,10 @@ const firebaseConfig = {
 export const environment = {
   production: true,
   appSettings: SETTINGS,
-  apiUrl: '/bcspc',
+  apiUrl: '/px',
   defaultLanguage: 'kz',
   appMenu: 'assets/data/menu.json',
-  logo: 'assets/img/mugalim-logo.svg',
-  logoSign: 'assets/img/mugalim-logo-white.png',
+  logo: 'assets/img/talaptan-logo.svg',
+  logoSign: 'assets/img/talaptan-logo.svg',
   firebaseConfig: firebaseConfig,
 };

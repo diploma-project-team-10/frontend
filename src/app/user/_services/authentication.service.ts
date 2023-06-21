@@ -122,6 +122,14 @@ export class AuthenticationService {
             }));
     }
 
+    register(user: any) {
+        return this.http.post<Status>(`${environment.apiUrl}/api/auth/register`, user)
+            .pipe(map(data => {
+                this.saveTokensStorage(data);
+                return data;
+            }));
+    }
+
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem(this.accessTokenSwitched);

@@ -28,6 +28,7 @@ export class AuthGuard implements CanActivate {
         if (!currentUser) {
             this.router.navigate(['/public/sign-in'], { queryParams: { returnUrl: state.url } }).then(r => {});
         }
+        console.log(route.data.roles);
         const res = await this.checkAccount(route.data.roles);
         if (res.status === 0) {
             // this.authenticationService.logout();

@@ -1,17 +1,8 @@
 <form [formGroup]="loginForm" (ngSubmit)="signUp()">
   <div class="title-block">
-    <h5 class="form-title">Sign Up</h5>
+    <h5 class="form-title">{{'Sign Up' | translate}}</h5>
     <a class="link right" [routerLink]="['/public/sign-in']">{{"Already registered" | translate}}?</a>
   </div>
-
-  <tc-form-group>
-    <tc-input [prefixIcon]="'icofont-ui-email'" [placeholder]="'Username'" formControlName="username"></tc-input>
-
-    <ng-container *ngIf="username.invalid && (username.touched || username.dirty)">
-      <span @fadeIn class="error" *ngIf="username.getError('required')">Please enter your username</span>
-      <span @fadeIn class="error" *ngIf="username.getError('username')">Please enter valid username</span>
-    </ng-container>
-  </tc-form-group>
 
   <tc-form-group>
     <tc-input [prefixIcon]="'icofont-ui-email'" [placeholder]="'First Name'" formControlName="firstName"></tc-input>
@@ -62,6 +53,6 @@
   </tc-form-group>
 
   <tc-form-group class="mt-1 d-flex justify-content-end align-items-center">
-    <button type="submit" tc-button [view]="'gradient'">Sign Up</button>
+    <button type="submit" tc-button [view]="'info'">{{'Sign Up' | translate}}</button>
   </tc-form-group>
 </form>

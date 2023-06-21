@@ -7,7 +7,7 @@
           [tcColor]="appSettings.topbarColor"
           [minHeight]="'4.28571429rem'"
   >
-    <img src="{{ logo }}" alt="{{ 'logo' }}"  height="50px" class="logo-img"/>
+    <img src="{{ logo }}" alt="{{ 'logo' }}"  width="135px" class="logo-img"/>
 
     <div class="d-flex align-middle">
       <p class="header">Проектінің мақсаты</p>
@@ -22,12 +22,112 @@
 
   </navbar>
   <!-- end Horizontal navbar -->
-  <router-outlet></router-outlet>
 
-<!--  <main class="main-content" [ngClass]="{ 'loaded': pageData?.loaded }">-->
-<!--    <div class="main-content-wrap">-->
-<!--    </div>-->
-<!--  </main>-->
+  <main class="main-content" [ngClass]="{ 'loaded': pageData?.loaded }">
+    <div class="main-content-wrap">
+      <div class="banner">
+        <div class="banner__text">
+          <div class="banner__title">
+            Талап <br />
+            Еңбек <br />
+            Терең ой
+          </div>
+          <div class="banner__desc">
+            Talaptan - мұғалімдер мен оқушыларға арналған білім платформасы. Talaptan-мен өз деңгейіңізді тексеріп, біліміңізді арттыраңыз.
+          </div>
+          <div class="banner__btn" (click)="this.router.navigate(['../public/sign-in'])">{{'Sign In' | translate}}</div>
+        </div>
+        <div class="banner__img">
+          <img src="assets/content/landing/Creative Block.png" alt="banner" />
+        </div>
+      </div>
+      <div class="videos" id="videos">
+        <div class="videos__title">Платформаға шолу</div>
+        <div class="videos__row">
+          <div class="video__item">
+            <div class="video__player">
+              <img src="./assets/content/landing/video-player.jpg" alt="" />
+            </div>
+            <div class="video__title">Қалай тест тапсырамыз</div>
+          </div>
+          <div class="video__item">
+            <div class="video__player">
+              <img src="./assets/content/landing/video-player.jpg" alt="" />
+            </div>
+            <div class="video__title">Қалай тест тапсырамыз</div>
+          </div>
+          <div class="video__item">
+            <div class="video__player">
+              <img src="./assets/content/landing/video-player.jpg" alt="" />
+            </div>
+            <div class="video__title">Қалай тест тапсырамыз</div>
+          </div>
+        </div>
+      </div>
+      <div class="gallery">
+        <div class="gallery__title">Қолжетімді курстар</div>
+        <div class="gallery__imgs">
+          <img src="./assets/content/landing/gallery.jpg" alt="gallery" />
+        </div>
+      </div>
+      <div class="community">
+        <div class="community__bigtit">Біздің қоғам</div>
+        <div class="community__liltit">
+          Бұл жолдағы біздің жетістігіміз сан ретінде көрсетілді
+        </div>
+        <div class="community__data">
+          <div class="data__item">
+            <div class="num">40</div>
+            <div class="word">менторлар</div>
+          </div>
+          <div><img src="" alt="" /></div>
+          <div class="data__item">
+            <div class="num">2000</div>
+            <div class="word">студенттер</div>
+          </div>
+          <div><img src="" alt="" /></div>
+
+          <div class="data__item">
+            <div class="num">30</div>
+            <div class="word">мамандар</div>
+          </div>
+        </div>
+      </div>
+      <div class="contacts">
+        <div class="contacts__title">Біздің контакті</div>
+        <div class="contacts__detail">
+          <div class="detail__img">
+            <img src="./assets/content/landing/map.jpg" alt="" />
+          </div>
+          <div class="detail__text">
+            <div class="text">
+              <div class="address">
+                <i class="fa-solid fa-location-dot"></i> Kaskelen.Abylai khan
+                1/1
+              </div>
+              <div class="number">
+                <i class="fa-solid fa-phone"></i> 8(888) 299 00 99
+              </div>
+              <div class="email">
+                <i class="fa-regular fa-envelope"></i> Talaptan@mail.ru
+              </div>
+            </div>
+            <div class="socials">
+              <div class="twitter">
+                <i class="fa-brands fa-twitter"></i>
+              </div>
+              <div class="facebook">
+                <i class="fa-brands fa-square-facebook"></i>
+              </div>
+              <div class="linkedin">
+                <i class="fa-brands fa-linkedin"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
   <footer [boxed]="appSettings.boxed" [pageData]="pageData" [loaded]="loaded"></footer>
 </div>

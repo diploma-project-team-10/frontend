@@ -1,4 +1,4 @@
-<img style="margin-bottom: 15px" [src]="this.imgUrl ? (apiUrl + '/api/media/file/' + imgUrl | secureFile | async) : 'assets/image/photo34.jpg'" alt="" [style.borderRadius]="'16px'">
+<img style="margin-bottom: 15px" [src]="this.imgUrl ? (apiUrl + '/api/media/file/thumb/' + imgUrl | secureFile | async) : 'assets/image/photo34.jpg'" alt="" [style.borderRadius]="'16px'">
 <nz-upload class="col-3"
            [nzAction]="postAction"
            [nzShowUploadList]="false"

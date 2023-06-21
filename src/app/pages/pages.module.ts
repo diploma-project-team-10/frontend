@@ -142,6 +142,8 @@ import { PassportListComponent } from './projects/comminuty/program-list';
 import { PassportImgComponent} from './projects/comminuty/program-list/passport-img';
 import { HabitListComponent } from './projects/habit/list';
 import { InlineSVGModule} from 'ng-inline-svg';
+import {ProgramListComponent} from './projects/programs';
+import {QuizResultListComponent} from './apps/user-pages/user-profile/problem-list';
 
 
 
@@ -271,6 +273,8 @@ registerLocaleData(en);
         PassportListComponent,
         PassportImgComponent,
         HabitListComponent,
+        ProgramListComponent,
+        QuizResultListComponent,
     ],
     exports: [
         TCMiniFolderComponent,

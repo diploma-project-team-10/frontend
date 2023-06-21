@@ -26,17 +26,19 @@ import {PageEditProfileComponent} from '../pages/apps/user-pages/edit-profile';
 import {PageTwoFactorComponent} from '../pages/apps/authentication/two-factor';
 import {PageAnalyticsComponent} from '../pages/dashboards/analytics';
 import {PageLandingComponent} from '../layout/landing';
-import {LandingSectionComponent} from '../layout/landing/section';
+import {ProgramListComponent} from '../pages/projects/programs';
+import {PageDashboardComponent} from '../pages/dashboards/dashboard';
 
 const CHILD_ROUTES: Routes = [
-  { path: 'analytics', component: PageAnalyticsComponent, canActivate: [AuthGuard], data: { roles: ['admin'] }  },
+  { path: 'analytics', component: PageDashboardComponent, canActivate: [AuthGuard], data: { roles: ['admin'] }  },
   { path: 'profile/:id', component: PageUserProfileComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
   { path: 'user-profile', component: PageUserProfileComponent },
   { path: 'profile/edit/:id', component: PageEditProfileComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
   { path: 'create/profile', component: PageEditProfileComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
-  { path: 'edit-account', component: PageEditAccountComponent },
-  { path: 'edit-account/:id', component: PageEditAccountComponent },
+  { path: 'edit-account', component: PageEditAccountComponent, canActivate: [AuthGuard] },
+  { path: 'edit-account/:id', component: PageEditAccountComponent, canActivate: [AuthGuard] },
   { path: 'widgets', component: PageWidgetsComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+  { path: 'subjects', component: ProgramListComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'student'] } },
   {
     path: 'courses',
     children: COURSES_ROUTES
@@ -46,10 +48,6 @@ const CHILD_ROUTES: Routes = [
     children: COMMUNITY_ROUTES
   },
   { path: 'coming-soon', component: SoonComponent },
-];
-
-const LANDING_ROUTES: Routes = [
-  { path: '', component: LandingSectionComponent },
 ];
 
 const PUBLIC_ROUTES: Routes = [
@@ -99,7 +97,6 @@ export const ROUTES: Routes = [
   {
     path: 'landing',
     component: PageLandingComponent,
-    children: LANDING_ROUTES,
   },
   {
     path: 'error',

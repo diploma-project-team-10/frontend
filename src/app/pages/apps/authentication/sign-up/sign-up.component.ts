@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +7,9 @@ import { User } from '../../../../interfaces/services/user.service';
 
 import { fadeIn } from 'src/app/animations/form-error';
 import {AuthenticationService} from '../../../../user/_services/authentication.service';
+import {environment} from '../../../../../environments/environment';
+import {ToastrService} from 'ngx-toastr';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'page-sign-up',
@@ -16,9 +19,13 @@ import {AuthenticationService} from '../../../../user/_services/authentication.s
 })
 export class PageSignUpComponent implements OnInit {
   loginForm: FormGroup;
+  loading = false;
+  error = '';
 
   constructor(private router: Router,
               private http: HttpClient,
+              private route: ActivatedRoute,
+              private toastr: ToastrService,
               private authenticationService: AuthenticationService) {
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
@@ -39,18 +46,31 @@ export class PageSignUpComponent implements OnInit {
   signUp() {
     // tslint:disable-next-line:label-position
     const newUser: User = {
-      username:  this.username.toString(),
+      username:  this.email.toString(),
       firstName: this.firstName.toString(),
       lastName: this.lastName.toString(),
       email: this.email.toString(),
       password: this.password.toString()
     };
     // this.router.navigate(['']);
-    this.http.post('http://localhost:8080/api/auth/signup', newUser)
-        .subscribe({
-          next: data => console.log(data),
-          error: error => console.log(error)
-        });
+    this.authenticationService.register(newUser)
+        .pipe(first())
+        .subscribe(
+            data => {
+              if (data.status) {
+                this.toastr.success('Welcome!', 'Success', {closeButton: true});
+                this.router.navigate(['/vertical/user-profile']).then(r => {});
+              } else {
+                this.toastr.error(data.message, 'Error', { closeButton: true });
+                this.error = data.message;
+                this.loading = false;
+              }
+            },
+            error => {
+              this.toastr.error(error.message, 'Error', { closeButton: true });
+              this.error = error;
+              this.loading = false;
+            });
   }
 
   MatchPassword(ac: AbstractControl): ValidatorFn {
@@ -65,27 +85,27 @@ export class PageSignUpComponent implements OnInit {
   }
 
   get username() {
-    return this.loginForm.get('username');
+    return this.loginForm.get('username').value;
   }
 
   get firstName() {
-    return this.loginForm.get('firstName');
+    return this.loginForm.get('firstName').value;
   }
 
   get lastName() {
-    return this.loginForm.get('lastName');
+    return this.loginForm.get('lastName').value;
   }
 
   get email() {
-    return this.loginForm.get('email');
+    return this.loginForm.get('email').value;
   }
 
   get password() {
-    return this.loginForm.get('password');
+    return this.loginForm.get('password').value;
   }
 
   get confirm() {
-    return this.loginForm.get('confirm');
+    return this.loginForm.get('confirm').value;
   }
 }
 

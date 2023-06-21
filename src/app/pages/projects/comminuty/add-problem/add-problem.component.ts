@@ -45,7 +45,7 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
         this.succesCode = 'Successfully saved!';
         this.errorCode = 'Not saved!';
     }
-
+    program = '';
     notes = [
         'Save жасау үшін екі маңызды нарсе: <br> 1) Description <br> 2) Topic',
 
@@ -79,7 +79,7 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
 
     apiUrl = '';
     newTopicFromTree: Topic = null;
-    topicList: Topic[] = [];
+    topicList: any[] = [];
     children = false;
     langType = 'kz';
 
@@ -197,6 +197,9 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
     }
 
     initRoute() {
+        if (this.route.snapshot.params['programId']) {
+            this.program = this.route.snapshot.params['programId'];
+        }
         if (this.route.snapshot.params['problemId']) {
             this.exercise.id = this.route.snapshot.params['problemId'];
             this.getData();
@@ -274,7 +277,9 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
             topicVersion: []
         });
         for (let i = this.topicList.length - 1; i >= 0; i--) {
-            if (this.topicList[i].parentId != null && this.topicList[i].parentId !== '') {
+            if (this.topicList[i].parentId != null
+                && this.topicList[i].parentId !== ''
+                && this.topicList[i].parentId !== this.program) {
                 this.topicList.splice(i, 1);
             }
         }
@@ -364,7 +369,7 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
                     if (data.status === 1) {
                         this.toastr.success(data.message, 'Success', {closeButton: true});
                         this.exercise.id = data.value.id;
-                        this.router.navigate(['/vertical/community/problem/edit/', this.exercise.id]).then(r => {});
+                        this.router.navigate(['/vertical/community/problem/edit/', this.program, this.exercise.id]).then(r => {});
                     } else {
                         this.toastr.error(data.message, 'Error', {closeButton: true});
                     }
@@ -398,7 +403,7 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
 
     copyProblem() {
         this.toastr.success('Copied!', 'Success', {closeButton: true});
-        this.router.navigate(['/vertical/community/problem/edit/', this.exercise.id, 'copy']).then(r => {
+        this.router.navigate(['/vertical/community/problem/edit/', this.program, this.exercise.id, 'copy']).then(r => {
         });
     }
 

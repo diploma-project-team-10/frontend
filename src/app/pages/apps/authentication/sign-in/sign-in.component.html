@@ -23,7 +23,7 @@
 
   <tc-form-group class="mt-1 d-flex justify-content-between align-items-center">
     <a [routerLink]="'/public/forgot-password'" class="link pl-sm-0">{{'Forgot password' | translate}}?</a>
-    <button type="submit" tc-button [view]="'gradient'" [disabled]="loading || loginForm.invalid">{{'Sign In' | translate}}</button>
+    <button type="submit" tc-button [view]="'info'" [disabled]="loading || loginForm.invalid">{{'Sign In' | translate}}</button>
   </tc-form-group>
 
   <nz-divider nzPlain nzText="{{'Or' | translate | uppercase}}"></nz-divider>
