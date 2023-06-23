@@ -191,8 +191,6 @@
   "Birthday": "День рождения",
   "Roles": "Роль",
 
-
-
   "_comment": "Reference",
   "Reference properties": "Свойства справочника",
   "Title": "Название",
@@ -292,7 +290,7 @@
   "Access": "Доступ",
   "Class": "Класс",
   "Category": "Категория",
-  "Lists":"Списки",
+  "Lists": "Списки",
   "Application List": "Список приложений",
   "An Application": "Приложение",
   "Mark Complete": "Отметить как завершенное",
@@ -366,18 +364,16 @@
 
   "Spyder chart": "Спайдер чарт",
 
-  "SectionDescriptionBooks" : "Книги, отобранные экспертами",
-  "SectionDescriptionMenuCourses" : "Лучшие онлайн-курсы",
-  "SectionDescriptionSeminar" : "Спикерлерден семинар-тренингтер",
-  "SectionDescriptionEduway" : "Семинары-тренинги от спикеров",
-  "SectionDescriptionEdutest" : "Результаты тестирования по повышению квалификации",
-  "SectionDescriptionExperience" : "Результаты педагогической практики",
-  "SectionDescriptionEnglish" : "Результаты по английскому языку",
+  "SectionDescriptionBooks": "Книги, отобранные экспертами",
+  "SectionDescriptionMenuCourses": "Лучшие онлайн-курсы",
+  "SectionDescriptionSeminar": "Спикерлерден семинар-тренингтер",
+  "SectionDescriptionEduway": "Семинары-тренинги от спикеров",
+  "SectionDescriptionEdutest": "Результаты тестирования по повышению квалификации",
+  "SectionDescriptionExperience": "Результаты педагогической практики",
+  "SectionDescriptionEnglish": "Результаты по английскому языку",
   "SectionDescriptionPassport": "SectionDescriptionPassport",
 
-
   "Unarchive": "Разархивировать",
-
 
   "Passport Direction": "Направления",
   "About Passport": "О Направления",
@@ -386,7 +382,6 @@
   "Upload a file in png format with a maximum of 5 megabytes": "Загрузите файл в формате png размером не более 5 мегабайт",
   "Upload New Photo": "Загрузить новое фото",
   "Add Task": "Добавить новую задачу",
-
 
   "Attendance": "Посещаемость",
   "Download Excel": "Скачать Excel",
@@ -428,10 +423,10 @@
 
   "BooksGradingInfo": "BooksGradingInfo",
   "LinguaGradingInfo": "LinguaGradingInfo",
-  "PracticeGradingInfo":  "PracticeGradingInfo",
+  "PracticeGradingInfo": "PracticeGradingInfo",
   "EdutestGradingInfo": "EdutestGradingInfo",
   "EduwayGradingInfo": "EduwayGradingInfo",
-  "SeminarGradingInfo":  "SeminarGradingInfo",
+  "SeminarGradingInfo": "SeminarGradingInfo",
   "CourseGradingInfo": "CourseGradingInfo",
 
   "_comment": "KBF-zayavka",
@@ -439,12 +434,35 @@
   "Invitation message": "Пригласительное сообщение",
   "Default message": "Сообщение по умолчанию",
   "Email Message": "Дополнительная информация",
-  "Send Message" : "Отправить",
+  "Send Message": "Отправить",
   "Refuse": "Отказать",
   "Refuse message": "Письмо об отказе",
   "Firstname": "Имя",
   "SecondName": "Отчество",
   "Lastname": "Фамилия",
 
-  "regis": "Регистрация"
+  "regis": "Регистрация",
+
+  "_comment": "Landing",
+  "Navbar1": "Цели проекта",
+  "Navbar2": "Обзор платформы",
+  "Navbar3": "Доступные курсы",
+  "Navbar4": "Наши контакты",
+  "BannerTitle1": "Стремление",
+  "BannerTitle2": "Труд",
+  "BannerTitle3": "Глубокая мысль",
+  "BannerDesc": "Talaptan - образовательная платформа для учителей и учеников. Проверьте ваш уровень и совершенствуйте свои знания вместе с Talaptan.",
+  "BannerBtn": "Войти",
+  "VideosTitle": "Обзор платформы",
+  "VideoTitle1": "первое видео",
+  "VideoTitle2": "второе видео",
+  "VideoTitle3": "третье видео",
+  "GalleryTitle": "Доступные курсы",
+  "CommunityBigTit": "Наше сообщество",
+  "CommunityLilTit": "Наши достижения в числах",
+  "DataWord1": "менторов",
+  "DataWord2": "студентов",
+  "DataWord3": "специалистов",
+  "ContactsTitle": "Наши контакты",
+  "DetailAddress": "Каскелен, улица Абылайхана, 1/1"
 }

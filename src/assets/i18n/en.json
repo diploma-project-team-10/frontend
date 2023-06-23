@@ -291,7 +291,7 @@
   "Access": "Access",
   "Class": "Class",
   "Category": "Category",
-  "Lists":"Lists",
+  "Lists": "Lists",
   "Application List": "Application List",
   "An Application": "An Application",
   "Mark Complete": "Mark Complete",
@@ -302,7 +302,7 @@
   "The user must complete any one of the selected courses in order to access this course": "The user must complete any one of the selected courses in order to access this course",
   "The user must complete all selected course in order to access this course": "The user must complete all selected course in order to access this course",
   "The video will be shown and must be fully watched before the user can access the lesson’s associated steps.": "The video will be shown and must be fully watched before the user can access the lesson’s associated steps.",
-  "After completing sub - steps":  "After completing sub - steps",
+  "After completing sub - steps": "After completing sub - steps",
   "The video will be visible after the user has completed the lesson’s associated steps. The full video must be watched in order to complete the lesson.": "The video will be visible after the user has completed the lesson’s associated steps. The full video must be watched in order to complete the lesson.",
   "Comment of your Teacher": "Comment of your Teacher",
   "Add Placement": "Add Placement Test",
@@ -330,7 +330,6 @@
   "Points": "Points",
   "Mentor": "Mentor",
   "TotalNumberOfMentors": "Total number of mentors",
-
 
   "Are you sure you want to delete": "Are you sure you want to delete",
 
@@ -366,15 +365,14 @@
 
   "Spyder chart": "Spyder chart",
 
-
   "Unarchive": "Extract",
-  "SectionDescriptionBooks" : "Books selected by experts",
-  "SectionDescriptionMenuCourses" : "The best online courses",
-  "SectionDescriptionSeminar" : "Seminar-trainings from speakers",
-  "SectionDescriptionEduway" : "Courses for professional development",
-  "SectionDescriptionEdutest" : "Test results on professional development",
-  "SectionDescriptionExperience" : "Results of pedagogical practice",
-  "SectionDescriptionEnglish" : "Results of English language",
+  "SectionDescriptionBooks": "Books selected by experts",
+  "SectionDescriptionMenuCourses": "The best online courses",
+  "SectionDescriptionSeminar": "Seminar-trainings from speakers",
+  "SectionDescriptionEduway": "Courses for professional development",
+  "SectionDescriptionEdutest": "Test results on professional development",
+  "SectionDescriptionExperience": "Results of pedagogical practice",
+  "SectionDescriptionEnglish": "Results of English language",
   "SectionDescriptionPassport": "SectionDescriptionPassport",
 
   "Passport Direction": "Direction",
@@ -401,7 +399,6 @@
   "English Level": "English Level",
   "English Teacher": "English Teacher",
 
-
   "Prompt": "Prompt",
   "Default sort": "Default sort",
   "Default filtering": "Default filtering",
@@ -427,10 +424,10 @@
 
   "BooksGradingInfo": "BooksGradingInfo",
   "LinguaGradingInfo": "LinguaGradingInfo",
-  "PracticeGradingInfo":  "PracticeGradingInfo",
+  "PracticeGradingInfo": "PracticeGradingInfo",
   "EdutestGradingInfo": "EdutestGradingInfo",
   "EduwayGradingInfo": "EduwayGradingInfo",
-  "SeminarGradingInfo":  "SeminarGradingInfo",
+  "SeminarGradingInfo": "SeminarGradingInfo",
   "CourseGradingInfo": "CourseGradingInfo",
 
   "_comment": "KBF-zayavka",
@@ -438,12 +435,35 @@
   "Invitation message": "Invitation message",
   "Default message": "Default message",
   "Email Message": "Email Message",
-  "Send Message" : "Send Message",
+  "Send Message": "Send Message",
   "Refuse": "Refuse",
   "Refuse message": "Refuse message",
   "Firstname": "Firstname",
   "SecondName": "SecondName",
   "Lastname": "Lastname",
 
-  "regis": "Register"
+  "regis": "Register",
+
+  "_comment": "Landing",
+  "Navbar1": "Project aims",
+  "Navbar2": "Platform overview",
+  "Navbar3": "Available courses",
+  "Navbar4": "Our contacts",
+  "BannerTitle1": "Pursuit",
+  "BannerTitle2": "Effort",
+  "BannerTitle3": "Deep thought",
+  "BannerDesc": "Talaptan - educational platform for teachers and students. Check your level and improve your knowledge with Talaptan.",
+  "BannerBtn": "Login",
+  "VideosTitle": "Platform overview",
+  "VideoTitle1": "first video",
+  "VideoTitle2": "second video",
+  "VideoTitle3": "third video",
+  "GalleryTitle": "Available courses",
+  "CommunityBigTit": "Our community",
+  "CommunityLilTit": "Our achievements in numbers",
+  "DataWord1": "mentors",
+  "DataWord2": "students",
+  "DataWord3": "specialists",
+  "ContactsTitle": "Our contacts",
+  "DetailAddress": "Kaskelen, Abylai khan street, 1/1"
 }

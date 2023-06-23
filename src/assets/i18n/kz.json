@@ -239,7 +239,6 @@
   "Create Course": "Курс құру",
   "Start Course": "Курсты бастау",
 
-
   "Module": "Модуль",
   "Modules": "Модуль",
   "Module Progress": "Модулдің прогрессі",
@@ -365,15 +364,14 @@
 
   "Spyder chart": "Спайдер чарт",
 
-  "SectionDescriptionBooks" : "Эксперттер таңдаған кітаптар",
-  "SectionDescriptionMenuCourses" : "Үздік онлайн курстар",
-  "SectionDescriptionSeminar" : "Спикерлерден семинар-тренингтер",
-  "SectionDescriptionEduway" : "Кәсіби дамуға арналған курстар",
-  "SectionDescriptionEdutest" : "Кәсіби даму бойынша тест нәтижерелері",
-  "SectionDescriptionExperience" : "Педагогикалық практика нәтижелері",
-  "SectionDescriptionEnglish" : "Ағылшын тілі бойынша нәтижелер",
+  "SectionDescriptionBooks": "Эксперттер таңдаған кітаптар",
+  "SectionDescriptionMenuCourses": "Үздік онлайн курстар",
+  "SectionDescriptionSeminar": "Спикерлерден семинар-тренингтер",
+  "SectionDescriptionEduway": "Кәсіби дамуға арналған курстар",
+  "SectionDescriptionEdutest": "Кәсіби даму бойынша тест нәтижерелері",
+  "SectionDescriptionExperience": "Педагогикалық практика нәтижелері",
+  "SectionDescriptionEnglish": "Ағылшын тілі бойынша нәтижелер",
   "SectionDescriptionPassport": "SectionDescriptionPassport",
-
 
   "Unarchive": "Архивтен алу",
 
@@ -426,10 +424,10 @@
 
   "BooksGradingInfo": "BooksGradingInfo",
   "LinguaGradingInfo": "LinguaGradingInfo",
-  "PracticeGradingInfo":  "PracticeGradingInfo",
+  "PracticeGradingInfo": "PracticeGradingInfo",
   "EdutestGradingInfo": "EdutestGradingInfo",
   "EduwayGradingInfo": "EduwayGradingInfo",
-  "SeminarGradingInfo":  "SeminarGradingInfo",
+  "SeminarGradingInfo": "SeminarGradingInfo",
   "CourseGradingInfo": "CourseGradingInfo",
 
   "_comment": "KBF-zayavka",
@@ -437,12 +435,35 @@
   "Invitation message": "Шақыру хаты",
   "Default message": "Сообщение по умолчанию",
   "Email Message": "Қосымша ақпарат",
-  "Send Message" : "Жіберу",
+  "Send Message": "Жіберу",
   "Refuse": "Өткізбеу",
   "Refuse message": "Өткізбеу хаты",
   "Firstname": "Аты",
   "SecondName": "Әкесінің аты",
   "Lastname": "Тегі",
 
-  "regis": "Тіркелу"
+  "regis": "Тіркелу",
+
+  "_comment": "Landing",
+  "Navbar1": "Проектінің мақсаты",
+  "Navbar2": "Платформаға шолу",
+  "Navbar3": "Қолжетімді курстар",
+  "Navbar4": "Байланысымыз",
+  "BannerTitle1": "Талап",
+  "BannerTitle2": "Еңбек",
+  "BannerTitle3": "Терең ой",
+  "BannerDesc": "Talaptan - мұғалімдер мен оқушыларға арналған білім платформасы. Talaptan-мен өз деңгейіңізді тексеріп, біліміңізді арттыраңыз.",
+  "BannerBtn": "Кіру",
+  "VideosTitle": "Платформаға шолу",
+  "VideoTitle1": "бірінші видео",
+  "VideoTitle2": "екінші видео",
+  "VideoTitle3": "үшінші видео",
+  "GalleryTitle": "Қолжетімді курстар",
+  "CommunityBigTit": "Біздің қоғам",
+  "CommunityLilTit": "Бұл жолдағы біздің жетістігіміз сан ретінде көрсетілді",
+  "DataWord1": "менторлар",
+  "DataWord2": "студенттер",
+  "DataWord3": "мамандар",
+  "ContactsTitle": "Біздің контакті",
+  "DetailAddress": "Қаскелең, Абылайхан көшесі, 1/1"
 }
