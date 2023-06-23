@@ -1,126 +1,220 @@
-<div class="app-container" [ngClass]="{ 'boxed': appSettings.boxed }" *ngIf="appSettings">
+<div
+  class="app-container"
+  [ngClass]="{ boxed: appSettings.boxed }"
+  *ngIf="appSettings"
+>
   <!-- Horizontal navbar -->
   <navbar
-          class="horizontal-navbar"
-          [boxed]="appSettings.boxed"
-          [tcBgColor]="appSettings.topbarBg"
-          [tcColor]="appSettings.topbarColor"
-          [minHeight]="'4.28571429rem'"
+    class="horizontal-navbar"
+    [boxed]="appSettings.boxed"
+    [tcBgColor]="appSettings.topbarBg"
+    [tcColor]="appSettings.topbarColor"
+    [minHeight]="'4.28571429rem'"
   >
-    <img src="{{ logo }}" alt="{{ 'logo' }}"  width="135px" class="logo-img"/>
+    <img src="{{ logo }}" alt="{{ 'logo' }}" width="135px" class="logo-img" />
 
-    <div class="d-flex align-middle">
-      <p class="header">{{'landing1' | translate}}</p>
-      <p class="header">Платформаға шолу</p>
-      <p class="header">Қолжетімді курстар</p>
-      <p class="header">Контакті</p>
+    <div class="d-flex align-middle nav-items">
+      <p class="header header-nav">{{ 'Navbar1' | translate }}</p>
+      <p class="header header-nav">{{ 'Navbar2' | translate }}</p>
+      <p class="header header-nav">{{ 'Navbar3' | translate }}</p>
+      <p class="header header-nav">{{ 'Navbar4' | translate }}</p>
     </div>
 
     <actions></actions>
 
-    <navbar-skeleton [type]="'horizontal'" [withLogo]="false" [loaded]="loaded"></navbar-skeleton>
-
+    <navbar-skeleton
+      [type]="'horizontal'"
+      [withLogo]="false"
+      [loaded]="loaded"
+    ></navbar-skeleton>
   </navbar>
   <!-- end Horizontal navbar -->
 
-  <main class="main-content" [ngClass]="{ 'loaded': pageData?.loaded }">
+  <main class="main-content" [ngClass]="{ loaded: pageData?.loaded }">
     <div class="main-content-wrap">
       <div class="banner">
         <div class="banner__text">
           <div class="banner__title">
-            Талап <br />
-            Еңбек <br />
-            Терең ой
+            {{ 'BannerTitle1' | translate }}
+            <br />
+            {{ 'BannerTitle2' | translate }}
+            <br />
+            {{ 'BannerTitle3' | translate }}
           </div>
           <div class="banner__desc">
-            Talaptan - мұғалімдер мен оқушыларға арналған білім платформасы. Talaptan-мен өз деңгейіңізді тексеріп, біліміңізді арттыраңыз.
+            {{ 'BannerDesc' | translate }}
           </div>
-          <div class="banner__btn" (click)="this.router.navigate(['../public/sign-in'])">{{'Sign In' | translate}}</div>
+          <div
+            class="banner__btn"
+            (click)="this.router.navigate(['../public/sign-in'])"
+          >
+            {{ 'BannerBtn' | translate }}
+          </div>
         </div>
         <div class="banner__img">
           <img src="assets/content/landing/Creative Block.png" alt="banner" />
         </div>
       </div>
       <div class="videos" id="videos">
-        <div class="videos__title">Платформаға шолу</div>
+        <div class="videos__title">{{ 'VideosTitle' | translate }}</div>
         <div class="videos__row">
           <div class="video__item">
-            <div class="video__player">
+            <div
+              class="video__player"
+              (click)="
+                openModal(
+                  modalBody1,
+                  modalHeader1,
+                  { closeButton: true, overlayClose: true },
+                  index
+                )
+              "
+            >
               <img src="./assets/content/landing/video-player.jpg" alt="" />
             </div>
-            <div class="video__title">Қалай тест тапсырамыз</div>
+            <div class="video__title">{{ 'VideoTitle1' | translate }}</div>
           </div>
           <div class="video__item">
-            <div class="video__player">
+            <div
+              class="video__player"
+              (click)="
+                openModal(
+                  modalBody2,
+                  modalHeader2,
+                  { closeButton: true, overlayClose: true },
+                  index
+                )
+              "
+            >
               <img src="./assets/content/landing/video-player.jpg" alt="" />
             </div>
-            <div class="video__title">Қалай тест тапсырамыз</div>
+            <div class="video__title">{{ 'VideoTitle2' | translate }}</div>
           </div>
           <div class="video__item">
-            <div class="video__player">
+            <div
+              class="video__player"
+              (click)="
+                openModal(
+                  modalBody3,
+                  modalHeader3,
+                  { closeButton: true, overlayClose: true },
+                  index
+                )
+              "
+            >
               <img src="./assets/content/landing/video-player.jpg" alt="" />
             </div>
-            <div class="video__title">Қалай тест тапсырамыз</div>
+            <div class="video__title">{{ 'VideoTitle3' | translate }}</div>
           </div>
         </div>
       </div>
       <div class="gallery">
-        <div class="gallery__title">Қолжетімді курстар</div>
+        <div class="gallery__title">{{ 'GalleryTitle' | translate }}</div>
         <div class="gallery__imgs">
-          <img src="./assets/content/landing/gallery.jpg" alt="gallery" />
+          <div class="gallery-one"></div>
+          <div class="gallery-two"></div>
+          <div class="gallery-three"></div>
+          <div class="gallery-four"></div>
+          <div class="gallery-five"></div>
+          <div class="gallery-six"></div>
         </div>
       </div>
       <div class="community">
-        <div class="community__bigtit">Біздің қоғам</div>
+        <div class="community__bigtit">{{ 'CommunityBigTit' | translate }}</div>
         <div class="community__liltit">
-          Бұл жолдағы біздің жетістігіміз сан ретінде көрсетілді
+          {{ 'CommunityLilTit' | translate }}
         </div>
         <div class="community__data">
           <div class="data__item">
             <div class="num">40</div>
-            <div class="word">менторлар</div>
+            <div class="word">{{ 'DataWord1' | translate }}</div>
           </div>
           <div><img src="" alt="" /></div>
           <div class="data__item">
             <div class="num">2000</div>
-            <div class="word">студенттер</div>
+            <div class="word">{{ 'DataWord2' | translate }}</div>
           </div>
           <div><img src="" alt="" /></div>
 
           <div class="data__item">
             <div class="num">30</div>
-            <div class="word">мамандар</div>
+            <div class="word">{{ 'DataWord3' | translate }}</div>
           </div>
         </div>
       </div>
       <div class="contacts">
-        <div class="contacts__title">Біздің контакті</div>
+        <div class="contacts__title">{{ 'ContactsTitle' | translate }}</div>
         <div class="contacts__detail">
-          <div class="detail__img">
-            <img src="./assets/content/landing/map.jpg" alt="" />
+          <div class="detail__map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2908.0831310747685!2d76.66647927485269!3d43.20774568112957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38834f7675d8a6c3%3A0x7b7d14aec270c056!2sSDU%20(Suleyman%20Demirel%20University)!5e0!3m2!1sen!2skz!4v1687405549510!5m2!1sen!2skz"
+              width="100%"
+              height="400"
+              style="
+                border: 0;
+                border-radius: 22px;
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+              "
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+            <!-- <img src="./assets/content/landing/map.jpg" alt="" /> -->
           </div>
           <div class="detail__text">
             <div class="text">
               <div class="address">
-                <i class="fa-solid fa-location-dot"></i> Kaskelen.Abylai khan
-                1/1
+                <tc-icon
+                  [iconClass]="'icofont-location-pin'"
+                  [tcFontSize]="25"
+                  [tcColor]="'#18408c'"
+                ></tc-icon>
+                {{ 'DetailAddress' | translate }}
               </div>
               <div class="number">
-                <i class="fa-solid fa-phone"></i> 8(888) 299 00 99
+                <tc-icon
+                  [iconClass]="'icofont-phone'"
+                  [tcFontSize]="25"
+                  [tcColor]="'#18408c'"
+                ></tc-icon>
+                8(888) 299 00 99
               </div>
               <div class="email">
-                <i class="fa-regular fa-envelope"></i> Talaptan@mail.ru
+                <tc-icon
+                  [iconClass]="'icofont-envelope'"
+                  [tcFontSize]="25"
+                  [tcColor]="'#18408c'"
+                ></tc-icon>
+                Talaptan@mail.ru
               </div>
             </div>
             <div class="socials">
               <div class="twitter">
-                <i class="fa-brands fa-twitter"></i>
+                <a href="https://twitter.com/" target="_blank">
+                  <tc-icon
+                    [iconClass]="'icofont-twitter'"
+                    [tcFontSize]="25"
+                    [tcColor]="'#18408c'"
+                  ></tc-icon>
+                </a>
               </div>
               <div class="facebook">
-                <i class="fa-brands fa-square-facebook"></i>
+                <a href="https://facebook.com/" target="_blank">
+                  <tc-icon
+                    [iconClass]="'icofont-facebook'"
+                    [tcFontSize]="25"
+                    [tcColor]="'#18408c'"
+                  ></tc-icon>
+                </a>
               </div>
               <div class="linkedin">
-                <i class="fa-brands fa-linkedin"></i>
+                <a href="https://linkedin.com/" target="_blank">
+                  <tc-icon
+                    [iconClass]="'icofont-linkedin'"
+                    [tcFontSize]="25"
+                    [tcColor]="'#18408c'"
+                  ></tc-icon>
+                </a>
               </div>
             </div>
           </div>
@@ -129,8 +223,65 @@
     </div>
   </main>
 
-  <footer [boxed]="appSettings.boxed" [pageData]="pageData" [loaded]="loaded"></footer>
+  <footer
+    [boxed]="appSettings.boxed"
+    [pageData]="pageData"
+    [loaded]="loaded"
+  ></footer>
 </div>
 
+<ng-container>
+  <ng-template #modalHeader1>
+    <h3>{{ 'VideoTitle1' | translate }}</h3>
+  </ng-template>
+  <ng-template #modalBody1>
+    <div class="modal-body d-flex justify-content-center align-items-center">
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/U44qKaKpAMk"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </ng-template>
+</ng-container>
 
-
+<ng-container>
+  <ng-template #modalHeader2>
+    <h3>{{ 'VideoTitle2' | translate }}</h3>
+  </ng-template>
+  <ng-template #modalBody2>
+    <div class="modal-body d-flex justify-content-center align-items-center">
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/U44qKaKpAMk"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </ng-template>
+</ng-container>
+<ng-container>
+  <ng-template #modalHeader3>
+    <h3>{{ 'VideoTitle3' | translate }}</h3>
+  </ng-template>
+  <ng-template #modalBody3>
+    <div class="modal-body d-flex justify-content-center align-items-center">
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/U44qKaKpAMk"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </ng-template>
+</ng-container>
