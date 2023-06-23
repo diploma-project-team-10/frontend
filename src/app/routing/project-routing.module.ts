@@ -117,8 +117,7 @@ export const COMMUNITY_ROUTES: Routes = [
     },
     {
         path: 'quiz/:programId', component: QuizComponent,
-        canActivate: [AuthGuard],
-        data: { roles: ['admin', 'community_admin'] }
+        canActivate: [AuthGuard]
     },
     {
         path: 'problem',
