@@ -101,13 +101,13 @@ select {
   padding: 10px 115px;
 }
 .banner__title {
-  font-size: 4rem;
+  font-size: 3.5rem;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 .banner__desc {
   font-size: 1.2rem;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .banner__btn {
   // comment all after bootstrap
@@ -322,7 +322,9 @@ select {
 .socials tc-icon:hover {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
-
+.navbar .header-nav {
+  cursor: pointer;
+}
 @media screen and (max-width: 768px) {
   .navbar img {
     width: 100px;

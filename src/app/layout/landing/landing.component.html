@@ -14,10 +14,18 @@
     <img src="{{ logo }}" alt="{{ 'logo' }}" width="135px" class="logo-img" />
 
     <div class="d-flex align-middle nav-items">
-      <p class="header header-nav">{{ 'Navbar1' | translate }}</p>
-      <p class="header header-nav">{{ 'Navbar2' | translate }}</p>
-      <p class="header header-nav">{{ 'Navbar3' | translate }}</p>
-      <p class="header header-nav">{{ 'Navbar4' | translate }}</p>
+      <p class="header header-nav" (click)="scroll('banner')">
+        {{ 'Navbar1' | translate }}
+      </p>
+      <p class="header header-nav" (click)="scroll('videos')">
+        {{ 'Navbar2' | translate }}
+      </p>
+      <p class="header header-nav" (click)="scroll('gallery')">
+        {{ 'Navbar3' | translate }}
+      </p>
+      <p class="header header-nav" (click)="scroll('contacts')">
+        {{ 'Navbar4' | translate }}
+      </p>
     </div>
 
     <actions></actions>
@@ -32,7 +40,7 @@
 
   <main class="main-content" [ngClass]="{ loaded: pageData?.loaded }">
     <div class="main-content-wrap">
-      <div class="banner">
+      <div class="banner" id="banner">
         <div class="banner__text">
           <div class="banner__title">
             {{ 'BannerTitle1' | translate }}
@@ -44,12 +52,20 @@
           <div class="banner__desc">
             {{ 'BannerDesc' | translate }}
           </div>
-          <div
+          <!-- <div
             class="banner__btn"
             (click)="this.router.navigate(['../public/sign-in'])"
           >
             {{ 'BannerBtn' | translate }}
-          </div>
+          </div> -->
+          <button
+            tc-button
+            [view]="'info'"
+            class="item banner__btn"
+            (click)="goTo($event, 'sign-in', '../public/')"
+          >
+            {{ 'Log In' | translate }}
+          </button>
         </div>
         <div class="banner__img">
           <img src="assets/content/landing/Creative Block.png" alt="banner" />
@@ -108,7 +124,7 @@
           </div>
         </div>
       </div>
-      <div class="gallery">
+      <div class="gallery" id="gallery">
         <div class="gallery__title">{{ 'GalleryTitle' | translate }}</div>
         <div class="gallery__imgs">
           <div class="gallery-one"></div>
@@ -142,7 +158,7 @@
           </div>
         </div>
       </div>
-      <div class="contacts">
+      <div class="contacts" id="contacts">
         <div class="contacts__title">{{ 'ContactsTitle' | translate }}</div>
         <div class="contacts__detail">
           <div class="detail__map">

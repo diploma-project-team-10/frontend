@@ -1,5 +1,11 @@
 import { Router } from '@angular/router';
-import { Component, ElementRef, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  EventEmitter,
+  Input,
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { User } from '../../interfaces/services/user.service';
@@ -25,6 +31,9 @@ import { BaseLayoutComponent } from '../base-layout';
 })
 export class PageLandingComponent extends BaseLayoutComponent
   implements OnInit {
+  closeDropdown: EventEmitter<boolean>;
+  @Input() layout: string;
+
   gender: IOption[];
   currentAvatar: string | ArrayBuffer;
   defaultAvatar: string;
@@ -79,6 +88,28 @@ export class PageLandingComponent extends BaseLayoutComponent
       body: body,
       header: header,
       options: options,
+    });
+  }
+
+  goTo(event: Event, link: string, layout: string = '') {
+    event.preventDefault();
+
+    if (link === 'sign-in') {
+      this.authenticationService.logout();
+    }
+
+    setTimeout(() => {
+      this.router.navigate([layout ? layout : this.layout, link], {
+        queryParams: { tabindex: 2 },
+      });
+    });
+  }
+
+  scroll(targetName: string) {
+    document.getElementById(targetName).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
     });
   }
 

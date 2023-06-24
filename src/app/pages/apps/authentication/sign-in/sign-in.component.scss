@@ -1,5 +1,8 @@
 @import '../../../../../assets/sass/variables';
 
+.go-back {
+  cursor: pointer;
+}
 :host {
   .title-block {
     align-items: baseline;
