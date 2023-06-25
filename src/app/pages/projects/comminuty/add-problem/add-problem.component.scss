@@ -1,8 +1,17 @@
+.btn-control {
+  position: fixed;
+  bottom: 5px;
+  right: 10px;
+  z-index: 10;
+}
+.btn-control > * {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
 
-.test{
+.test {
   display: block;
 }
-.open{
+.open {
   display: none;
 }
 
@@ -35,8 +44,7 @@ example-list {
   box-sizing: border-box;
   border-radius: 4px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-  0 8px 10px 1px rgba(0, 0, 0, 0.14),
-  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
 .cdk-drag-placeholder {
@@ -59,7 +67,7 @@ example-list {
   display: flex;
 }
 
-.result{
+.result {
   justify-content: space-between;
   margin-right: 10px;
 }
