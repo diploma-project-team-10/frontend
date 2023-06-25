@@ -1,0 +1,105 @@
+<div>
+  <div>
+    <tc-card>
+      <div class="d-flex mb-2" style="justify-content: space-between;">
+        <h5 class="mt-0">{{ 'Student List' | translate }}</h5>
+        <button
+          class="btn btn-primary"
+          (click)="
+            openModal(
+              modalHeader,
+              modalBody,
+              modalFooter,
+              { closeButton: true, overlayClose: true },
+              index
+            )
+          "
+        >
+          {{ 'Add Student' | translate }}
+        </button>
+      </div>
+
+      <nz-table
+        #rakingTable
+        [nzData]="studentData"
+        [nzPageSize]="5"
+        [nzShowTotal]="totalTpl"
+        [nzPageIndex]="pageIndex"
+        (nzPageIndexChange)="onChangePageIndex($event)"
+        nzTableLayout="fixed"
+        class="table-raking"
+      >
+        <thead>
+          <tr>
+            <th width="70px" class="th-raking">{{ 'Ranking' | translate }}</th>
+            <th>
+              {{ 'Student' | translate }}
+            </th>
+            <th>
+              {{ 'Gender' | translate }}
+            </th>
+            <th>
+              {{ 'Quiz Count' | translate }}
+            </th>
+            <th width="175">
+              {{ 'Points' | translate }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ranking">3</td>
+            <td>Dana K</td>
+            <td>Female</td>
+            <td>2 quizes</td>
+            <td class="points">200 pts.</td>
+          </tr>
+        </tbody>
+      </nz-table>
+      <ng-template #totalTpl let-totalData>
+        {{ 'Total' | translate }}{{ ': ' + totalData }}
+      </ng-template>
+    </tc-card>
+  </div>
+</div>
+
+<!-- <tr *ngFor="let data of rakingTable.data; let index = index">
+                <td class="ranking">{{ 5 * (pageIndex - 1) + index + 1 }}</td>
+                <td>{{ data['fio'] }}</td>
+                <td>{{ data['gender_enum'] }}</td>
+                <td>{{ data['group'] }}</td>
+                <td>{{ data['mentor'] }}</td>
+                <td class="points">{{ data['points'] }} pts.</td>
+              </tr> -->
+
+<ng-container>
+  <ng-template #modalHeader>
+    <h3>{{ 'Add Student' | translate }}</h3>
+  </ng-template>
+  <ng-template #modalBody>
+    <p>{{ 'Enter students names separated by comma' | translate }}</p>
+    <p>{{ 'i.e. John, Tom, Dean' | translate }}</p>
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="{{ 'Students names' | translate }}"
+        aria-label="Students' usernames"
+        aria-describedby="basic-addon2"
+      />
+      <div class="input-group-append mt-2">
+        <button class="btn btn-primary" type="button">
+          {{ 'Add' | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions" [ngStyle]="{ textAlign: 'right', display: 'block' }">
+      <button tc-button [view]="'default'" (click)="closeModal()">
+        {{ 'Cancel' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</ng-container>

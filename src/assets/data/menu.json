@@ -33,7 +33,7 @@
       "pathToSvg": "assets/menuSvg/Report.svg",
       "pathToDarkSvg": "assets/image/icons/SeminarDark.svg"
     },
-    "routing": "community/program/list",
+    "routing": "teacher-list",
     "access": ["admin"]
   },
   {
@@ -45,7 +45,7 @@
       "pathToSvg": "assets/menuSvg/Report.svg",
       "pathToDarkSvg": "assets/image/icons/SeminarDark.svg"
     },
-    "routing": "community/program/list",
+    "routing": "student-list",
     "access": ["admin", "teacher"]
   },
   {
