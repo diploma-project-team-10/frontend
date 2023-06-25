@@ -16,36 +16,84 @@ import { PageResetPasswordComponent } from '../pages/apps/authentication/reset-p
 import { PageVerifyAccountComponent } from '../pages/apps/authentication/verify-account';
 import { PageWidgetsComponent } from '../pages/widgets';
 import { AuthGuard } from '../user/_helpers/auth.guard';
-import {
-  COMMUNITY_ROUTES,
-  COURSES_ROUTES,
-} from './project-routing.module';
-import {PageResetPasswordConfirmComponent} from '../pages/apps/authentication/reset-password-confirm';
-import {SoonComponent} from '../pages/projects/soon';
-import {PageEditProfileComponent} from '../pages/apps/user-pages/edit-profile';
-import {PageTwoFactorComponent} from '../pages/apps/authentication/two-factor';
-import {PageAnalyticsComponent} from '../pages/dashboards/analytics';
-import {PageLandingComponent} from '../layout/landing';
-import {ProgramListComponent} from '../pages/projects/programs';
-import {PageDashboardComponent} from '../pages/dashboards/dashboard';
+import { COMMUNITY_ROUTES, COURSES_ROUTES } from './project-routing.module';
+import { PageResetPasswordConfirmComponent } from '../pages/apps/authentication/reset-password-confirm';
+import { SoonComponent } from '../pages/projects/soon';
+import { PageEditProfileComponent } from '../pages/apps/user-pages/edit-profile';
+import { PageTwoFactorComponent } from '../pages/apps/authentication/two-factor';
+import { PageAnalyticsComponent } from '../pages/dashboards/analytics';
+import { PageLandingComponent } from '../layout/landing';
+import { ProgramListComponent } from '../pages/projects/programs';
+import { PageDashboardComponent } from '../pages/dashboards/dashboard';
+import { PageTeacherListComponent } from '../pages/projects/teacher-list';
+import { PageStudentListComponent } from '../pages/projects/student-list';
 
 const CHILD_ROUTES: Routes = [
-  { path: 'analytics', component: PageDashboardComponent, canActivate: [AuthGuard], data: { roles: ['admin'] }  },
-  { path: 'profile/:id', component: PageUserProfileComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+  {
+    path: 'analytics',
+    component: PageDashboardComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: 'student-list',
+    component: PageStudentListComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: 'teacher-list',
+    component: PageTeacherListComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: 'profile/:id',
+    component: PageUserProfileComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin', 'student'] },
+  },
   { path: 'user-profile', component: PageUserProfileComponent },
-  { path: 'profile/edit/:id', component: PageEditProfileComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
-  { path: 'create/profile', component: PageEditProfileComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
-  { path: 'edit-account', component: PageEditAccountComponent, canActivate: [AuthGuard] },
-  { path: 'edit-account/:id', component: PageEditAccountComponent, canActivate: [AuthGuard] },
-  { path: 'widgets', component: PageWidgetsComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
-  { path: 'subjects', component: ProgramListComponent, canActivate: [AuthGuard] },
+  {
+    path: 'profile/edit/:id',
+    component: PageEditProfileComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: 'create/profile',
+    component: PageEditProfileComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: 'edit-account',
+    component: PageEditAccountComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'edit-account/:id',
+    component: PageEditAccountComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'widgets',
+    component: PageWidgetsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: 'subjects',
+    component: ProgramListComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'courses',
-    children: COURSES_ROUTES
+    children: COURSES_ROUTES,
   },
   {
     path: 'community',
-    children: COMMUNITY_ROUTES
+    children: COMMUNITY_ROUTES,
   },
   { path: 'coming-soon', component: SoonComponent },
 ];
@@ -57,7 +105,7 @@ const PUBLIC_ROUTES: Routes = [
   { path: 'reset-password', component: PageResetPasswordConfirmComponent },
   { path: 'verify-account', component: PageVerifyAccountComponent },
   { path: 'two-factor', component: PageTwoFactorComponent },
-  { path: '**', component: Page404Component }
+  { path: '**', component: Page404Component },
 ];
 
 const ERROR_ROUTES: Routes = [
@@ -65,21 +113,21 @@ const ERROR_ROUTES: Routes = [
   { path: '500', component: Page500Component },
   { path: '503', component: Page503Component },
   { path: '505', component: Page505Component },
-  { path: '**', component: Page404Component }
+  { path: '**', component: Page404Component },
 ];
 
 export const ROUTES: Routes = [
   {
     path: '',
     redirectTo: 'landing',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'vertical',
     component: VerticalLayoutComponent,
     children: CHILD_ROUTES,
     canActivate: [AuthGuard],
-    data: { roles: [] }
+    data: { roles: [] },
     // data: { roles: ['ROLE_ADMIN', 'ROLE_STUDENT'] }
   },
   {
@@ -87,7 +135,7 @@ export const ROUTES: Routes = [
     component: HorizontalLayoutComponent,
     children: CHILD_ROUTES,
     canActivate: [AuthGuard],
-    data: { roles: ['admin'] }
+    data: { roles: ['admin'] },
   },
   {
     path: 'public',
@@ -101,13 +149,13 @@ export const ROUTES: Routes = [
   {
     path: 'error',
     component: ErrorLayoutComponent,
-    children: ERROR_ROUTES
+    children: ERROR_ROUTES,
   },
   {
     path: '**',
     component: ErrorLayoutComponent,
-    children: ERROR_ROUTES
-  }
+    children: ERROR_ROUTES,
+  },
 ];
 
 @NgModule({
@@ -115,4 +163,4 @@ export const ROUTES: Routes = [
   exports: [RouterModule],
   declarations: [],
 })
-export class RoutingModule { }
+export class RoutingModule {}
