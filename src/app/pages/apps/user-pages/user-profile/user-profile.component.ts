@@ -4,27 +4,30 @@ import { Store } from '@ngrx/store';
 import { IAppState } from '../../../../interfaces/app-state';
 import { HttpService } from '../../../../services/http/http.service';
 import { IOption } from '../../../../ui/interfaces/option';
-import {ActivatedRoute, Router} from '@angular/router';
-import {environment} from '../../../../../environments/environment';
-import {filter, map} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
-import {UserService} from '../../../../user/_services/user.service';
-import {FieldService} from '../../../../interfaces/services/reference/field.service';
-import {Status} from '../../../../interfaces/services/util.service';
-import {ToastrService} from 'ngx-toastr';
-import {Content} from '../../../../ui/interfaces/modal';
-import {TCModalService} from '../../../../ui/services/modal/modal.service';
-import {ChartComponent} from 'ng-apexcharts';
-import {ChartLineOptions, ChartOptions} from '../../../../interfaces/dashboard/dashboard';
-import {AuthenticationService} from '../../../../user/_services/authentication.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../../../../environments/environment';
+import { filter, map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { UserService } from '../../../../user/_services/user.service';
+import { FieldService } from '../../../../interfaces/services/reference/field.service';
+import { Status } from '../../../../interfaces/services/util.service';
+import { ToastrService } from 'ngx-toastr';
+import { Content } from '../../../../ui/interfaces/modal';
+import { TCModalService } from '../../../../ui/services/modal/modal.service';
+import { ChartComponent } from 'ng-apexcharts';
+import {
+  ChartLineOptions,
+  ChartOptions,
+} from '../../../../interfaces/dashboard/dashboard';
+import { AuthenticationService } from '../../../../user/_services/authentication.service';
 
 @Component({
   selector: 'page-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  styleUrls: ['./user-profile.component.scss'],
 })
-
-export class PageUserProfileComponent extends BasePageComponent implements OnInit, OnDestroy {
+export class PageUserProfileComponent extends BasePageComponent
+  implements OnInit, OnDestroy {
   @ViewChild('chart') chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   numDir = 5;
@@ -32,12 +35,19 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
     series: [
       {
         name: 'Series 1',
-        data: [0, 0, 0, 0, 0, 0, 0]
-      }
+        data: [0, 0, 0, 0, 0, 0, 0],
+      },
     ],
     xaxis: {
-      categories: ['Books', 'Курс', 'Семинар', 'Тәжірибе', 'Edutest', 'Ағылшын тілі']
-    }
+      categories: [
+        'Books',
+        'Курс',
+        'Семинар',
+        'Тәжірибе',
+        'Edutest',
+        'Ағылшын тілі',
+      ],
+    },
   };
   userInfo: any;
   gender: IOption[];
@@ -54,7 +64,7 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
     practice: false,
     edutest: false,
     lingua: false,
-    passport: false
+    passport: false,
   };
 
   id: string;
@@ -72,13 +82,13 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
 
   selectedSemester = 'semester1';
   semester: any[] = [
-    {value: 'semester1', label: 'FirstSemester'},
-    {value: 'semester2', label: 'SecondSemester'},
-    {value: 'year', label: 'Year'},
+    { value: 'semester1', label: 'FirstSemester' },
+    { value: 'semester2', label: 'SecondSemester' },
+    { value: 'year', label: 'Year' },
   ];
   typeChart = [
-    {value: 'list', label: 'List'},
-    {value: 'spyder', label: 'Spyder chart'},
+    { value: 'list', label: 'List' },
+    { value: 'spyder', label: 'Spyder chart' },
   ];
   selectedTypeChart = 'list';
 
@@ -86,25 +96,25 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
   selectedSertificate = 1;
   month: any[] = [
     // {value: 'august', label: 'August'},
-    {value: 'september', label: 'September'},
-    {value: 'october', label: 'October'},
-    {value: 'november', label: 'November'},
-    {value: 'december', label: 'December'},
-    {value: 'semester1', label: 'Semester 1'},
-    {value: 'january', label: 'January'},
-    {value: 'february', label: 'February'},
-    {value: 'march', label: 'March'},
-    {value: 'april', label: 'April'},
-    {value: 'may', label: 'May'},
-    {value: 'semester2', label: 'Semester 2'},
-    {value: 'year', label: 'Year'},
+    { value: 'september', label: 'September' },
+    { value: 'october', label: 'October' },
+    { value: 'november', label: 'November' },
+    { value: 'december', label: 'December' },
+    { value: 'semester1', label: 'Semester 1' },
+    { value: 'january', label: 'January' },
+    { value: 'february', label: 'February' },
+    { value: 'march', label: 'March' },
+    { value: 'april', label: 'April' },
+    { value: 'may', label: 'May' },
+    { value: 'semester2', label: 'Semester 2' },
+    { value: 'year', label: 'Year' },
     // {value: 'june', label: 'June'},
     // {value: 'july', label: 'July'},
   ];
   sertificate: any[] = [
-    {value: 1, label: 'СertificatesValue'},
-    {value: 2, label: 'DocumentsValue'},
-    {value: 3, label: 'DiplomaValue'},
+    { value: 1, label: 'СertificatesValue' },
+    { value: 2, label: 'DocumentsValue' },
+    { value: 3, label: 'DiplomaValue' },
   ];
 
   array: [1, 2, 3, 4];
@@ -126,12 +136,12 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
     private fieldService: FieldService,
     private toastr: ToastrService,
     private modal: TCModalService,
-    private authenticationService: AuthenticationService,
+    private authenticationService: AuthenticationService
   ) {
     super(store, httpSv);
     this.pageData = {
       title: '',
-      loaded: true
+      loaded: true,
     };
     // this.chartRadar = new ApexChart();
     this.chartOptions = {
@@ -140,40 +150,40 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
         height: 480,
         type: 'radar',
         toolbar: {
-          show: false
+          show: false,
         },
       },
       title: {
-        text: ''
+        text: '',
       },
       yaxis: {
         min: 0,
         max: 100,
-        tickAmount: 5
-      }
+        tickAmount: 5,
+      },
     };
     this.avgRating = {
       chart: {
         height: 350,
         type: 'line',
         zoom: {
-          enabled: false
-        }
+          enabled: false,
+        },
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       stroke: {
-        curve: 'straight'
+        curve: 'straight',
       },
       title: {
-        align: 'left'
+        align: 'left',
       },
       grid: {
         row: {
           colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5
-        }
+          opacity: 0.5,
+        },
       },
     };
 
@@ -191,20 +201,29 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
     super.ngOnInit();
     this.setLoaded();
     this.loading = true;
-    this.fieldsData = await this.fieldService.getReferenceFields(this.referenceId, 'object');
+    this.fieldsData = await this.fieldService.getReferenceFields(
+      this.referenceId,
+      'object'
+    );
     this.getProfile();
     this.getProfileStatistic();
     this.isAdmin = await this.userService.isAdmin();
-    Object.values(this.route.snapshot.url).forEach(
-        (value) => {
-          if (value.path === 'archive') {
-            this.archive = true;
-          }
-        }
-    );
+    Object.values(this.route.snapshot.url).forEach((value) => {
+      if (value.path === 'archive') {
+        this.archive = true;
+      }
+    });
     if (this.id) {
-      this.canEdit = await this.fieldService.mayAccessRecord('edit', this.referenceId, this.id);
-      this.canDelete = await this.fieldService.mayAccessRecord('delete', this.referenceId, this.id);
+      this.canEdit = await this.fieldService.mayAccessRecord(
+        'edit',
+        this.referenceId,
+        this.id
+      );
+      this.canDelete = await this.fieldService.mayAccessRecord(
+        'delete',
+        this.referenceId,
+        this.id
+      );
     }
   }
 
@@ -229,34 +248,47 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
     if (this.id) {
       url = `${environment.apiUrl}/api/v2/profiles/user/${this.id}?fields=`;
     }
-    return this.http.get<any>(url)
-        .pipe(map(data => {
+    return this.http
+      .get<any>(url)
+      .pipe(
+        map((data) => {
           return data;
-        }))
-        .subscribe(
-            async data => {
-              if (Object.keys(data).length) {
-                this.profile = data;
-                this.isStudent =
-                this.isEduWT = (this.profile.course === '1' || this.profile.course === '2' || this.profile.course === null);
-                this.isPractice = (this.profile.course === '3' || this.profile.course === '4' || this.profile.course === null);
-                if (this.isEduWT) {
-                  this.numDir += 2;
-                }
-                if (this.isPractice) {
-                  this.numDir += 1;
-                }
-                if (this.profile['id']) {
-                  this.canEdit = await this.fieldService.mayAccessRecord('edit', this.referenceId, this.profile['id']);
-                }
-                this.loading = false;
-              } else {
-                this.isEmpty = true;
-              }
-            },
-            error => {
-              this.isEmpty = true;
-            });
+        })
+      )
+      .subscribe(
+        async (data) => {
+          if (Object.keys(data).length) {
+            this.profile = data;
+            this.isStudent = this.isEduWT =
+              this.profile.course === '1' ||
+              this.profile.course === '2' ||
+              this.profile.course === null;
+            this.isPractice =
+              this.profile.course === '3' ||
+              this.profile.course === '4' ||
+              this.profile.course === null;
+            if (this.isEduWT) {
+              this.numDir += 2;
+            }
+            if (this.isPractice) {
+              this.numDir += 1;
+            }
+            if (this.profile['id']) {
+              this.canEdit = await this.fieldService.mayAccessRecord(
+                'edit',
+                this.referenceId,
+                this.profile['id']
+              );
+            }
+            this.loading = false;
+          } else {
+            this.isEmpty = true;
+          }
+        },
+        (error) => {
+          this.isEmpty = true;
+        }
+      );
   }
 
   getProfileStatistic() {
@@ -264,116 +296,167 @@ export class PageUserProfileComponent extends BasePageComponent implements OnIni
     if (this.id) {
       url = `${environment.apiUrl}/api/project/grade/page/${this.id}?month=true`;
     }
-    return this.http.get<any>(url)
-        .pipe(map(data => {
+    return this.http
+      .get<any>(url)
+      .pipe(
+        map((data) => {
           return data;
-        }))
-        .subscribe(
-            async data => {
-              if (Object.keys(data).length) {
-                this.profileStatistic = data;
-                Object.keys(this.profileEmpty).forEach(
-                    (key) => {
-                      if (Object.keys(this.profileStatistic[key]).length) {
-                        this.profileEmpty[key] = true;
-                      }
-                    }
-                );
-                this.changeMonth();
-                this.loading = false;
-              } else {
-                this.isEmpty = true;
+        })
+      )
+      .subscribe(
+        async (data) => {
+          if (Object.keys(data).length) {
+            this.profileStatistic = data;
+            Object.keys(this.profileEmpty).forEach((key) => {
+              if (Object.keys(this.profileStatistic[key]).length) {
+                this.profileEmpty[key] = true;
               }
-            },
-            error => {
-              this.isEmpty = true;
             });
+            this.changeMonth();
+            this.loading = false;
+          } else {
+            this.isEmpty = true;
+          }
+        },
+        (error) => {
+          this.isEmpty = true;
+        }
+      );
   }
 
   changeMonth() {
-    const categories = ['Books', 'Курс', 'Семинар', 'Ағылшын тілі', 'M Passport'];
+    const categories = [
+      'Books',
+      'Курс',
+      'Семинар',
+      'Ағылшын тілі',
+      'M Passport',
+    ];
     // tslint:disable-next-line:max-line-length
-    const data = [this.profileStatistic['reading'][this.selectedMonth]['avg'] ? this.profileStatistic['reading'][this.selectedMonth]['avg'] : 0,
-      this.profileStatistic['course'][this.selectedMonth]['avg'] ? this.profileStatistic['course'][this.selectedMonth]['avg'] : 0,
-      this.profileStatistic['seminar'][this.selectedMonth]['avg'] ? this.profileStatistic['seminar'][this.selectedMonth]['avg'] : 0,
-      this.profileStatistic['lingua'][this.selectedMonth]['avg'] ? this.profileStatistic['lingua'][this.selectedMonth]['avg'] : 0,
-      this.profileStatistic['passport'][this.selectedMonth]['avg'] ? this.profileStatistic['passport'][this.selectedMonth]['avg'] : 0,
+    const data = [
+      this.profileStatistic['reading'][this.selectedMonth]['avg']
+        ? this.profileStatistic['reading'][this.selectedMonth]['avg']
+        : 0,
+      this.profileStatistic['course'][this.selectedMonth]['avg']
+        ? this.profileStatistic['course'][this.selectedMonth]['avg']
+        : 0,
+      this.profileStatistic['seminar'][this.selectedMonth]['avg']
+        ? this.profileStatistic['seminar'][this.selectedMonth]['avg']
+        : 0,
+      this.profileStatistic['lingua'][this.selectedMonth]['avg']
+        ? this.profileStatistic['lingua'][this.selectedMonth]['avg']
+        : 0,
+      this.profileStatistic['passport'][this.selectedMonth]['avg']
+        ? this.profileStatistic['passport'][this.selectedMonth]['avg']
+        : 0,
     ];
     if (this.isEduWT) {
       // tslint:disable-next-line:max-line-length
-      data.push(this.profileStatistic['edutest'][this.selectedMonth]['avg'] ? this.profileStatistic['edutest'][this.selectedMonth]['avg'] : 0);
+      data.push(
+        this.profileStatistic['edutest'][this.selectedMonth]['avg']
+          ? this.profileStatistic['edutest'][this.selectedMonth]['avg']
+          : 0
+      );
       // tslint:disable-next-line:max-line-length
       // data.push(this.profileStatistic['eduway'][this.selectedMonth]['avg'] ? this.profileStatistic['eduway'][this.selectedMonth]['avg'] : 0,
       categories.push('Edutest');
     }
     if (this.isPractice) {
       // tslint:disable-next-line:max-line-length
-      data.push(this.profileStatistic['practice'][this.selectedMonth]['avg'] ? this.profileStatistic['practice'][this.selectedMonth]['avg'] : 0);
+      data.push(
+        this.profileStatistic['practice'][this.selectedMonth]['avg']
+          ? this.profileStatistic['practice'][this.selectedMonth]['avg']
+          : 0
+      );
       categories.push('Тәжірибе');
     }
-    this.chartData.series = [{
-      name: 'Series 1',
-      data: data
-    }];
+    this.chartData.series = [
+      {
+        name: 'Series 1',
+        data: data,
+      },
+    ];
     this.chartData.xaxis = {
-      categories: categories
+      categories: categories,
     };
   }
 
   removeRecord() {
     this.modal.close();
-    return this.http.post<Status>(`${environment.apiUrl}/api/reference/record/remove/${this.referenceId}/${this.id}`, {})
-        .subscribe({
-          next: data => {
-            if (data.status === 1) {
-              this.toastr.success(data.message, 'Success', { closeButton: true });
-              this.router.navigate(['/vertical/reference/record/section', this.referenceId, this.referenceId]).then(r => {});
-            } else {
-              this.toastr.error(data.message, 'Error', { closeButton: true });
-            }
-          },
-          error: error => {
-            this.toastr.error('Not saved!', 'Error', { closeButton: true });
+    return this.http
+      .post<Status>(
+        `${environment.apiUrl}/api/reference/record/remove/${this.referenceId}/${this.id}`,
+        {}
+      )
+      .subscribe({
+        next: (data) => {
+          if (data.status === 1) {
+            this.toastr.success(data.message, 'Success', { closeButton: true });
+            this.router
+              .navigate([
+                '/vertical/reference/record/section',
+                this.referenceId,
+                this.referenceId,
+              ])
+              .then((r) => {});
+          } else {
+            this.toastr.error(data.message, 'Error', { closeButton: true });
           }
-        });
+        },
+        error: (error) => {
+          this.toastr.error('Not saved!', 'Error', { closeButton: true });
+        },
+      });
   }
 
   addFromArchive() {
     this.modal.close();
-    return this.http.delete<Status>(`${environment.apiUrl}/api/profile/archive/unzip/${this.id}`)
-        .subscribe({
-          next: data => {
-            if (data.status === 1) {
-              this.toastr.success(data.message, 'Success', { closeButton: true });
-              this.router.navigate(['/vertical/reference/record/section', this.referenceId, this.referenceId]).then(r => {});
-            } else {
-              this.toastr.error(data.message, 'Error', { closeButton: true });
-            }
-          },
-          error: error => {
-            this.toastr.error('Not saved!', 'Error', { closeButton: true });
+    return this.http
+      .delete<Status>(
+        `${environment.apiUrl}/api/profile/archive/unzip/${this.id}`
+      )
+      .subscribe({
+        next: (data) => {
+          if (data.status === 1) {
+            this.toastr.success(data.message, 'Success', { closeButton: true });
+            this.router
+              .navigate([
+                '/vertical/reference/record/section',
+                this.referenceId,
+                this.referenceId,
+              ])
+              .then((r) => {});
+          } else {
+            this.toastr.error(data.message, 'Error', { closeButton: true });
           }
-        });
+        },
+        error: (error) => {
+          this.toastr.error('Not saved!', 'Error', { closeButton: true });
+        },
+      });
   }
 
   openModal<T>(
-      body: Content<T>,
-      header: Content<T> = null,
-      footer: Content<T> = null,
-      options: any = null
+    body: Content<T>,
+    header: Content<T> = null,
+    footer: Content<T> = null,
+    options: any = null
   ) {
     this.modal.open({
       body: body,
       header: header,
       footer: footer,
-      options: options
+      options: options,
     });
   }
 
-  formatOne = (percent: number) => `${this.profileStatistic[this.selectedSemester]} pts.`;
+  formatOne = (percent: number) =>
+    `${this.profileStatistic[this.selectedSemester]} pts.`;
 
   closeModal() {
     this.modal.close();
   }
-
+  ewrqwefqwef() {
+    return false;
+  }
 }
