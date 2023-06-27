@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IAppState } from '../../../../interfaces/app-state';
 import { HttpService } from '../../../../services/http/http.service';
@@ -20,6 +20,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import * as PageActions from '../../../../store/actions/page.actions';
+import { Content } from '../../../../ui/interfaces/modal';
 
 @Component({
   selector: 'app-quiz',
@@ -73,8 +74,11 @@ export class QuizComponent extends BasePageComponent implements OnInit {
     orderNum: 0,
   };
   started = false;
+  finished = false;
+  index;
 
-  totalSec: number = 20 * 60;
+  @ViewChild('resModal') resModal: any;
+  totalSec: number = 5;
   minutes: string;
   seconds: string;
 
@@ -216,9 +220,17 @@ export class QuizComponent extends BasePageComponent implements OnInit {
   updateTimer() {
     setInterval(() => {
       if (this.totalSec > -1) this.startTimer();
+      else {
+        this.finished = true;
+        // this.openModal(this.resModal);
+      }
     }, 1000);
   }
   pad(n: number) {
     return (n < 10 ? '0' : '') + n;
+  }
+
+  openModal(content: any) {
+    this.modal.open(content);
   }
 }

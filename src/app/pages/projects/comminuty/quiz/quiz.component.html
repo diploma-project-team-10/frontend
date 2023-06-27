@@ -131,8 +131,24 @@
           :
           <span id="seconds">{{ seconds }}</span>
         </h3>
-        <h3 *ngIf="totalSec == -1">{{ 'Finish Quiz' | translate }}</h3>
+        <h3 *ngIf="totalSec == -1">{{ 'Finished Quiz' | translate }}</h3>
       </div>
     </tc-card>
   </div>
 </div>
+
+<ng-container #resModal>
+  <ng-template #modalBody>
+    <h3>{{ 'Finish Quiz' | translate }}</h3>
+    <h4>Result</h4>
+    <p>78%</p>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions" [ngStyle]="{ textAlign: 'right', display: 'block' }">
+      <button tc-button [view]="'default'" (click)="closeModal()">
+        {{ 'Exit' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
