@@ -186,7 +186,7 @@ export class QuizComponent extends BasePageComponent implements OnInit {
           this.programId = data.value;
           this.started = true;
           this.nextQuestion();
-          // this.updateTimer();
+          this.updateTimer();
           this.openModal(this.modalBody, this.modalFooter, {
             size: 'xl',
             closeButton: true,
@@ -281,7 +281,6 @@ export class QuizComponent extends BasePageComponent implements OnInit {
       if (this.totalSec > -1) this.startTimer();
       else {
         this.finished = true;
-        // this.openModal(this.resModal);
       }
     }, 1000);
   }
