@@ -11,7 +11,7 @@ const firebaseConfig = {
   storageBucket: 'innlab-mobile-app.appspot.com',
   messagingSenderId: '59188235869',
   appId: '1:59188235869:web:5a714cb0e1a6a5e64fc7b4',
-  measurementId: 'G-LE9YD9YBYJ'
+  measurementId: 'G-LE9YD9YBYJ',
 };
 
 export const environment = {
