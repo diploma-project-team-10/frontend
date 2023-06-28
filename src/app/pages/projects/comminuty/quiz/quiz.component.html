@@ -131,8 +131,69 @@
           :
           <span id="seconds">{{ seconds }}</span>
         </h3>
-        <h3 *ngIf="totalSec == -1">{{ 'Finish Quiz' | translate }}</h3>
+        <h3 *ngIf="totalSec == -1">{{ 'Finished Quiz' | translate }}</h3>
       </div>
     </tc-card>
   </div>
 </div>
+
+<ng-container #resModal>
+  <ng-template #modalBody>
+    <h3 class="text-center">{{ 'Finished Quiz' | translate }}</h3>
+    <div class="row">
+      <div class="resChart">
+        <apx-chart
+          [series]="[86]"
+          [chart]="radialBar.chart"
+          [plotOptions]="radialBar.plotOptions"
+          [labels]="radialBar.labels"
+          [dataLabels]="radialBar.dataLabels"
+          [legend]="radialBar.legend"
+          [colors]="radialBar.colors"
+        ></apx-chart>
+      </div>
+      <div class="resText">
+        <h4>
+          {{ 'Results' | translate }}
+        </h4>
+        <h5>
+          86%
+          <tc-icon
+            [iconClass]="'icofont-bubble-up'"
+            [tcFontSize]="20"
+            [tcColor]="'#28a745'"
+          ></tc-icon>
+          <tc-icon
+            [iconClass]="'icofont-bubble-down'"
+            [tcFontSize]="20"
+            [tcColor]="'#dc3545'"
+          ></tc-icon>
+        </h5>
+        <hr />
+        <h4>
+          {{ 'Topics to review' | translate }}
+        </h4>
+        <ul class="list-group">
+          <li class="list-group-item">Topic 1</li>
+          <li class="list-group-item">Topic 2</li>
+          <li class="list-group-item">Topic 3</li>
+          <li class="list-group-item">Topic 4</li>
+          <li class="list-group-item">Topic 5</li>
+        </ul>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions" [ngStyle]="{ textAlign: 'right', display: 'block' }">
+      <button
+        tc-button
+        [view]="'default'"
+        [routerLink]="['/vertical/subjects']"
+        (click)="closeModal()"
+      >
+        {{ 'Exit' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</ng-container>

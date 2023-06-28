@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IAppState } from '../../../../interfaces/app-state';
 import { HttpService } from '../../../../services/http/http.service';
@@ -20,11 +20,18 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import * as PageActions from '../../../../store/actions/page.actions';
+import { Content } from '../../../../ui/interfaces/modal';
+import { ApexPlotOptions, ChartComponent } from 'ng-apexcharts';
+import {
+  ChartLineOptions,
+  ChartOptionColumns,
+  ChartOptions,
+} from '../../../../interfaces/dashboard/dashboard';
 
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
-  styleUrls: ['./quiz.component.css'],
+  styleUrls: ['./quiz.component.scss'],
 })
 export class QuizComponent extends BasePageComponent implements OnInit {
   programId = '';
@@ -73,10 +80,18 @@ export class QuizComponent extends BasePageComponent implements OnInit {
     orderNum: 0,
   };
   started = false;
+  finished = false;
+  index;
 
-  totalSec: number = 20 * 60;
+  @ViewChild('resModal') resModal: any;
+  @ViewChild('modalBody') modalBody: any;
+  @ViewChild('modalFooter') modalFooter: any;
+  totalSec: number = 5;
   minutes: string;
   seconds: string;
+
+  @ViewChild('chart') chart: ChartComponent;
+  public radialBar: Partial<ChartOptions>;
 
   constructor(
     store: Store<IAppState>,
@@ -96,6 +111,50 @@ export class QuizComponent extends BasePageComponent implements OnInit {
     };
     this.successCode = 'Successfully saved!';
     this.errorCode = 'Not saved!';
+    this.radialBar = {
+      series: [0],
+      colors: ['#3D3DD8'],
+      chart: {
+        height: 275,
+        width: 205,
+        offsetX: -10,
+        offsetY: -10,
+        type: 'radialBar',
+        sparkline: {
+          enabled: true,
+        },
+      },
+      plotOptions: {
+        radialBar: {
+          hollow: {
+            margin: 0,
+            size: '70%',
+          },
+          track: {
+            margin: 0,
+            strokeWidth: '100%',
+          },
+          dataLabels: {
+            name: {
+              show: false,
+            },
+            value: {
+              fontSize: '46px',
+              color: '#3D3DD8',
+              fontWeight: 700,
+              show: true,
+            },
+          },
+        },
+      },
+      labels: [],
+      legend: {
+        itemMargin: {
+          horizontal: 0,
+          vertical: 0,
+        },
+      },
+    };
   }
 
   ngOnInit(): void {
@@ -128,6 +187,10 @@ export class QuizComponent extends BasePageComponent implements OnInit {
           this.started = true;
           this.nextQuestion();
           this.updateTimer();
+          this.openModal(this.modalBody, this.modalFooter, {
+            size: 'xl',
+            closeButton: true,
+          });
           this.toastr.success(data.message, 'Success', { closeButton: true });
         } else {
           this.toastr.error(data.message, 'Error', { closeButton: true });
@@ -216,9 +279,22 @@ export class QuizComponent extends BasePageComponent implements OnInit {
   updateTimer() {
     setInterval(() => {
       if (this.totalSec > -1) this.startTimer();
+      else {
+        this.finished = true;
+      }
     }, 1000);
   }
   pad(n: number) {
     return (n < 10 ? '0' : '') + n;
+  }
+  closeModal() {
+    this.modal.close();
+  }
+  openModal<T>(body: Content<T>, footer: Content<T>, options: any = null) {
+    this.modal.open({
+      body: body,
+      footer: footer,
+      options: options,
+    });
   }
 }

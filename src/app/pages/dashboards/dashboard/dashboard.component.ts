@@ -1,33 +1,35 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { BasePageComponent } from '../../base-page';
 import { IAppState } from '../../../interfaces/app-state';
 import { HttpService } from '../../../services/http/http.service';
-import {UserService} from '../../../user/_services/user.service';
-import {Router} from '@angular/router';
+import { UserService } from '../../../user/_services/user.service';
+import { Router } from '@angular/router';
 
-import {ApexPlotOptions, ChartComponent} from 'ng-apexcharts';
-import {ChartLineOptions, ChartOptionColumns, ChartOptions} from '../../../interfaces/dashboard/dashboard';
-import {environment} from '../../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-
-
+import { ApexPlotOptions, ChartComponent } from 'ng-apexcharts';
+import {
+  ChartLineOptions,
+  ChartOptionColumns,
+  ChartOptions,
+} from '../../../interfaces/dashboard/dashboard';
+import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'page-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-
-export class PageDashboardComponent extends BasePageComponent implements OnInit, OnDestroy {
+export class PageDashboardComponent extends BasePageComponent
+  implements OnInit, OnDestroy {
   @ViewChild('chart') chart: ChartComponent;
   public attendanceEnglish: Partial<ChartLineOptions>;
   public radialBar: Partial<ChartOptions>;
 
   semester: any[] = [
     { value: 1, label: 'Семестр 1' },
-    { value: 2, label: 'Семестр 2' }
+    { value: 2, label: 'Семестр 2' },
   ];
   months: any[] = [
     { value: 9, label: 'September' },
@@ -60,7 +62,7 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
       university: [],
       speciality: [],
       gender: null,
-      loading: false
+      loading: false,
     },
     specCount: {
       mentors: [],
@@ -71,28 +73,28 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
       gender: null,
       specHumCourse: null,
       specTechCourse: null,
-      loading: false
+      loading: false,
     },
     rating12: {
       semester: null,
       city: [],
       mentors: [],
       gender: null,
-      loading: false
+      loading: false,
     },
     rating34: {
       semester: null,
       city: [],
       mentors: [],
       gender: null,
-      loading: false
+      loading: false,
     },
     filterAttLin: {
       semester: null,
       month: [],
       mentors: [],
       gender: null,
-      loading: false
+      loading: false,
     },
   };
 
@@ -103,15 +105,15 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
 
   attLin = [];
   att = {
-    9:  { label: 'September' , count: 0, isSelected: true },
-    10: { label: 'October' , count: 0, isSelected: true},
-    11: { label: 'November' , count: 0, isSelected: true},
-    12: { label: 'December' , count: 0, isSelected: true},
-    1:  { label: 'January' , count: 0, isSelected: false},
-    2:  { label: 'February' , count: 0, isSelected: true},
-    3:  { label: 'March' , count: 0, isSelected: true},
-    4:  { label: 'April' , count: 0, isSelected: true},
-    5:  { label: 'May' , count: 0 , isSelected: true},
+    9: { label: 'September', count: 0, isSelected: true },
+    10: { label: 'October', count: 0, isSelected: true },
+    11: { label: 'November', count: 0, isSelected: true },
+    12: { label: 'December', count: 0, isSelected: true },
+    1: { label: 'January', count: 0, isSelected: false },
+    2: { label: 'February', count: 0, isSelected: true },
+    3: { label: 'March', count: 0, isSelected: true },
+    4: { label: 'April', count: 0, isSelected: true },
+    5: { label: 'May', count: 0, isSelected: true },
   };
 
   studentData12: any[];
@@ -119,29 +121,27 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
   pageIndex = 1;
 
   constructor(
-      store: Store<IAppState>,
-      httpSv: HttpService,
-      private userService: UserService,
-      private router: Router,
-      private http: HttpClient,
+    store: Store<IAppState>,
+    httpSv: HttpService,
+    private userService: UserService,
+    private router: Router,
+    private http: HttpClient
   ) {
     super(store, httpSv);
     this.pageData = {
       title: 'Dashboard',
-      loaded: true
+      loaded: true,
     };
 
     const data = [];
     const categories = [];
 
-    Object.entries(this.attLin).forEach(
-        ([key, value]) => {
-          if (value.isSelected) {
-            data.push(value.count);
-            categories.push(value.label);
-          }
-        }
-    );
+    Object.entries(this.attLin).forEach(([key, value]) => {
+      if (value.isSelected) {
+        data.push(value.count);
+        categories.push(value.label);
+      }
+    });
 
     this.radialBar = {
       series: [0],
@@ -153,14 +153,14 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
         offsetY: -10,
         type: 'radialBar',
         sparkline: {
-          enabled: true
+          enabled: true,
         },
       },
       plotOptions: {
         radialBar: {
           hollow: {
             margin: 0,
-            size: '70%'
+            size: '70%',
           },
           track: {
             margin: 0,
@@ -174,18 +174,18 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
               fontSize: '46px',
               color: '#3D3DD8',
               fontWeight: 700,
-              show: true
-            }
+              show: true,
+            },
           },
-        }
+        },
       },
       labels: [],
       legend: {
         itemMargin: {
           horizontal: 0,
-          vertical: 0
-        }
-      }
+          vertical: 0,
+        },
+      },
     };
 
     const now = new Date();
@@ -208,7 +208,7 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
     //   });
     // }
 
-    this.getPrepareOption().then(r => {
+    this.getPrepareOption().then((r) => {
       this.speciality = this.prepareOption(r['speciality']);
       this.university = this.prepareOption(r['university']);
       this.mentors = this.prepareOption(r['mentors']);
@@ -227,28 +227,28 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
     //     .then(r => {
     //   this.studentData34 = r;
     // });
-
   }
 
   prepareOption(value: any[]): any[] {
     const rr = [];
-    value.forEach(item => {
-      rr.push({value: item.id, label: item.value});
+    value.forEach((item) => {
+      rr.push({ value: item.id, label: item.value });
     });
     return rr;
   }
   async getPrepareOption(): Promise<any> {
-    return this.http.get<any>(`${environment.apiUrl}/api/profile/fields/list`)
-        .toPromise()
-        .then(response => response)
-        .catch();
+    return this.http
+      .get<any>(`${environment.apiUrl}/api/profile/fields/list`)
+      .toPromise()
+      .then((response) => response)
+      .catch();
   }
 
   async applyFilter(type: string, course: string = '') {
     switch (type) {
       case 'specCount':
         this.filter.specCount.loading = true;
-        this.getCountStatistic().then(r => {
+        this.getCountStatistic().then((r) => {
           const mentors = this.countStatistic['MENTOR'];
           this.countStatistic = r;
           if (!this.countStatistic['MENTOR']) {
@@ -268,25 +268,26 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
 
   // Count
   async getCountStatistic(): Promise<any> {
-    return this.http.get<any>(`${environment.apiUrl}/api/dashboard/count`)
-        .toPromise()
-        .then(response => response)
-        .catch();
+    return this.http
+      .get<any>(`${environment.apiUrl}/api/dashboard/count`)
+      .toPromise()
+      .then((response) => response)
+      .catch();
   }
   getPercentageCount(value: any[], key: string): number {
     let allCount = 0;
     let keyCount = 0;
-    value.forEach(item => {
+    value.forEach((item) => {
       allCount += item['count'];
       if (item['gender_enum'] === key) {
         keyCount = item['count'];
       }
     });
-    return keyCount * 100 / allCount;
+    return (keyCount * 100) / allCount;
   }
   getTotalCount(value: any[]): number {
     let result = 0;
-    value.forEach(item => {
+    value.forEach((item) => {
       result += item['count'];
     });
 
@@ -295,10 +296,11 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
 
   // Month Statistic by report
   async getByUrl(url: string): Promise<any> {
-    return this.http.get<any>(url)
-        .toPromise()
-        .then(response => response)
-        .catch();
+    return this.http
+      .get<any>(url)
+      .toPromise()
+      .then((response) => response)
+      .catch();
   }
   round(value: any): number {
     return Math.round(Number(value));
@@ -308,20 +310,26 @@ export class PageDashboardComponent extends BasePageComponent implements OnInit,
   }
 
   // Rating
-  async getRatingStudents(course: string = '', filter: string = 'rating'): Promise<any> {
+  async getRatingStudents(
+    course: string = '',
+    filter: string = 'rating'
+  ): Promise<any> {
     this.filter[filter].loading = true;
     this.filter[filter].loading = true;
     let url = `${environment.apiUrl}/api/dashboard/data/rating/list`;
     if (course.length) {
       url = `${environment.apiUrl}/api/dashboard/data/rating/list/all?cr=${course}`;
     }
-    return this.http.get<any>(url)
-        .toPromise()
-        .then(response => {
-          this.studentData = response;
-          this.filter[filter].loading = false;
-        } )
-        .catch();
+    return this.http
+      .get<any>(url)
+      .toPromise()
+      .then((response) => {
+        this.studentData = response;
+        this.filter[filter].loading = false;
+      })
+      .catch();
   }
-  onChangePageIndex(event) { this.pageIndex = event; }
+  onChangePageIndex(event) {
+    this.pageIndex = event;
+  }
 }
