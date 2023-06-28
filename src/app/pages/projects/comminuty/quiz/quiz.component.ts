@@ -116,7 +116,7 @@ export class QuizComponent extends BasePageComponent implements OnInit {
       colors: ['#3D3DD8'],
       chart: {
         height: 275,
-        width: 205,
+        width: 275,
         offsetX: -10,
         offsetY: -10,
         type: 'radialBar',
@@ -188,8 +188,8 @@ export class QuizComponent extends BasePageComponent implements OnInit {
           this.nextQuestion();
           this.updateTimer();
           this.openModal(this.modalBody, this.modalFooter, {
-            size: 'xl',
-            closeButton: true,
+            width: '750px',
+            overlayClose: false,
           });
           this.toastr.success(data.message, 'Success', { closeButton: true });
         } else {

@@ -173,13 +173,12 @@
         <h4>
           {{ 'Topics to review' | translate }}
         </h4>
-        <ul class="list-group">
-          <li class="list-group-item">Topic 1</li>
-          <li class="list-group-item">Topic 2</li>
-          <li class="list-group-item">Topic 3</li>
-          <li class="list-group-item">Topic 4</li>
-          <li class="list-group-item">Topic 5</li>
-        </ul>
+        <tc-list [timeline]="true">
+          <tc-list-item>Topic 1</tc-list-item>
+          <tc-list-item>Topic 2</tc-list-item>
+          <tc-list-item>Topic 3</tc-list-item>
+          <tc-list-item>Topic 4</tc-list-item>
+        </tc-list>
       </div>
     </div>
   </ng-template>
