@@ -15,19 +15,20 @@ import {FieldService} from '../../../../../interfaces/services/reference/field.s
 import {Program} from '../../../../../interfaces/services/projects/community.service';
 
 @Component({
-    selector: 'quiz-result-list',
-    templateUrl: './result-list.component.html',
-    styleUrls: ['./result-list.component.scss']
+    selector: 'question-list',
+    templateUrl: './question-list.component.html',
+    styleUrls: ['./question-list.component.scss']
 })
-export class QuizResultListComponent implements OnInit {
+export class QuestionListComponent implements OnInit {
     @Input() userId = '';
 
-    pageSize = 4;
+    pageSize = 20;
     pageIndex = 1;
-    totalData = 16;
+    totalData = 0;
     loading = false;
 
-    programList = [];
+    programList: Program[] = [];
+    programList1 = [];
 
     sortData = {};
     queryParams: any = {};
@@ -50,14 +51,8 @@ export class QuizResultListComponent implements OnInit {
             result: '13/20',
             relatedTopics: ['Arithmethic', 'Algebraic expressions'],
             createdAt: '01.04.2023'
-        },        {
-            title: 'Математика',
-            result: '13/20',
-            relatedTopics: ['Arithmethic', 'Algebraic expressions'],
-            createdAt: '01.04.2023'
         },
     ];
-    programFilter: any;
 
     constructor(store: Store<IAppState>, httpSv: HttpService,
                 private formBuilder: FormBuilder,
@@ -78,6 +73,7 @@ export class QuizResultListComponent implements OnInit {
         const urlTree = this.router.parseUrl(this.routeSnapshot);
         this.routeSnapshot = urlTree.root.children['primary'].segments.map(it => it.path).join('/');
         this.renderQueryParams(this.queryParams);
+
     }
 
     getListOfResult() {
@@ -114,16 +110,17 @@ export class QuizResultListComponent implements OnInit {
                 return data;
             }))
             .subscribe(data => {
-                for (let i = 0; i < data.length; i++) {
-                    this.programList.push({
-                        label: data[i].title,
-                        value: data[i].id
+                this.programList = data;
+                for (let i = 0; i < this.programList.length; i++) {
+                    this.programList1.push({
+                        label: this.programList[i].title,
+                        value: this.programList[i].id
                     });
                 }
+                this.programList1.push({
+                    label: 'None',
+                    value: ''
+                });
             });
-    }
-
-    onChange() {
-
     }
 }

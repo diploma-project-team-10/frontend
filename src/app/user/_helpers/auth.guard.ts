@@ -40,7 +40,6 @@ export class AuthGuard implements CanActivate {
         })
         .then((r) => {});
     }
-    console.log(route.data.roles);
     if (!route.data || !route.data.roles || !route.data.roles.length) {
       return true;
     }

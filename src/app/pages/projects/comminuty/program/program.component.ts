@@ -66,13 +66,12 @@ export class ProgramComponent extends BasePageComponent implements OnInit, OnDes
     async ngOnInit() {
         if (this.route.snapshot.params['id']) {
             this.id = this.route.snapshot.params['id'];
+            this.getPassport();
             this.isNew = false;
             this.exists = true;
         }
         super.ngOnInit();
         this.setLoaded();
-        this.loading = true;
-        this.getPassport();
     }
 
     postRequest(url, postParam): Promise<Status> {
@@ -86,20 +85,21 @@ export class ProgramComponent extends BasePageComponent implements OnInit, OnDes
         if (!this.isNew) {
             const url = `${environment.apiUrl}/api/project/community/program/${this.id}`;
             return this.http.get<any>(url).pipe(map(data => {
-                    return data;
-                })).subscribe(
-                    async data => {
-                        if (Object.keys(data).length) {
-                            this.passport = data;
-                            this.imgUrl = this.passport['image'];
-                            this.loading = false;
-                        } else {
-                            this.isEmpty = true;
-                        }
-                    },
-                    error => {
+                return data;
+            })).subscribe(
+                async data => {
+                    if (Object.keys(data).length) {
+                        this.passport = data;
+                        this.title = this.passport['title'];
+                        this.imgUrl = this.passport['image'];
+                        this.loading = false;
+                    } else {
                         this.isEmpty = true;
-                    });
+                    }
+                },
+                error => {
+                    this.isEmpty = true;
+                });
         } else {
             this.loading = false;
         }

@@ -222,7 +222,7 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
 
     openTopicList() {
         if (!this.children) {
-            return this.http.get<Topic[]>(`${environment.apiUrl}/api/project/community/topic/list`)
+            return this.http.get<Topic[]>(`${environment.apiUrl}/api/project/community/topic/list/${this.program}`)
                 .pipe(map(data => {
                     return data;
                 }))
@@ -278,8 +278,7 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
         });
         for (let i = this.topicList.length - 1; i >= 0; i--) {
             if (this.topicList[i].parentId != null
-                && this.topicList[i].parentId !== ''
-                && this.topicList[i].parentId !== this.program) {
+                && this.topicList[i].parentId !== '') {
                 this.topicList.splice(i, 1);
             }
         }
@@ -299,6 +298,7 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
                 id: '',
                 title: '',
                 parentId: addTopic.parentId,
+                programId: this.program,
                 orderNum: 0,
                 hidden: true,
                 children: [],
@@ -316,6 +316,7 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
                 title: '+Add New Topic',
                 key: 'add' + newTopic.id,
                 parentId: newTopic.id,
+                programId: this.program,
                 orderNum: 0,
                 hidden: true,
                 children: [],

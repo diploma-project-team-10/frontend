@@ -12,6 +12,7 @@ export interface Topic {
     title: string;
     key?: string;
     parentId: string;
+    programId: string;
     orderNum: number;
     hidden: boolean;
     children: Topic[];

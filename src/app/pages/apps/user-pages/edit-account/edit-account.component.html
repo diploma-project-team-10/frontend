@@ -14,7 +14,6 @@
                                     [isNew]="false"
                                     [styleType]="'single'"
                                     [formControlName]="'first_name'"
-                                    [disabled]="!canEdit"
                             ></tc-string-field>
                             <tc-string-field
                                     [_valueField]="fieldsData['last_name']"
@@ -24,7 +23,6 @@
                                     [isNew]="false"
                                     [styleType]="'single'"
                                     [formControlName]="'last_name'"
-                                    [disabled]="!canEdit"
                             ></tc-string-field>
                             <tc-string-field
                                     [_valueField]="fieldsData['middle_name']"
@@ -34,7 +32,6 @@
                                     [isNew]="false"
                                     [styleType]="'single'"
                                     [formControlName]="'middle_name'"
-                                    [disabled]="!canEdit"
                             ></tc-string-field>
                             <tc-enumeration-field
                                     [_valueField]="fieldsData['gender_enum']"
@@ -53,6 +50,7 @@
                                                 [formControlName]="'city'"
                             ></tc-reference-field>
                             <tc-string-field class="col-12 col-md-6"
+                                             [title]="addressTitle"
                                              [_valueField]="fieldsData['address']"
                                              [(ngModel)]="fieldsData['address'].value"
                                              [type]="'edit'"

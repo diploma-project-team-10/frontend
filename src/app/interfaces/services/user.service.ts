@@ -7,6 +7,7 @@ export interface User {
     lastName: string;
     email: string;
     password: string;
+    type: string;
 }
 
 export const roleReference = {

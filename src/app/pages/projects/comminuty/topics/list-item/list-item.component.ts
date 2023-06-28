@@ -46,7 +46,7 @@ export class TopicListItemComponent implements OnInit {
   addChildren(children: Topic[], parentId: string, pos: number) {
     this.data[pos].hidden = false;
     this.iconString = 'icofont-caret-down tc-icon-wrap';
-    children.push({ id: '', title: '', key: '', children: [], parentId: parentId, orderNum: 0, hidden: false});
+    children.push({ id: '', title: '', key: '', children: [], programId: this.program, parentId: parentId, orderNum: 0, hidden: false});
   }
 
   saveTopic(topic: Topic, i: number) {
@@ -139,7 +139,7 @@ export class TopicListItemComponent implements OnInit {
   }
 
   addTopic() {
-    this.data.push({ id: '', title: this.newTopic, children: [], parentId: this.program, orderNum: 0, hidden: true });
+    this.data.push({ id: '', title: this.newTopic, children: [], programId: this.program, parentId: this.program, orderNum: 0, hidden: true });
     const index = this.data.length - 1;
     this.saveTopic(this.data[index], index);
     this.newTopic = '';

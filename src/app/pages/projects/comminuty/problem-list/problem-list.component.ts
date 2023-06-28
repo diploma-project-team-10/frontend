@@ -185,7 +185,7 @@ export class ProblemListComponent implements OnInit {
 
     openTopicList() {
         if (!this.children) {
-            return this.http.get<Topic[]>(`${environment.apiUrl}/api/project/community/topic/list`)
+            return this.http.get<Topic[]>(`${environment.apiUrl}/api/project/community/topic/list/${this.program}`)
                 .pipe(map(data => {
                     return data;
                 }))
@@ -218,7 +218,6 @@ export class ProblemListComponent implements OnInit {
         for (let i = this.topicList.length - 1; i >= 0; i--) {
             if (this.topicList[i].parentId != null
                 && this.topicList[i].parentId !== ''
-                && this.topicList[i].parentId !== this.program
             ) {
                 this.topicList.splice(i, 1);
             }
@@ -229,7 +228,7 @@ export class ProblemListComponent implements OnInit {
     openProgramList() {
         // this.initTable();
         // this.loading = true;
-        return this.http.get<Program[]>(`${environment.apiUrl}/api/project/community/programs/list`)
+        return this.http.get<Program[]>(`${environment.apiUrl}/api/project/community/program/list`)
             .pipe(map(data => {
                 return data;
             }))

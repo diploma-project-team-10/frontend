@@ -30,6 +30,7 @@ export class PageSignUpComponent implements OnInit {
       label: 'Student',
     }
   ];
+  role:any = null;
 
   constructor(private router: Router,
               private http: HttpClient,
@@ -54,13 +55,28 @@ export class PageSignUpComponent implements OnInit {
   }
 
   signUp() {
+    if (
+        this.username.invalid ||
+        this.firstName.invalid ||
+        this.lastName.invalid ||
+        this.type.invalid ||
+        this.email.invalid ||
+        this.password.invalid ||
+        this.confirm.invalid
+    ) {
+      this.toastr.error('Please fill all required fields', 'Error', { closeButton: true });
+      this.loading = false;
+      return;
+    }
+
     // tslint:disable-next-line:label-position
     const newUser: User = {
       username:  this.email.toString(),
       firstName: this.firstName.toString(),
       lastName: this.lastName.toString(),
       email: this.email.toString(),
-      password: this.password.toString()
+      password: this.password.toString(),
+      type: this.type.toString()
     };
     // this.router.navigate(['']);
     this.authenticationService.register(newUser)
@@ -69,7 +85,7 @@ export class PageSignUpComponent implements OnInit {
             data => {
               if (data.status) {
                 this.toastr.success('Welcome!', 'Success', {closeButton: true});
-                this.router.navigate(['/vertical/edit']).then(r => {});
+                this.router.navigate(['/vertical/user-profile']).then(r => {});
               } else {
                 this.toastr.error(data.message, 'Error', { closeButton: true });
                 this.error = data.message;
@@ -114,8 +130,18 @@ export class PageSignUpComponent implements OnInit {
     return this.loginForm.get('password').value;
   }
 
+  get type() {
+    return this.loginForm.get('type').value;
+  }
+
   get confirm() {
     return this.loginForm.get('confirm').value;
+  }
+
+  onChange(value) {
+    if (value) {
+      this.loginForm.controls['type'].setValue(value);
+    }
   }
 }
 

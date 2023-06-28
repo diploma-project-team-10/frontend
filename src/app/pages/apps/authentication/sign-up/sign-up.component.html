@@ -31,11 +31,8 @@
     <ng-container
       *ngIf="firstName.invalid && (firstName.touched || firstName.dirty)"
     >
-      <span @fadeIn class="error" *ngIf="firstName.getError('required')">
+      <span @fadeIn class="error" *ngIf="firstName.getError('required') || firstName.getError('firstName')">
         Please enter your first name
-      </span>
-      <span @fadeIn class="error" *ngIf="firstName.getError('firstName')">
-        Please enter valid first name
       </span>
     </ng-container>
   </tc-form-group>
@@ -50,11 +47,8 @@
     <ng-container
       *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)"
     >
-      <span @fadeIn class="error" *ngIf="lastName.getError('required')">
+      <span @fadeIn class="error" *ngIf="lastName.getError('required') || lastName.getError('lastName')">
         Please enter your last name
-      </span>
-      <span @fadeIn class="error" *ngIf="lastName.getError('lastName')">
-        Please enter valid last name
       </span>
     </ng-container>
   </tc-form-group>
@@ -67,11 +61,8 @@
     ></tc-input>
 
     <ng-container *ngIf="email.invalid && (email.touched || email.dirty)">
-      <span @fadeIn class="error" *ngIf="email.getError('required')">
+      <span @fadeIn class="error" *ngIf="email.getError('required') || email.getError('email')">
         Please enter your email
-      </span>
-      <span @fadeIn class="error" *ngIf="email.getError('email')">
-        Please enter valid email
       </span>
     </ng-container>
   </tc-form-group>
@@ -114,12 +105,14 @@
     <tc-select
       [options]="types"
       [placeholder]="'Select your role'"
-      formControlName="type"
+      [ngModelOptions]="{standalone: true}"
+      [(ngModel)]="role"
+      (ngModelChange)="onChange($event)"
     ></tc-select>
 
-    <ng-container *ngIf="confirm.invalid && (confirm.touched || confirm.dirty)">
-      <span @fadeIn class="error" *ngIf="confirm.getError('notMatch')">
-        Password's do not match
+    <ng-container *ngIf="type.invalid && (type.touched || type.dirty)">
+      <span @fadeIn class="error" *ngIf="type.getError('required')">
+        Select Your Role
       </span>
     </ng-container>
   </tc-form-group>

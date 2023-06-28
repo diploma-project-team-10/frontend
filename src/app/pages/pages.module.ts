@@ -146,6 +146,7 @@ import { ProgramListComponent } from './projects/programs';
 import { QuizResultListComponent } from './apps/user-pages/user-profile/problem-list';
 import { PageTeacherListComponent } from './projects/teacher-list';
 import { PageStudentListComponent } from './projects/student-list/student-list.component';
+import {QuestionListComponent} from './apps/user-pages/user-profile/question-list';
 
 registerLocaleData(en);
 
@@ -277,6 +278,7 @@ registerLocaleData(en);
     QuizResultListComponent,
     PageTeacherListComponent,
     PageStudentListComponent,
+    QuestionListComponent,
   ],
   exports: [
     TCMiniFolderComponent,

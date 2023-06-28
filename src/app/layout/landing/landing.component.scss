@@ -17,6 +17,8 @@
       }
     }
     .horizontal-navbar {
+      top: 0;
+      position: sticky;
       box-shadow: 0 0 10px 0 rgba(#000, 0.15);
     }
   }
@@ -91,6 +93,7 @@ select {
 }
 
 .banner {
+  scroll-margin-top: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -111,6 +114,7 @@ select {
 }
 .banner__btn {
   // comment all after bootstrap
+  min-width: 100px !important;
   width: 40%;
   text-align: center;
   text-transform: uppercase;
@@ -133,14 +137,20 @@ select {
   //   color: #fff;
 }
 .banner__img {
+  height: calc(100vh - 60px);
   width: 45%;
 }
 .banner__img img {
+  height: 100%;
   width: 100%;
+}
+
+.videos {
 }
 
 .videos,
 .gallery {
+  scroll-margin-top: 70px;
   margin-top: 70px;
   padding: 0 100px;
 }
@@ -238,6 +248,7 @@ select {
   background-image: url('../../../assets/content/landing/gallery-six.png');
 }
 .community {
+  scroll-margin-top: 70px;
   width: 100%;
   padding: 65px 10px;
   background: #3d3dd8;
@@ -272,6 +283,7 @@ select {
   font-size: 18px;
 }
 .contacts {
+  scroll-margin-top: 70px;
   padding: 65px 115px;
 }
 .contacts__detail {
@@ -360,7 +372,7 @@ select {
   }
   .banner__img {
     height: 200px;
-    background-image: url('../../../assets/content/landing/Creative\ Block.png');
+    background-image: url('../../../assets/content/landing/Creative Block.png');
     background-size: cover;
     background-position-x: center;
     background-position-y: -150px;

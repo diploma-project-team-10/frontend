@@ -29,43 +29,13 @@ import { AuthenticationService } from '../../../../user/_services/authentication
 export class PageUserProfileComponent extends BasePageComponent
   implements OnInit, OnDestroy {
   @ViewChild('chart') chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
+  public rating: Partial<ChartLineOptions>;
   numDir = 5;
-  chartData = {
-    series: [
-      {
-        name: 'Series 1',
-        data: [0, 0, 0, 0, 0, 0, 0],
-      },
-    ],
-    xaxis: {
-      categories: [
-        'Books',
-        'Курс',
-        'Семинар',
-        'Тәжірибе',
-        'Edutest',
-        'Ағылшын тілі',
-      ],
-    },
-  };
-  userInfo: any;
   gender: IOption[];
   status: IOption[];
   currentAvatar: string | ArrayBuffer;
   defaultAvatar: string;
-  changes: boolean;
   profile: any;
-  profileStatistic: any;
-  profileEmpty = {
-    reading: false,
-    course: false,
-    seminar: false,
-    practice: false,
-    edutest: false,
-    lingua: false,
-    passport: false,
-  };
 
   id: string;
   loading = false;
@@ -77,7 +47,6 @@ export class PageUserProfileComponent extends BasePageComponent
   fieldsData = {};
   apiUrl = environment.apiUrl;
   canEdit = false;
-  archive = false;
   canDelete = false;
 
   selectedSemester = 'semester1';
@@ -86,45 +55,23 @@ export class PageUserProfileComponent extends BasePageComponent
     { value: 'semester2', label: 'SecondSemester' },
     { value: 'year', label: 'Year' },
   ];
-  typeChart = [
-    { value: 'list', label: 'List' },
-    { value: 'spyder', label: 'Spyder chart' },
-  ];
-  selectedTypeChart = 'list';
 
   selectedMonth = 'september';
-  selectedSertificate = 1;
-  month: any[] = [
-    // {value: 'august', label: 'August'},
-    { value: 'september', label: 'September' },
-    { value: 'october', label: 'October' },
-    { value: 'november', label: 'November' },
-    { value: 'december', label: 'December' },
-    { value: 'semester1', label: 'Semester 1' },
-    { value: 'january', label: 'January' },
-    { value: 'february', label: 'February' },
-    { value: 'march', label: 'March' },
-    { value: 'april', label: 'April' },
-    { value: 'may', label: 'May' },
-    { value: 'semester2', label: 'Semester 2' },
-    { value: 'year', label: 'Year' },
-    // {value: 'june', label: 'June'},
-    // {value: 'july', label: 'July'},
-  ];
-  sertificate: any[] = [
-    { value: 1, label: 'СertificatesValue' },
-    { value: 2, label: 'DocumentsValue' },
-    { value: 3, label: 'DiplomaValue' },
-  ];
-
-  array: [1, 2, 3, 4];
 
   switchValue = true;
   isEduWT = false;
   isPractice = false;
-  switched = false;
   isStudent = false;
-  public avgRating: Partial<ChartLineOptions>;
+  ratingPrograms = [{
+    value: '1',
+    label: 'Math',
+    data: [1500, 1350, 1620, 1590, 1700, null, null, null]
+  }, {
+    value: '2',
+    label: 'Biology',
+    data: [1500, 1420, 1800, 1920, 1760, null, null, null]
+  }];
+  ratingProgram: any;
 
   constructor(
     store: Store<IAppState>,
@@ -144,54 +91,56 @@ export class PageUserProfileComponent extends BasePageComponent
       loaded: true,
     };
     // this.chartRadar = new ApexChart();
-    this.chartOptions = {
-      chart: {
-        width: 480,
-        height: 480,
-        type: 'radar',
-        toolbar: {
-          show: false,
+    const data = [1500, 1350, 1620, 1590, 1700, null, null, null];
+    const dataMax = [null, null, null, null, null, null, null, null, 3000];
+    const dataMin = [null, null, null, null, null, null, null, null, 0];
+    const categories = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    this.rating = {
+      series: [
+        {
+          name: 'Ратинг',
+          data: data,
+          color: '#3D3DD8'
         },
-      },
-      title: {
-        text: '',
-      },
-      yaxis: {
-        min: 0,
-        max: 100,
-        tickAmount: 5,
-      },
-    };
-    this.avgRating = {
+      ],
       chart: {
-        height: 350,
+        height: 200,
         type: 'line',
         zoom: {
-          enabled: false,
-        },
+          enabled: false
+        }
       },
       dataLabels: {
-        enabled: false,
+        enabled: false
       },
       stroke: {
-        curve: 'straight',
+        curve: 'straight'
       },
       title: {
-        align: 'left',
+        align: 'left'
       },
       grid: {
         row: {
           colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5,
-        },
+          opacity: 0.5
+        }
       },
+      xaxis: {
+        categories: categories,
+        labels: {
+          show: false
+        }
+      },
+      yaxis: {
+        min: 0,
+        max: 3000,
+        tickAmount: 6
+      }
     };
 
     this.defaultAvatar = 'assets/content/anonymous-400.jpg';
     this.currentAvatar = this.defaultAvatar;
-    this.changes = false;
 
-    this.switched = this.authenticationService.isSwitched;
     if (this.route.snapshot.params['id']) {
       this.id = this.route.snapshot.params['id'];
     }
@@ -206,33 +155,9 @@ export class PageUserProfileComponent extends BasePageComponent
       'object'
     );
     this.getProfile();
-    this.getProfileStatistic();
+    this.getProfileRating();
     this.isAdmin = await this.userService.isAdmin();
-    Object.values(this.route.snapshot.url).forEach((value) => {
-      if (value.path === 'archive') {
-        this.archive = true;
-      }
-    });
-    if (this.id) {
-      this.canEdit = await this.fieldService.mayAccessRecord(
-        'edit',
-        this.referenceId,
-        this.id
-      );
-      this.canDelete = await this.fieldService.mayAccessRecord(
-        'delete',
-        this.referenceId,
-        this.id
-      );
-    }
-  }
-
-  switch() {
-    if (this.switched) {
-      this.authenticationService.switchBack();
-    } else if (this.id) {
-      this.authenticationService.switchLog(this.id);
-    }
+    this.isStudent = await this.userService.roleAccount(['student']);
   }
 
   ngOnDestroy() {
@@ -248,34 +173,20 @@ export class PageUserProfileComponent extends BasePageComponent
     if (this.id) {
       url = `${environment.apiUrl}/api/v2/profiles/user/${this.id}?fields=`;
     }
-    return this.http
-      .get<any>(url)
-      .pipe(
-        map((data) => {
-          return data;
-        })
-      )
+    return this.http.get<any>(url)
+      .pipe(map((data) => {return data;}))
       .subscribe(
         async (data) => {
           if (Object.keys(data).length) {
             this.profile = data;
-            this.isStudent = this.isEduWT =
-              this.profile.course === '1' ||
-              this.profile.course === '2' ||
-              this.profile.course === null;
-            this.isPractice =
-              this.profile.course === '3' ||
-              this.profile.course === '4' ||
-              this.profile.course === null;
-            if (this.isEduWT) {
-              this.numDir += 2;
-            }
-            if (this.isPractice) {
-              this.numDir += 1;
-            }
             if (this.profile['id']) {
               this.canEdit = await this.fieldService.mayAccessRecord(
                 'edit',
+                this.referenceId,
+                this.profile['id']
+              );
+              this.canDelete = await this.fieldService.mayAccessRecord(
+                'delete',
                 this.referenceId,
                 this.profile['id']
               );
@@ -291,129 +202,12 @@ export class PageUserProfileComponent extends BasePageComponent
       );
   }
 
-  getProfileStatistic() {
-    let url = `${environment.apiUrl}/api/project/grade/page/my?month=true`;
-    if (this.id) {
-      url = `${environment.apiUrl}/api/project/grade/page/${this.id}?month=true`;
-    }
-    return this.http
-      .get<any>(url)
-      .pipe(
-        map((data) => {
-          return data;
-        })
-      )
-      .subscribe(
-        async (data) => {
-          if (Object.keys(data).length) {
-            this.profileStatistic = data;
-            Object.keys(this.profileEmpty).forEach((key) => {
-              if (Object.keys(this.profileStatistic[key]).length) {
-                this.profileEmpty[key] = true;
-              }
-            });
-            this.changeMonth();
-            this.loading = false;
-          } else {
-            this.isEmpty = true;
-          }
-        },
-        (error) => {
-          this.isEmpty = true;
-        }
-      );
-  }
-
-  changeMonth() {
-    const categories = [
-      'Books',
-      'Курс',
-      'Семинар',
-      'Ағылшын тілі',
-      'M Passport',
-    ];
-    // tslint:disable-next-line:max-line-length
-    const data = [
-      this.profileStatistic['reading'][this.selectedMonth]['avg']
-        ? this.profileStatistic['reading'][this.selectedMonth]['avg']
-        : 0,
-      this.profileStatistic['course'][this.selectedMonth]['avg']
-        ? this.profileStatistic['course'][this.selectedMonth]['avg']
-        : 0,
-      this.profileStatistic['seminar'][this.selectedMonth]['avg']
-        ? this.profileStatistic['seminar'][this.selectedMonth]['avg']
-        : 0,
-      this.profileStatistic['lingua'][this.selectedMonth]['avg']
-        ? this.profileStatistic['lingua'][this.selectedMonth]['avg']
-        : 0,
-      this.profileStatistic['passport'][this.selectedMonth]['avg']
-        ? this.profileStatistic['passport'][this.selectedMonth]['avg']
-        : 0,
-    ];
-    if (this.isEduWT) {
-      // tslint:disable-next-line:max-line-length
-      data.push(
-        this.profileStatistic['edutest'][this.selectedMonth]['avg']
-          ? this.profileStatistic['edutest'][this.selectedMonth]['avg']
-          : 0
-      );
-      // tslint:disable-next-line:max-line-length
-      // data.push(this.profileStatistic['eduway'][this.selectedMonth]['avg'] ? this.profileStatistic['eduway'][this.selectedMonth]['avg'] : 0,
-      categories.push('Edutest');
-    }
-    if (this.isPractice) {
-      // tslint:disable-next-line:max-line-length
-      data.push(
-        this.profileStatistic['practice'][this.selectedMonth]['avg']
-          ? this.profileStatistic['practice'][this.selectedMonth]['avg']
-          : 0
-      );
-      categories.push('Тәжірибе');
-    }
-    this.chartData.series = [
-      {
-        name: 'Series 1',
-        data: data,
-      },
-    ];
-    this.chartData.xaxis = {
-      categories: categories,
-    };
-  }
-
   removeRecord() {
     this.modal.close();
     return this.http
       .post<Status>(
         `${environment.apiUrl}/api/reference/record/remove/${this.referenceId}/${this.id}`,
         {}
-      )
-      .subscribe({
-        next: (data) => {
-          if (data.status === 1) {
-            this.toastr.success(data.message, 'Success', { closeButton: true });
-            this.router
-              .navigate([
-                '/vertical/reference/record/section',
-                this.referenceId,
-                this.referenceId,
-              ])
-              .then((r) => {});
-          } else {
-            this.toastr.error(data.message, 'Error', { closeButton: true });
-          }
-        },
-        error: (error) => {
-          this.toastr.error('Not saved!', 'Error', { closeButton: true });
-        },
-      });
-  }
-
-  addFromArchive() {
-    this.modal.close();
-    return this.http
-      .delete<Status>(
-        `${environment.apiUrl}/api/profile/archive/unzip/${this.id}`
       )
       .subscribe({
         next: (data) => {
@@ -450,13 +244,20 @@ export class PageUserProfileComponent extends BasePageComponent
     });
   }
 
-  formatOne = (percent: number) =>
-    `${this.profileStatistic[this.selectedSemester]} pts.`;
-
   closeModal() {
     this.modal.close();
   }
-  ewrqwefqwef() {
-    return false;
+
+  ratingChange() {
+    const ratingProgram = this.ratingPrograms.find(item => item.value === this.ratingProgram);
+    this.rating.series = [{
+        name: 'Ратинг',
+        data: ratingProgram.data,
+        color: '#3D3DD8'
+      }];
+  }
+
+  getProfileRating() {
+    this.ratingProgram = this.ratingPrograms[0].value;
   }
 }

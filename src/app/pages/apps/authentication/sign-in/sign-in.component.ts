@@ -19,6 +19,7 @@ export class PageSignInComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+  addRouteLink = '';
 
   constructor(
       private formBuilder: FormBuilder,
@@ -40,6 +41,7 @@ export class PageSignInComponent implements OnInit {
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.addRouteLink = this.route.snapshot.queryParams['route'];
   }
 
   get f() { return this.loginForm.controls; }
@@ -59,7 +61,7 @@ export class PageSignInComponent implements OnInit {
             data => {
               if (data.status) {
                 this.toastr.success('Welcome!', 'Success', {closeButton: true});
-                this.router.navigate([this.returnUrl]).then(r => {});
+                this.router.navigate(['/vertical/user-profile']).then(r => {});
               } else {
                 this.toastr.error(data.message, 'Error', { closeButton: true });
                 this.error = data.message;
@@ -115,4 +117,8 @@ export class PageSignInComponent implements OnInit {
         });
   }
 
+    routeToSignUp() {
+      const queryParams = this.addRouteLink ? {queryParams: { route: '/vertical/subjects' } } : {};
+        this.router.navigate(['/public/sign-up'], queryParams).then(r => {});
+    }
 }

@@ -6,6 +6,16 @@ import {TCExternalEditRecordComponent} from '../../../reference/external/record/
 import {IReference} from '../../../../interfaces/services/reference/reference';
 import {Status} from '../../../../interfaces/services/util.service';
 import {roleReference} from '../../../../interfaces/services/user.service';
+import {Store} from '@ngrx/store';
+import {IAppState} from '../../../../interfaces/app-state';
+import {HttpService} from '../../../../services/http/http.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {UserService} from '../../../../user/_services/user.service';
+import {FieldService} from '../../../../interfaces/services/reference/field.service';
+import {ToastrService} from 'ngx-toastr';
+import {TCModalService} from '../../../../ui/services/modal/modal.service';
+import {AuthenticationService} from '../../../../user/_services/authentication.service';
 
 @Component({
   selector: 'page-edit-account',
@@ -14,6 +24,7 @@ import {roleReference} from '../../../../interfaces/services/user.service';
 })
 export class PageEditAccountComponent extends TCExternalEditRecordComponent implements OnInit, OnDestroy, AfterViewChecked {
     tabindex;
+    redirectUrl = '/vertical/user-profile';
     loaded = false;
     labelForm1: FormGroup;
     labelForm2: FormGroup;
@@ -23,6 +34,7 @@ export class PageEditAccountComponent extends TCExternalEditRecordComponent impl
     currentPassword = '';
     postAction = environment.apiUrl + '/api/v2/profiles/user/edit/avatar';
     canEdit = false;
+    addressTitle = 'Workplace';
 
     ngOnInit() {
         this.pageData = {
@@ -69,6 +81,9 @@ export class PageEditAccountComponent extends TCExternalEditRecordComponent impl
             this.loaded = true;
         }
         this.getRecordData('get-edit');
+        if (await this.userService.roleAccount(['student'])) {
+            this.addressTitle = 'EducationalPlace';
+        }
     }
 
     createForm() {

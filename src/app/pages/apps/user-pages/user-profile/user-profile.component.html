@@ -3,7 +3,7 @@
   <div>
     <button
       tc-button
-      *ngIf="(!id || canEdit || isAdmin) && !archive"
+      *ngIf="(!id || canEdit || isAdmin)"
       [view]="'info'"
       [beforeIcon]="'icofont-gear'"
       [routerLink]="
@@ -41,25 +41,17 @@
             <p class="mb-0 mt-1">{{ 'Lives' | translate }}</p>
             <span>{{ profile['city'] }}</span>
           </div>
-        </div>
-
-        <div class="mt-3">
-          <h5 class="mb-2">{{ 'Workplace' | translate }}</h5>
           <div class="mb-2 mt-2">
-            <div *ngIf="profile['university']">
-              <p class="mb-0 mt-1">{{ 'School' | translate }}</p>
-              <span>{{ profile['university'] }}</span>
+            <div *ngIf="profile['address']">
+              <p class="mb-2" *ngIf="!isStudent">{{ 'Workplace' | translate }}</p>
+              <p class="mb-2" *ngIf="!isStudent">{{ 'EducationalPlace' | translate }}</p>
+              <span>{{ profile['address'] }}</span>
             </div>
-            <div *ngIf="profile['speciality']">
+            <div *ngIf="profile['speciality'] && !isStudent">
               <p class="mb-0 mt-1">{{ 'Subject' | translate }}</p>
               <span>{{ profile['speciality'] }}</span>
-              <span *ngIf="profile['edu_degree']">
-                ({{ profile['edu_degree'] }})
-              </span>
             </div>
-            <div
-              *ngIf="profile['course'] && profile['roles'].includes('Студенты')"
-            >
+            <div *ngIf="profile['course'] && isStudent">
               <p class="mb-0 mt-1">{{ 'Course' | translate }}</p>
               <span>{{ profile['course'] }}</span>
             </div>
@@ -95,7 +87,7 @@
         </div>
         <div class="mt-3">
           <a
-            *ngIf="isAdmin && !archive"
+            *ngIf="isAdmin"
             [routerLink]="[
               '/vertical/profile/edit',
               profile['id'] ? profile['id'] : id
@@ -107,21 +99,7 @@
           </a>
           <br />
           <a
-            *ngIf="(isAdmin || canDelete) && id && archive"
-            [ngStyle]="{ color: '#949494' }"
-            (click)="
-              openModal(modalBodyArchive, 'Modal title', modalFooterArchive, {
-                closeButton: true,
-                overlayClose: true
-              })
-            "
-          >
-            <i class="icofont-upload-alt tc-icon-wrap mr-2"></i>
-            {{ 'Unarchive' | translate }}
-          </a>
-          <br />
-          <a
-            *ngIf="(isAdmin || canDelete) && id && !archive"
+            *ngIf="!id || ((isAdmin || canDelete) && id)"
             [ngStyle]="{ color: '#949494' }"
             (click)="
               openModal(modalBody, 'Modal title', modalFooter, {
@@ -139,211 +117,25 @@
   </div>
 
   <div class="col-12 col-md-8">
-    <tc-card *ngIf="profileStatistic">
-      <div class="d-flex justify-content-between">
-        <h4 class="mt-0">{{ 'RatingEducation' | translate }}</h4>
-        <tc-select
-          class="mr-2"
-          placeholder="Тип чарт"
-          [(ngModel)]="selectedTypeChart"
-          [options]="typeChart"
-        ></tc-select>
-        <tc-select
-          placeholder="Ай"
-          [(ngModel)]="selectedMonth"
-          [options]="month"
-          (ngModelChange)="changeMonth()"
-        ></tc-select>
+    <tc-card >
+      <div class="d-flex" style="justify-content: space-between;">
+        <h5 class="mt-0">{{'Rating'|translate}}</h5>
+        <tc-select class="mr-3" [(ngModel)]="ratingProgram" [options]="ratingPrograms" (ngModelChange)="ratingChange()"></tc-select>
       </div>
-
-      <div class="row" *ngIf="selectedTypeChart == 'list'">
-        <div class="rating col-12 col-md-6">
-          <div class="mb-3 icon d-flex">
-            <div
-              class="mr-3 ico-img"
-              [inlineSVG]="'assets/image/icons/CalendarDark.svg'"
-            ></div>
-            <div class="ico-text">
-              {{ 'Books' | translate }}
-              <div class="sub-text">
-                {{ 'SectionDescriptionBooks' | translate }}
-              </div>
-            </div>
-          </div>
-          <nz-progress
-            nzStrokeLinecap="round"
-            [nzPercent]="
-              this.profileEmpty['reading'] &&
-              this.profileStatistic['reading'][this.selectedMonth]['avg']
-                ? this.profileStatistic['reading'][this.selectedMonth]['avg']
-                : 0
-            "
-            nzStrokeColor="#3D3DD8"
-            nzStrokeWidth="12"
-          ></nz-progress>
-        </div>
-
-        <div class="rating col-12 col-md-6">
-          <div class="mb-3 icon d-flex">
-            <div
-              class="mr-3 ico-img"
-              [inlineSVG]="'assets/image/icons/MenuCourseDark.svg'"
-            ></div>
-            <div class="ico-text">
-              {{ 'Menu Courses' | translate }}
-              <div class="sub-text">
-                {{ 'SectionDescriptionMenuCourses' | translate }}
-              </div>
-            </div>
-          </div>
-          <nz-progress
-            nzStrokeLinecap="round"
-            [nzPercent]="
-              this.profileEmpty['course'] &&
-              profileStatistic['course'][selectedMonth]['avg']
-                ? profileStatistic['course'][selectedMonth]['avg']
-                : 0
-            "
-            nzStrokeColor="#3D3DD8"
-            nzStrokeWidth="12"
-          ></nz-progress>
-        </div>
-
-        <div class="rating col-12 col-md-6">
-          <div class="mb-3 icon d-flex">
-            <div
-              class="mr-3 ico-img"
-              [inlineSVG]="'assets/image/icons/SeminarDark.svg'"
-            ></div>
-            <div class="ico-text">
-              {{ 'Seminar' | translate }}
-              <div class="sub-text">
-                {{ 'SectionDescriptionSeminar' | translate }}
-              </div>
-            </div>
-          </div>
-          <nz-progress
-            nzStrokeLinecap="round"
-            [nzPercent]="
-              this.profileEmpty['seminar'] &&
-              profileStatistic['seminar'][selectedMonth]['avg']
-                ? profileStatistic['seminar'][selectedMonth]['avg']
-                : 0
-            "
-            nzStrokeColor="#3D3DD8"
-            nzStrokeWidth="12"
-          ></nz-progress>
-        </div>
-
-        <div class="rating col-12 col-md-6" *ngIf="isPractice">
-          <div class="mb-3 icon d-flex">
-            <div
-              class="mr-3 ico-img"
-              [inlineSVG]="'assets/image/icons/WorkDark.svg'"
-            ></div>
-            <div class="ico-text">
-              {{ 'Experience' | translate }}
-              <div class="sub-text">
-                {{ 'SectionDescriptionExperience' | translate }}
-              </div>
-            </div>
-          </div>
-          <nz-progress
-            nzStrokeLinecap="round"
-            [nzPercent]="
-              this.profileEmpty['practice'] &&
-              profileStatistic['practice'][selectedMonth]['avg']
-                ? profileStatistic['practice'][selectedMonth]['avg']
-                : 0
-            "
-            nzStrokeColor="#3D3DD8"
-            nzStrokeWidth="12"
-          ></nz-progress>
-        </div>
-
-        <div class="rating col-12 col-md-6">
-          <div class="mb-3 icon d-flex">
-            <div
-              class="mr-3 ico-img"
-              [inlineSVG]="'assets/image/icons/MPassportDark.svg'"
-            ></div>
-            <div class="ico-text">
-              {{ 'M Passport' | translate }}
-              <div class="sub-text">
-                {{ 'SectionDescriptionPassport' | translate }}
-              </div>
-            </div>
-          </div>
-          <nz-progress
-            nzStrokeLinecap="round"
-            [nzPercent]="
-              this.profileEmpty['passport'] &&
-              profileStatistic['passport'][selectedMonth]['avg']
-                ? profileStatistic['passport'][selectedMonth]['avg']
-                : 0
-            "
-            nzStrokeColor="#3D3DD8"
-            nzStrokeWidth="12"
-          ></nz-progress>
-        </div>
-
-        <div class="rating col-12 col-md-6" *ngIf="isEduWT">
-          <div class="mb-3 icon d-flex">
-            <div
-              class="mr-3 ico-img"
-              [inlineSVG]="'assets/image/icons/EdutestDark.svg'"
-            ></div>
-            <div class="ico-text">
-              {{ 'Edutest' | translate }}
-              <div class="sub-text">
-                {{ 'SectionDescriptionEdutest' | translate }}
-              </div>
-            </div>
-          </div>
-          <nz-progress
-            nzStrokeLinecap="round"
-            [nzPercent]="
-              this.profileEmpty['edutest'] &&
-              profileStatistic['edutest'][selectedMonth]['avg']
-                ? profileStatistic['edutest'][selectedMonth]['avg']
-                : 0
-            "
-            nzStrokeColor="#3D3DD8"
-            nzStrokeWidth="12"
-          ></nz-progress>
-        </div>
-
-        <div class="rating col-12 col-md-6">
-          <div class="mb-3 icon d-flex">
-            <div
-              class="mr-3 ico-img"
-              [inlineSVG]="'assets/image/icons/LinguaDark.svg'"
-            ></div>
-            <div class="ico-text">
-              {{ 'English' | translate }}
-              <div class="sub-text">
-                {{ 'SectionDescriptionEnglish' | translate }}
-              </div>
-            </div>
-          </div>
-          <nz-progress
-            nzStrokeLinecap="round"
-            [nzPercent]="
-              this.profileEmpty['lingua'] &&
-              profileStatistic['lingua'][selectedMonth]['avg']
-                ? profileStatistic['lingua'][selectedMonth]['avg']
-                : 0
-            "
-            nzStrokeColor="#3D3DD8"
-            nzStrokeWidth="12"
-          ></nz-progress>
-        </div>
-      </div>
+      <apx-chart
+              [series]="rating.series"
+              [chart]="rating.chart"
+              [xaxis]="rating.xaxis"
+              [yaxis]="rating.yaxis"
+              [dataLabels]="rating.dataLabels"
+              [grid]="rating.grid"
+              [stroke]="rating.stroke"
+              [title]="rating.title"
+      ></apx-chart>
     </tc-card>
 
-    <tc-card *ngIf="!isAdmin">
-      <quiz-result-list [userId]="profile['id']"></quiz-result-list>
-    </tc-card>
+    <quiz-result-list *ngIf="isStudent" [userId]="profile['id']"></quiz-result-list>
+
   </div>
 </div>
 
@@ -373,9 +165,6 @@
     <div class="actions" [ngStyle]="{ textAlign: 'right', display: 'block' }">
       <button tc-button [view]="'default'" (click)="closeModal()">
         {{ 'Cancel' | translate }}
-      </button>
-      <button tc-button [view]="'info'" (click)="addFromArchive()">
-        {{ 'Unarchive' | translate }}
       </button>
     </div>
   </ng-template>

@@ -72,13 +72,26 @@
     "sub": [
       {
         "title": "Main",
-        "routing": "courses/course/main"
+        "routing": "courses/course/main",
+        "access": ["admin"]
       },
       {
         "title": "List Course",
         "routing": "courses/course/list",
-        "access": ["admin", "chief", "head_city"]
+        "access": ["admin"]
       }
     ]
+  },
+  {
+    "title": "Menu Courses",
+    "routing": "courses/course/main",
+    "icon": {
+      "class": "icofont-library"
+    },
+    "pathToSvg": {
+      "pathToSvg": "assets/menuSvg/MenuCourse.svg",
+      "pathToDarkSvg": "assets/image/icons/MenuCourseDark.svg"
+    },
+    "access": ["mentor", "student"]
   }
 ]

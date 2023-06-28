@@ -1,31 +1,40 @@
-<nz-table
-    #basicTable
-    [nzData]="result"
-    [nzShowPagination]="true"
-    [nzPageSize]="pageSize"
-    [nzTotal]="totalData"
-    [nzLoading]="loading"
-    [nzPageIndex]="pageIndex"
-    [nzFrontPagination]="false"
-    (nzPageIndexChange)="onChangePageIndex($event)"
->
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Subject</th>
-        <th nzShowSort>Result</th>
-        <th>Topics</th>
-        <th nzShowSort nzColumnKey="date">Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let data of basicTable.data; let index = index;"
-        class="mainTable">
-        <td>{{ (pageSize * (pageIndex - 1)) + index + 1}}</td>
-        <td>{{ data.title }}</td>
-        <td>{{ data.result }}</td>
-        <td>{{ data.relatedTopics ? data.relatedTopics.join('.') : '' }}</td>
-        <td>{{ data.createdAt ? data.createdAt : '' }}</td>
-    </tr>
-    </tbody>
-</nz-table>
+<tc-card >
+    <div class="d-flex" style="justify-content: space-between;">
+        <h5 class="mt-0">{{'Quiz'|translate}}</h5>
+        <tc-select class="mr-3" [(ngModel)]="programFilter" allowClear="true" [options]="programList" placeholder="Выберите Предметь" (ngModelChange)="onChange()"></tc-select>
+    </div>
+
+    <nz-table
+        #basicTable
+        [nzData]="result"
+        [nzShowPagination]="true"
+        [nzPageSize]="pageSize"
+        [nzTotal]="totalData"
+        [nzLoading]="loading"
+        [nzPageIndex]="pageIndex"
+        [nzFrontPagination]="false"
+        (nzPageIndexChange)="onChangePageIndex($event)"
+    >
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Subject</th>
+            <th nzShowSort>Result</th>
+            <th>Topics</th>
+            <th nzShowSort nzColumnKey="date">Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of basicTable.data; let index = index;"
+            class="mainTable">
+            <td>{{ (pageSize * (pageIndex - 1)) + index + 1}}</td>
+            <td>{{ data.title }}</td>
+            <td>{{ data.result }}</td>
+            <td>{{ data.relatedTopics ? data.relatedTopics.join('.') : '' }}</td>
+            <td>{{ data.createdAt ? data.createdAt : '' }}</td>
+        </tr>
+        </tbody>
+    </nz-table>
+
+</tc-card>
+

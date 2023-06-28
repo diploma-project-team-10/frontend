@@ -34,11 +34,11 @@
         </nz-tab>
 
         <nz-tab [nzTitle]="'Topics'|translate" *ngIf="!isNew">
-            <add-topic [program]="passport['id']"></add-topic>
+            <add-topic [program]="id"></add-topic>
         </nz-tab>
 
         <nz-tab [nzTitle]="'Questions'|translate" *ngIf="!isNew">
-            <community-problem-list [program] = "passport['id']">
+            <community-problem-list [program] = "id">
             </community-problem-list>
         </nz-tab>
     </nz-tabset>

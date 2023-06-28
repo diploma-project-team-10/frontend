@@ -14,6 +14,7 @@ import {environment} from '../../../../../../environments/environment';
 import {Status} from '../../../../../interfaces/services/util.service';
 import {map} from 'rxjs/operators';
 import {TCModalService} from '../../../../../ui/services/modal/modal.service';
+import {UserService} from '../../../../../user/_services/user.service';
 
 @Component({
   selector: 'edit-srecord',
@@ -55,6 +56,7 @@ export class TCExternalEditRecordComponent extends BasePageComponent implements 
               protected http: HttpClient, protected router: Router,
               protected route: ActivatedRoute,
               protected fieldService: FieldService,
+              protected userService: UserService,
               protected readonly changeDetectorRef: ChangeDetectorRef,
               protected modal: TCModalService,
               protected toastr: ToastrService) {
@@ -152,6 +154,7 @@ export class TCExternalEditRecordComponent extends BasePageComponent implements 
               if (data.status === 1) {
                 this.toastr.success(data.message, 'Success', { closeButton: true });
                 if (edit === 'acc' && !this.recordId) {
+                  this.router.navigate([this.redirectUrl]).then();
                 } else {
                   this.router.navigate([this.redirectUrl, data.value]).then();
                 }

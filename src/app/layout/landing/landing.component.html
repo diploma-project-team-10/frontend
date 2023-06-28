@@ -26,6 +26,9 @@
       <p class="header header-nav" (click)="scroll('contacts')">
         {{ 'Navbar4' | translate }}
       </p>
+      <p class="header header-nav" [routerLink]="['/vertical/subjects']" *ngIf="currentUser">
+        {{ 'Quiz' | translate }}
+      </p>
     </div>
 
     <actions></actions>
@@ -62,9 +65,9 @@
             tc-button
             [view]="'info'"
             class="item banner__btn"
-            (click)="goTo($event, 'sign-in', '../public/')"
+            (click)="passQuizRoute()"
           >
-            {{ 'Log In' | translate }}
+            {{ 'Тест тапсыру' | translate }}
           </button>
         </div>
         <div class="banner__img">

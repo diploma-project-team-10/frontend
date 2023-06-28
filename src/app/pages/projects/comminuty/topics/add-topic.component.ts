@@ -61,7 +61,6 @@ export class AddTopicComponent implements OnInit {
     for (let i = this.topics.length - 1; i >= 0; i--) {
       if (this.topics[i].parentId != null
           && this.topics[i].parentId !== ''
-          && this.topics[i].parentId !== this.program
       ) {
         this.topics.splice(i, 1);
       }
@@ -70,15 +69,15 @@ export class AddTopicComponent implements OnInit {
   }
 
   getTopics() {
+    console.log(this.program);
     this.initTable();
-    return this.http.get<Topic[]>(`${environment.apiUrl}/api/project/community/topic/list`)
+    return this.http.get<Topic[]>(`${environment.apiUrl}/api/project/community/topic/list/${this.program}`)
         .pipe(map(data => {
           return data;
         }))
         .subscribe(data => {
           this.topics = data;
           if (this.topics.length === 0) {
-            this.topics.push({ id: '', title: '', children: [], parentId: this.program, orderNum: 0, hidden: false});
           } else {
             for (let i = 0; i < this.topics.length; i++) {
               this.topics[i].children = [];

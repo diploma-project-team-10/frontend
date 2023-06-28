@@ -44,7 +44,7 @@ export class PageLandingComponent extends BaseLayoutComponent
   index;
 
   loading = false;
-  currentUser: User;
+  currentUser = null;
 
   constructor(
     store: Store<IAppState>,
@@ -63,6 +63,7 @@ export class PageLandingComponent extends BaseLayoutComponent
 
   ngOnInit() {
     super.ngOnInit();
+    this.currentUser = this.authenticationService.currentUserValue;
     this.store.dispatch(new SettingsActions.Update({ layout: 'vertical' }));
     this.loading = true;
   }
@@ -91,25 +92,19 @@ export class PageLandingComponent extends BaseLayoutComponent
     });
   }
 
-  goTo(event: Event, link: string, layout: string = '') {
-    event.preventDefault();
-
-    if (link === 'sign-in') {
-      this.authenticationService.logout();
+  passQuizRoute() {
+    if (this.currentUser) {
+      this.router.navigate(['/vertical/subjects']).then(r => {});
+    } else {
+      this.router.navigate(['/public/sign-in'], {queryParams: { tabindex: 2, route: '/vertical/subjects' } }).then(r => {});
     }
-
-    setTimeout(() => {
-      this.router.navigate([layout ? layout : this.layout, link], {
-        queryParams: { tabindex: 2 },
-      });
-    });
   }
 
   scroll(targetName: string) {
     document.getElementById(targetName).scrollIntoView({
       behavior: 'smooth',
       block: 'start',
-      inline: 'nearest',
+      inline: 'start',
     });
   }
 

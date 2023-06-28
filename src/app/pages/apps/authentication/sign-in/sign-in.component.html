@@ -79,7 +79,7 @@
       <img src="assets/image/social/mailru.png" [height]="32" [width]="32" />
     </div>
     <div class="align-middle">
-      <a class="link right" [routerLink]="['/public/sign-up']">
+      <a class="link right" (click)="routeToSignUp()">
         {{ 'register' | translate }}
       </a>
     </div>
