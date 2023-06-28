@@ -3,7 +3,7 @@
   <div>
     <button
       tc-button
-      *ngIf="(!id || canEdit || isAdmin)"
+      *ngIf="!id"
       [view]="'info'"
       [beforeIcon]="'icofont-gear'"
       [routerLink]="
@@ -44,7 +44,7 @@
           <div class="mb-2 mt-2">
             <div *ngIf="profile['address']">
               <p class="mb-2" *ngIf="!isStudent">{{ 'Workplace' | translate }}</p>
-              <p class="mb-2" *ngIf="!isStudent">{{ 'EducationalPlace' | translate }}</p>
+              <p class="mb-2" *ngIf="isStudent">{{ 'EducationalPlace' | translate }}</p>
               <span>{{ profile['address'] }}</span>
             </div>
             <div *ngIf="profile['speciality'] && !isStudent">
@@ -117,12 +117,12 @@
   </div>
 
   <div class="col-12 col-md-8">
-    <tc-card >
+    <tc-card *ngIf="isStudentOrMentor()">
       <div class="d-flex" style="justify-content: space-between;">
         <h5 class="mt-0">{{'Rating'|translate}}</h5>
         <tc-select class="mr-3" [(ngModel)]="ratingProgram" [options]="ratingPrograms" (ngModelChange)="ratingChange()"></tc-select>
       </div>
-      <apx-chart
+      <apx-chart *ngIf="ratingPrograms.length"
               [series]="rating.series"
               [chart]="rating.chart"
               [xaxis]="rating.xaxis"
@@ -134,7 +134,8 @@
       ></apx-chart>
     </tc-card>
 
-    <quiz-result-list *ngIf="isStudent" [userId]="profile['id']"></quiz-result-list>
+    <quiz-result-list *ngIf="isStudentOrMentor()" [userId]="profile['id']"></quiz-result-list>
+    <my-question-list *ngIf="!isStudentOrMentor()" [userId]="profile['id']"></my-question-list>
 
   </div>
 </div>
@@ -151,20 +152,6 @@
       </button>
       <button tc-button [view]="'error'" (click)="removeRecord()">
         {{ 'Delete' | translate }}
-      </button>
-    </div>
-  </ng-template>
-</ng-container>
-
-<ng-container>
-  <ng-template #modalBodyArchive>
-    <p>{{ 'Are you sure you want to add User?' | translate }}</p>
-  </ng-template>
-
-  <ng-template #modalFooterArchive>
-    <div class="actions" [ngStyle]="{ textAlign: 'right', display: 'block' }">
-      <button tc-button [view]="'default'" (click)="closeModal()">
-        {{ 'Cancel' | translate }}
       </button>
     </div>
   </ng-template>

@@ -86,7 +86,7 @@ export class QuizComponent extends BasePageComponent implements OnInit {
   @ViewChild('resModal') resModal: any;
   @ViewChild('modalBody') modalBody: any;
   @ViewChild('modalFooter') modalFooter: any;
-  totalSec: number = 20 * 60;
+  totalSec: number = 20; /** 60*/
   minutes: string;
   seconds: string;
 
@@ -106,7 +106,7 @@ export class QuizComponent extends BasePageComponent implements OnInit {
   ) {
     super(store, httpSv);
     this.pageData = {
-      title: 'Quiz',
+      title: '',
       loaded: true,
     };
     this.successCode = 'Successfully saved!';
@@ -160,8 +160,6 @@ export class QuizComponent extends BasePageComponent implements OnInit {
   ngOnInit(): void {
     super.ngOnInit();
     this.programId = this.route.snapshot.params['programId'];
-    // console.log(this.programId);
-    // this.selectProgram();
   }
 
   initTable(): void {
@@ -183,6 +181,10 @@ export class QuizComponent extends BasePageComponent implements OnInit {
       )
       .subscribe((data) => {
         if (data.status === 1) {
+          this.pageData = {
+            title: 'Quiz',
+            loaded: true,
+          };
           this.programId = data.value;
           this.started = true;
           this.nextQuestion();

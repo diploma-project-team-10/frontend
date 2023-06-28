@@ -14,6 +14,7 @@ export interface Topic {
     parentId: string;
     programId: string;
     orderNum: number;
+    rating?: number;
     hidden: boolean;
     children: Topic[];
     isLeaf?: boolean;

@@ -15,14 +15,14 @@ import {FieldService} from '../../../../../interfaces/services/reference/field.s
 import {Program} from '../../../../../interfaces/services/projects/community.service';
 
 @Component({
-    selector: 'question-list',
+    selector: 'my-question-list',
     templateUrl: './question-list.component.html',
     styleUrls: ['./question-list.component.scss']
 })
 export class QuestionListComponent implements OnInit {
     @Input() userId = '';
 
-    pageSize = 20;
+    pageSize = 10;
     pageIndex = 1;
     totalData = 0;
     loading = false;
@@ -33,26 +33,7 @@ export class QuestionListComponent implements OnInit {
     sortData = {};
     queryParams: any = {};
     routeSnapshot = '';
-    result = [
-        {
-            title: 'Математика',
-            result: '19/20',
-            relatedTopics: ['Arithmethic', 'Algebraic expressions'],
-            createdAt: '10.05.2023'
-        },
-        {
-            title: 'Математика',
-            result: '16/20',
-            relatedTopics: ['Arithmethic', 'Algebraic expressions'],
-            createdAt: '04.05.2023'
-        },
-        {
-            title: 'Математика',
-            result: '13/20',
-            relatedTopics: ['Arithmethic', 'Algebraic expressions'],
-            createdAt: '01.04.2023'
-        },
-    ];
+    questions = [];
 
     constructor(store: Store<IAppState>, httpSv: HttpService,
                 private formBuilder: FormBuilder,
@@ -78,6 +59,17 @@ export class QuestionListComponent implements OnInit {
 
     getListOfResult() {
         this.initTable();
+        this.loading = true;
+        return this.http.get<IPageContent>(`${environment.apiUrl}/api/project/community/questions/list/${this.userId}` +
+            `?page=${this.pageIndex}&size=${this.pageSize}`)
+            .pipe(map(data => {
+                return data;
+            }))
+            .subscribe(data => {
+                this.questions = data.content;
+                this.totalData = data.totalElements;
+                this.loading = false;
+            });
     }
 
     onChangePageIndex(param) {
@@ -122,5 +114,11 @@ export class QuestionListComponent implements OnInit {
                     value: ''
                 });
             });
+    }
+
+    getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
     }
 }

@@ -3,11 +3,12 @@
     <li *ngFor="let item of data; let index = index;" cdkDrag  >
       <div class="d-flex mb-2">
         <button tc-button (click)="toggle(index)" [afterIcon]="iconString" [view]="'info'" [square]="true" class="mr-2"></button>
-        <tc-input [(ngModel)]="item.title"  (ngModelChange)="saveTopic(item, index)" class="mr-2" [placeholder]="'Topic title'"></tc-input>
+        <tc-input [(ngModel)]="item.title"  [nz-tooltip]="item?.rating ? 'Rating of Topic: ' + item?.rating : 'No Rating'"
+                  (ngModelChange)="saveTopic(item, index)" class="mr-2" [placeholder]="'Topic title'"></tc-input>
         <button tc-button (click)="openModal(modalBody, 'Modal title', modalFooter, { closeButton: true, overlayClose: true }, index)" [afterIcon]="'icofont-close'" [view]="'error'" [square]="true" class="mr-2"></button>
       </div>
 
-      <topic-list-item *ngIf="item.hidden == false" [data]="item.children" [program]="item['id']"></topic-list-item>
+      <topic-list-item *ngIf="item.hidden == false" [data]="item.children" [program]="program" [parent]="item['id']"></topic-list-item>
     </li>
     <li>
       <div class="d-flex mb-2">

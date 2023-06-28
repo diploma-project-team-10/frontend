@@ -66,12 +66,12 @@ export class ProgramComponent extends BasePageComponent implements OnInit, OnDes
     async ngOnInit() {
         if (this.route.snapshot.params['id']) {
             this.id = this.route.snapshot.params['id'];
-            this.getPassport();
             this.isNew = false;
             this.exists = true;
         }
         super.ngOnInit();
         this.setLoaded();
+        this.getPassport();
     }
 
     postRequest(url, postParam): Promise<Status> {
@@ -153,13 +153,7 @@ export class ProgramComponent extends BasePageComponent implements OnInit, OnDes
         this.isFocused = true;
     }
 
-    openModalRemove(
-        body: any,
-        header: any = null,
-        footer: any = null,
-        options: any = null,
-        index: number = -1
-    ) {
+    openModalRemove(body: any, header: any = null, footer: any = null, options: any = null, index: number = -1) {
         this.removeIndex = index;
         this.modal.open({
             body: body,

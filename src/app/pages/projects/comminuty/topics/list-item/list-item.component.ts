@@ -26,6 +26,7 @@ import {ExpEx} from '../../../../../interfaces/services/projects/sendex';
 export class TopicListItemComponent implements OnInit {
   @Input() data: Topic[] = [];
   @Input() program = '';
+  @Input() parent = '';
 
   index;
   successColor = 'success';
@@ -139,10 +140,13 @@ export class TopicListItemComponent implements OnInit {
   }
 
   addTopic() {
-    this.data.push({ id: '', title: this.newTopic, children: [], programId: this.program, parentId: this.program, orderNum: 0, hidden: true });
+    this.data.push({ id: '', title: this.newTopic, children: [], programId: this.program, parentId: this.parent, orderNum: 0, hidden: true });
     const index = this.data.length - 1;
     this.saveTopic(this.data[index], index);
     this.newTopic = '';
   }
 
+  isNumber(rating) {
+    return Number.isInteger(rating);
+  }
 }

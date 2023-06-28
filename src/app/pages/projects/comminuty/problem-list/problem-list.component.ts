@@ -71,7 +71,8 @@ export class ProblemListComponent implements OnInit {
     getListQuestion() {
         this.initTable();
         this.loading = true;
-        return this.http.get<IPageContent>(`${environment.apiUrl}/api/project/community/questions/list?page=${this.pageIndex}&size=${this.pageSize}`)
+        return this.http.get<IPageContent>(`${environment.apiUrl}/api/project/community/questions/list` +
+            `?page=${this.pageIndex}&size=${this.pageSize}&programId=${this.program}`)
             .pipe(map(data => {
                 return data;
             }))
@@ -94,8 +95,8 @@ export class ProblemListComponent implements OnInit {
         //     body['byProgram'] = true;
         // }
         // console.log(body);
-        return this.http.post<IPageContent>(`${environment.apiUrl}/api/project/community/questions/list`
-            + `?page=${this.pageIndex}&size=${this.pageSize}${this.prepareParamsFields()}`, body)
+        return this.http.get<IPageContent>(`${environment.apiUrl}/api/project/community/questions/list`
+            + `?page=${this.pageIndex}&size=${this.pageSize}&programId=${this.program}${this.prepareParamsFields()}`)
             .pipe(map(data => {
                 return data;
             }))

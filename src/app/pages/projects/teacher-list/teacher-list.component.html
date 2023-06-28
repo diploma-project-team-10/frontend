@@ -6,34 +6,42 @@
       </div>
 
       <nz-table
-        #rakingTable
-        [nzData]="studentData"
-        [nzPageSize]="5"
-        [nzShowTotal]="totalTpl"
+        #basicTable
+        [nzData]="comAdmin"
+        [nzShowPagination]="true"
+        [nzPageSize]="pageSize"
+        [nzTotal]="totalData"
+        [nzLoading]="loading"
         [nzPageIndex]="pageIndex"
+        [nzFrontPagination]="false"
+        [nzShowTotal]="totalTpl"
         (nzPageIndexChange)="onChangePageIndex($event)"
         nzTableLayout="fixed"
         class="table-raking"
       >
         <thead>
           <tr>
-            <th>
+            <th class="col-1">#</th>
+            <th class="col-5">
               {{ 'Teacher' | translate }}
             </th>
-            <th>
+            <th class="col-3">
               {{ 'Gender' | translate }}
             </th>
-            <th>
+            <th class="col-3">
               {{ 'Subject' | translate }}
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Dr. John</td>
-            <td>Male</td>
-            <td>Math</td>
-          </tr>
+          <tr *ngFor="let data of basicTable.data; let index = index;"
+            class="mainTable">
+              <td>{{ (pageSize * (pageIndex - 1)) + index + 1}}</td>
+              <td><a [routerLink]="['/vertical/profile/', data.id]">{{data.fio}}</a>
+              </td>
+              <td>{{ data.gender | translate }}</td>
+              <td>{{ data.subject  | translate }}</td>
+            </tr>
         </tbody>
       </nz-table>
       <ng-template #totalTpl let-totalData>

@@ -62,6 +62,7 @@ export class PageUserProfileComponent extends BasePageComponent
   isEduWT = false;
   isPractice = false;
   isStudent = false;
+  isMentor = false;
   ratingPrograms = [{
     value: '1',
     label: 'Math',
@@ -91,10 +92,8 @@ export class PageUserProfileComponent extends BasePageComponent
       loaded: true,
     };
     // this.chartRadar = new ApexChart();
-    const data = [1500, 1350, 1620, 1590, 1700, null, null, null];
-    const dataMax = [null, null, null, null, null, null, null, null, 3000];
-    const dataMin = [null, null, null, null, null, null, null, null, 0];
-    const categories = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const data = [];
+    const categories = [];
     this.rating = {
       series: [
         {
@@ -158,6 +157,7 @@ export class PageUserProfileComponent extends BasePageComponent
     this.getProfileRating();
     this.isAdmin = await this.userService.isAdmin();
     this.isStudent = await this.userService.roleAccount(['student']);
+    this.isMentor = await this.userService.roleAccount(['mentor']);
   }
 
   ngOnDestroy() {
@@ -260,4 +260,8 @@ export class PageUserProfileComponent extends BasePageComponent
   getProfileRating() {
     this.ratingProgram = this.ratingPrograms[0].value;
   }
+
+    isStudentOrMentor() {
+        return this.isStudent || this.isMentor;
+    }
 }

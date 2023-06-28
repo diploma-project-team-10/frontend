@@ -131,34 +131,32 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.httpSv.getData(url).subscribe(
       data => {
         this.menuItems = data;
-        if (!this.isAdmin) {
-          const menuAccess: IMenuItem[] = [];
-          this.menuItems.forEach(item => {
-              // Sub menu begin
-              if (item.sub && item.sub.length > 0) {
-                const subs = [];
-                item.sub.forEach(sub => {
-                  if (sub.access && sub.access.length > 0) {
-                    if (sub.access.filter(x => this.roles.includes(x)).length > 0) {
-                      subs.push(sub);
-                    }
-                  } else {
-                    subs.push(sub);
-                  }
-                });
-                item.sub = subs;
+        const menuAccess: IMenuItem[] = [];
+        this.menuItems.forEach(item => {
+          // Sub menu begin
+          if (item.sub && item.sub.length > 0) {
+            const subs = [];
+            item.sub.forEach(sub => {
+              if (sub.access && sub.access.length > 0) {
+                if (sub.access.filter(x => this.roles.includes(x)).length > 0) {
+                  subs.push(sub);
+                }
+              } else {
+                subs.push(sub);
               }
-              // Sub menu end
+            });
+            item.sub = subs;
+          }
+          // Sub menu end
 
-              if (
-                  (item.access && item.access.filter(x => this.roles.includes(x)).length > 0)
-                  || !item.access
-              ) {
-                menuAccess.push(item);
-              }
-          });
-          this.menuItems = menuAccess;
-        }
+          if (
+              (item.access && item.access.filter(x => this.roles.includes(x)).length > 0)
+              || !item.access
+          ) {
+            menuAccess.push(item);
+          }
+        });
+        this.menuItems = menuAccess;
         this.setActiveItem();
       },
       err => {
@@ -282,18 +280,13 @@ export class MenuComponent implements OnInit, OnDestroy {
       'background-color': this.accentColor,
     };
   }
-  setActiveLine(acc:boolean): any {
+  setActiveLine(acc: boolean): any {
     if (acc) {
       return 'currentMenu';
     }
 
     return null;
   }
-
-  setAccentColor() {
-
-  }
-
 
   getMenuDataApi(url: string) {
     if (
@@ -304,25 +297,6 @@ export class MenuComponent implements OnInit, OnDestroy {
       console.log(url);
     }
   }
-
-  colorLine :any;
-
-  setHoverColor(img: string){
-    // console.log(img);
-    // this.hoverColor= document.getElementById(img);
-    // this.hoverColor.setAttribute('style','filter: brightness(0) saturate(100%) invert(100%) sepia(1%) saturate(4382%) hue-rotate(194deg) brightness(113%) contrast(101%);')
-    // this.hoverColor.style.filter = "#brightness(0) saturate(100%) invert(100%) sepia(1%) saturate(4382%) hue-rotate(194deg) brightness(113%) contrast(101%)";
-  }
-
-  setLine(img: any){
-    console.log(img);
-    // this.hoverColor= document.getElementById(img);
-
-    // this.hoverColor= document.getElementById(img);
-    // this.hoverColor.setAttribute('style','filter: brightness(0) saturate(100%) invert(7%) sepia(35%) saturate(2150%) hue-rotate(206deg) brightness(93%) contrast(97%);')
-    // return this.hoverColor("fill","#10142D");
-  }
-
 }
 
 

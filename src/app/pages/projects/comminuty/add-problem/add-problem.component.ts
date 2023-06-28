@@ -189,8 +189,8 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
 
     ngOnInit() {
         super.ngOnInit();
-        this.openTopicList();
         this.initRoute();
+        this.openTopicList();
         setTimeout(() => {
             this.showTxt = true;
         }, 500);
@@ -229,7 +229,6 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
                 .subscribe(data => {
                     this.topicList = data;
                     if (this.topicList.length === 0) {
-                        this.topicList.push({id: '', title: '', key: '', children: [], parentId: null, orderNum: 0, hidden: false});
                     } else {
                         for (let i = 0; i < this.topicList.length; i++) {
                             this.topicList[i].children = [];
@@ -258,6 +257,7 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
                 title: '+Add New Topic',
                 key: 'add' + this.topicList[i].id,
                 parentId: this.topicList[i].id,
+                programId: this.program,
                 orderNum: 0,
                 hidden: true,
                 children: [],
@@ -271,6 +271,7 @@ export class AddProblemComponent extends BasePageComponent implements OnInit {
             key: 'add',
             parentId: '',
             orderNum: 0,
+            programId: this.program,
             hidden: true,
             children: [],
             isLeaf: true,

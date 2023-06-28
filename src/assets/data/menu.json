@@ -5,7 +5,7 @@
       "class": "icofont-sound-wave"
     },
     "routing": "analytics",
-    "access": ["admin", "chief", "mentor", "head_city"],
+    "access": ["admin", "mentor"],
     "pathToSvg": {
       "pathToSvg": "assets/menuSvg/Analytics.svg",
       "pathToDarkSvg": "assets/menuSvg/AnalyticsDark.svg"
@@ -22,7 +22,7 @@
       "pathToDarkSvg": "assets/menuSvg/HabitDark.svg"
     },
     "routing": "community/program/list",
-    "access": ["admin"]
+    "access": ["admin", "community_admin"]
   },
   {
     "title": "Teacher List",
@@ -46,10 +46,10 @@
       "pathToDarkSvg": "assets/image/icons/SeminarDark.svg"
     },
     "routing": "student-list",
-    "access": ["admin", "teacher"]
+    "access": ["mentor"]
   },
   {
-    "title": "Subjects",
+    "title": "Quiz",
     "icon": {
       "class": "icofont-justify-left"
     },
@@ -58,7 +58,7 @@
       "pathToDarkSvg": "assets/menuSvg/ReportDark.svg"
     },
     "routing": "subjects",
-    "access": ["admin", "student"]
+    "access": ["admin", "mentor", "student"]
   },
   {
     "title": "Menu Courses",
@@ -72,15 +72,14 @@
     "sub": [
       {
         "title": "Main",
-        "routing": "courses/course/main",
-        "access": ["admin"]
+        "routing": "courses/course/main"
       },
       {
         "title": "List Course",
-        "routing": "courses/course/list",
-        "access": ["admin"]
+        "routing": "courses/course/list"
       }
-    ]
+    ],
+    "access": ["admin"]
   },
   {
     "title": "Menu Courses",

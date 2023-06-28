@@ -23,10 +23,12 @@ export class PassportListComponent extends BasePageComponent implements OnInit {
   passports = [];
   private loading: boolean;
   private isEmpty: boolean;
+  isAdmin: any;
 
   constructor(store: Store<IAppState>,
               httpSv: HttpService,
               protected formBuilder: FormBuilder,
+              private userService: UserService,
               private route: ActivatedRoute,
               private http: HttpClient,
   ) {
@@ -40,6 +42,7 @@ export class PassportListComponent extends BasePageComponent implements OnInit {
   async ngOnInit() {
     super.ngOnInit();
     this.getPassports();
+    this.isAdmin = await this.userService.isAdmin();
   }
 
 

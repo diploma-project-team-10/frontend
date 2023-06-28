@@ -69,7 +69,6 @@ export class AddTopicComponent implements OnInit {
   }
 
   getTopics() {
-    console.log(this.program);
     this.initTable();
     return this.http.get<Topic[]>(`${environment.apiUrl}/api/project/community/topic/list/${this.program}`)
         .pipe(map(data => {
