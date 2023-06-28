@@ -86,7 +86,7 @@ export class QuizComponent extends BasePageComponent implements OnInit {
   @ViewChild('resModal') resModal: any;
   @ViewChild('modalBody') modalBody: any;
   @ViewChild('modalFooter') modalFooter: any;
-  totalSec: number = 5;
+  totalSec: number = 20 * 60;
   minutes: string;
   seconds: string;
 
@@ -116,7 +116,7 @@ export class QuizComponent extends BasePageComponent implements OnInit {
       colors: ['#3D3DD8'],
       chart: {
         height: 275,
-        width: 205,
+        width: 275,
         offsetX: -10,
         offsetY: -10,
         type: 'radialBar',
@@ -187,10 +187,13 @@ export class QuizComponent extends BasePageComponent implements OnInit {
           this.started = true;
           this.nextQuestion();
           this.updateTimer();
-          this.openModal(this.modalBody, this.modalFooter, {
-            size: 'xl',
-            closeButton: true,
-          });
+          setTimeout(() => {
+            if (this.finished)
+              this.openModal(this.modalBody, this.modalFooter, {
+                width: '750px',
+                overlayClose: false,
+              });
+          }, this.totalSec * 1000 + 3000);
           this.toastr.success(data.message, 'Success', { closeButton: true });
         } else {
           this.toastr.error(data.message, 'Error', { closeButton: true });
@@ -283,6 +286,12 @@ export class QuizComponent extends BasePageComponent implements OnInit {
         this.finished = true;
       }
     }, 1000);
+    if (this.finished) {
+      this.openModal(this.modalBody, this.modalFooter, {
+        width: '750px',
+        overlayClose: false,
+      });
+    }
   }
   pad(n: number) {
     return (n < 10 ? '0' : '') + n;
