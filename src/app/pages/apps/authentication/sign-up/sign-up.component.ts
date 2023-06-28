@@ -21,6 +21,15 @@ export class PageSignUpComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   error = '';
+  types = [
+    {
+      value: 'MENTOR',
+      label: 'Teacher',
+    }, {
+      value: 'STUDENT',
+      label: 'Student',
+    }
+  ];
 
   constructor(private router: Router,
               private http: HttpClient,
@@ -37,6 +46,7 @@ export class PageSignUpComponent implements OnInit {
       username: new FormControl('', [Validators.required, Validators.required]),
       firstName: new FormControl('', [Validators.required, Validators.required]),
       lastName: new FormControl('', [Validators.required, Validators.required]),
+      type: new FormControl('', [Validators.required, Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(5)]),
       confirm: new FormControl('', [Validators.required, Validators.minLength(5)])
@@ -59,7 +69,7 @@ export class PageSignUpComponent implements OnInit {
             data => {
               if (data.status) {
                 this.toastr.success('Welcome!', 'Success', {closeButton: true});
-                this.router.navigate(['/vertical/user-profile']).then(r => {});
+                this.router.navigate(['/vertical/edit']).then(r => {});
               } else {
                 this.toastr.error(data.message, 'Error', { closeButton: true });
                 this.error = data.message;

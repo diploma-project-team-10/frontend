@@ -18,7 +18,9 @@
       {{ 'Already registered' | translate }}?
     </a>
   </div>
+  <div>
 
+  </div>
   <tc-form-group>
     <tc-input
       [prefixIcon]="'icofont-ui-email'"
@@ -101,6 +103,19 @@
       [placeholder]="'Confirm password'"
       formControlName="confirm"
     ></tc-input>
+
+    <ng-container *ngIf="confirm.invalid && (confirm.touched || confirm.dirty)">
+      <span @fadeIn class="error" *ngIf="confirm.getError('notMatch')">
+        Password's do not match
+      </span>
+    </ng-container>
+  </tc-form-group>
+  <tc-form-group>
+    <tc-select
+      [options]="types"
+      [placeholder]="'Select your role'"
+      formControlName="type"
+    ></tc-select>
 
     <ng-container *ngIf="confirm.invalid && (confirm.touched || confirm.dirty)">
       <span @fadeIn class="error" *ngIf="confirm.getError('notMatch')">
