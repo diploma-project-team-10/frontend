@@ -26,6 +26,11 @@ export class PageDashboardComponent extends BasePageComponent
   @ViewChild('chart') chart: ChartComponent;
   public attendanceEnglish: Partial<ChartLineOptions>;
   public radialBar: Partial<ChartOptions>;
+  @ViewChild('barChart') barChart: ChartComponent;
+  public chartOptions: Partial<ChartOptions>;
+
+  // public attendanceEnglish: Partial<ChartLineOptions>;
+  // public radialBar: Partial<ChartOptions>;
 
   semester: any[] = [
     { value: 1, label: 'Семестр 1' },
@@ -187,6 +192,90 @@ export class PageDashboardComponent extends BasePageComponent
         },
       },
     };
+    this.chartOptions = {
+      series: [
+        {
+          name: 'Topic',
+          data: [4, 10, 5],
+        },
+      ],
+      chart: {
+        height: 350,
+        type: 'bar',
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            position: 'top', // top, center, bottom
+          },
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val) {
+          return val + '';
+        },
+        offsetY: -20,
+        style: {
+          fontSize: '12px',
+          colors: ['#304758'],
+        },
+      },
+
+      xaxis: {
+        categories: ['Biology', 'Math', 'Physics'],
+        position: 'top',
+        labels: {
+          offsetY: -18,
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        crosshairs: {
+          fill: {
+            type: 'gradient',
+            gradient: {
+              colorFrom: '#D8E3F0',
+              colorTo: '#BED1E6',
+              stops: [0, 100],
+              opacityFrom: 0.4,
+              opacityTo: 0.5,
+            },
+          },
+        },
+        tooltip: {
+          enabled: true,
+          offsetY: -35,
+        },
+      },
+
+      yaxis: {
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          show: false,
+          formatter: function (val) {
+            return val + '';
+          },
+        },
+      },
+      title: {
+        text: "'Quiz Count'",
+
+        offsetY: 320,
+        align: 'center',
+        style: {
+          color: '#444',
+        },
+      },
+    };
 
     const now = new Date();
     let month = now.getMonth();
@@ -207,7 +296,7 @@ export class PageDashboardComponent extends BasePageComponent
     //   this.router.navigate(['/vertical/user-profile']).then(r => {
     //   });
     // }
-
+    this.isAdmin = await this.userService.isAdmin();
     this.getPrepareOption().then((r) => {
       this.speciality = this.prepareOption(r['speciality']);
       this.university = this.prepareOption(r['university']);

@@ -17,7 +17,7 @@ const firebaseConfig = {
 export const environment = {
   production: false,
   appSettings: SETTINGS,
-  apiUrl: 'http://localhost:9227',
+  apiUrl: 'http://164.90.188.126:9898',
   defaultLanguage: 'kz',
   appMenu: 'assets/data/menu.json',
   logo: 'assets/img/talaptan-logo.svg',
